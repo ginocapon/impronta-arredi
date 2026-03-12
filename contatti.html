@@ -16,6 +16,7 @@
   <link rel="preload" href="fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chatbot.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -50,7 +51,9 @@
   </header>
 
   <main>
-    <section class="page-hero">
+    <!-- Page Hero with background -->
+    <section class="page-hero page-hero--with-bg">
+      <div class="page-hero__bg" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80');"></div>
       <div class="container">
         <span class="section__label" data-i18n="footer.contact">Contatti</span>
         <h1 data-i18n="page.contatti.title">Contatti</h1>
@@ -168,26 +171,7 @@
     </div>
   </div>
 
-  <button class="chatbot-fab" aria-label="Apri chat" title="Chat">&#128172;</button>
-  <div class="chatbot-modal" role="dialog" aria-label="Chat Impronta Arredi">
-    <div class="chatbot-modal__header">
-      <h4 data-i18n="chat.title">Impronta Arredi</h4>
-      <p data-i18n="chat.subtitle">Come possiamo aiutarti?</p>
-    </div>
-    <div class="chatbot-modal__lang">
-      <button data-chat-lang="it" class="active">Italiano</button>
-      <button data-chat-lang="en">English</button>
-      <button data-chat-lang="cn">中文</button>
-    </div>
-    <div class="chatbot-modal__body">
-      <p class="chat-welcome" data-i18n="chat.welcome">Ciao! Benvenuto su Impronta Arredi. Come posso aiutarti?</p>
-    </div>
-    <div class="chatbot-modal__footer">
-      <input type="text" data-i18n="chat.placeholder" placeholder="Scrivi un messaggio...">
-      <button data-i18n="chat.send">Invia</button>
-    </div>
-  </div>
-
   <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
 </body>
 </html>

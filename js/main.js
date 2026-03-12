@@ -1,6 +1,6 @@
 /* ==========================================================================
    Impronta Arredi – Script principale
-   i18n (IT/EN/CN), cookie banner, scroll reveal, chatbot, navigation
+   i18n (IT/EN/CN), cookie banner, scroll reveal, counter animation, navigation
    ========================================================================== */
 
 (function () {
@@ -24,14 +24,23 @@
       'hero.cta1': 'Richiedi consulenza',
       'hero.cta2': 'Scopri i servizi',
       'hero.scroll': 'Scopri',
+      // Portfolio
+      'portfolio.label': 'Progetti realizzati',
+      'portfolio.title': 'I nostri lavori parlano per noi',
+      'portfolio.1.title': 'Residenza Brera',
+      'portfolio.1.cat': 'Appartamento di lusso',
+      'portfolio.2.title': 'Loft Navigli',
+      'portfolio.2.cat': 'Ristrutturazione completa',
+      'portfolio.3.title': 'Villa Monza',
+      'portfolio.3.cat': 'Interior design',
+      'portfolio.4.title': 'Headquarter Porta Nuova',
+      'portfolio.4.cat': 'Ufficio direzionale',
+      'portfolio.5.title': 'Suite Hotel Duomo',
+      'portfolio.5.cat': 'Boutique hotel',
       // Stats
-      'stat.1.number': '20+',
       'stat.1.label': 'Anni di esperienza',
-      'stat.2.number': '500+',
       'stat.2.label': 'Progetti realizzati',
-      'stat.3.number': '100%',
       'stat.3.label': 'Certificazioni garantite',
-      'stat.4.number': '1',
       'stat.4.label': 'Unico referente',
       // Features
       'features.label': 'Perché sceglierci',
@@ -43,12 +52,18 @@
       'feature.2.text': 'Muratura, impianti elettrici e idraulici, pavimentazioni, controsoffitti. Tutto gestito dal nostro team certificato.',
       'feature.3.title': 'Arredamento su misura',
       'feature.3.text': 'Mobili, complementi, illuminazione e tessuti selezionati per creare ambienti unici che riflettono la tua identità.',
+      // Parallax
+      'parallax.quote': '"Un unico referente, zero sorprese, risultati impeccabili"',
+      'parallax.desc': 'Dalla prima idea alla consegna delle chiavi, il nostro team gestisce ogni aspetto del progetto con la massima cura.',
       // About
       'about.label': 'Chi siamo',
       'about.title': 'Eccellenza artigianale, visione contemporanea',
       'about.text1': 'Impronta Arredi è il partner di riferimento per chi cerca un servizio chiavi in mano di altissimo livello. Dalla progettazione alla certificazione finale, gestiamo ogni aspetto del tuo progetto con competenza e passione.',
       'about.text2': 'La nostra forza è la direzione unica: un solo referente che coordina architetti, artigiani, impiantisti e fornitori. Questo significa zero problemi di comunicazione, tempi certi e risultati impeccabili.',
       'about.cta': 'Scopri la nostra storia',
+      // Testimonial
+      'testimonial.text': '"Impronta Arredi ha trasformato il nostro appartamento in un capolavoro. Un unico referente per tutto, zero stress, risultato perfetto."',
+      'testimonial.author': '— Cliente privato, Milano',
       // CTA
       'cta.title': 'Hai un progetto in mente?',
       'cta.text': 'Contattaci per una consulenza gratuita. Dal primo incontro alla consegna delle chiavi, saremo il tuo unico referente.',
@@ -70,13 +85,6 @@
       'cookie.more': 'Scopri di più',
       'cookie.accept': 'Accetta',
       'cookie.reject': 'Rifiuta',
-      // Chatbot
-      'chat.title': 'Impronta Arredi',
-      'chat.subtitle': 'Come possiamo aiutarti?',
-      'chat.lang.question': 'In che lingua preferisci chattare?',
-      'chat.placeholder': 'Scrivi un messaggio...',
-      'chat.send': 'Invia',
-      'chat.welcome': 'Ciao! Benvenuto su Impronta Arredi. Come posso aiutarti?',
       // Pages
       'page.chi-siamo.title': 'Chi Siamo',
       'page.chi-siamo.subtitle': 'Eccellenza artigianale e visione contemporanea al servizio del tuo progetto',
@@ -109,6 +117,7 @@
       'srv.5.text': 'Cucine, bagni, living, camere, uffici: arredi progettati e realizzati su misura con materiali selezionati. Complementi d\'arredo, illuminazione e tessuti coordinati.',
       'srv.6.title': 'Certificazioni e collaudi',
       'srv.6.text': 'Certificazione di conformità di tutti gli impianti, collaudi, pratiche catastali, APE. Consegniamo il progetto con tutta la documentazione in regola, pronta per l\'agibilità.',
+      'srv.parallax.quote': '"Ogni fase del progetto, un unico responsabile"',
       // USP
       'usp.label': 'Il vantaggio chiave',
       'usp.title': 'Perché un unico committente fa la differenza',
@@ -143,6 +152,10 @@
       'chi.val.2.text': 'Budget definito, timeline chiara, comunicazione costante. Nessuna sorpresa, solo risultati.',
       'chi.val.3.title': 'Responsabilità unica',
       'chi.val.3.text': 'Un solo referente per tutto il progetto. Zero rimpalli, zero alibi. Se qualcosa non va, lo risolviamo noi.',
+      'chi.parallax.quote': '"Ogni spazio merita di essere trasformato in un\'esperienza"',
+      'chi.approach.label': 'Il nostro approccio',
+      'chi.approach.title': 'Un unico referente, risultati impeccabili',
+      'chi.approach.text': 'La nostra forza è la direzione unica: un solo referente che coordina architetti, artigiani, impiantisti e fornitori. Questo significa zero problemi di comunicazione, tempi certi e risultati perfetti.',
       // Contact page
       'contact.address.label': 'Indirizzo',
       'contact.phone.label': 'Telefono',
@@ -164,13 +177,21 @@
       'hero.cta1': 'Request consultation',
       'hero.cta2': 'Discover services',
       'hero.scroll': 'Discover',
-      'stat.1.number': '20+',
+      'portfolio.label': 'Completed projects',
+      'portfolio.title': 'Our work speaks for itself',
+      'portfolio.1.title': 'Brera Residence',
+      'portfolio.1.cat': 'Luxury apartment',
+      'portfolio.2.title': 'Navigli Loft',
+      'portfolio.2.cat': 'Complete renovation',
+      'portfolio.3.title': 'Villa Monza',
+      'portfolio.3.cat': 'Interior design',
+      'portfolio.4.title': 'Porta Nuova Headquarters',
+      'portfolio.4.cat': 'Executive office',
+      'portfolio.5.title': 'Hotel Duomo Suite',
+      'portfolio.5.cat': 'Boutique hotel',
       'stat.1.label': 'Years of experience',
-      'stat.2.number': '500+',
       'stat.2.label': 'Projects completed',
-      'stat.3.number': '100%',
       'stat.3.label': 'Certifications guaranteed',
-      'stat.4.number': '1',
       'stat.4.label': 'Single point of contact',
       'features.label': 'Why choose us',
       'features.title': 'One partner for the entire project',
@@ -181,11 +202,15 @@
       'feature.2.text': 'Masonry, electrical and plumbing systems, flooring, suspended ceilings. All managed by our certified team.',
       'feature.3.title': 'Bespoke furnishing',
       'feature.3.text': 'Furniture, accessories, lighting, and fabrics selected to create unique environments that reflect your identity.',
+      'parallax.quote': '"One point of contact, zero surprises, impeccable results"',
+      'parallax.desc': 'From the first idea to key handover, our team manages every aspect of the project with the utmost care.',
       'about.label': 'About us',
       'about.title': 'Artisan excellence, contemporary vision',
       'about.text1': 'Impronta Arredi is the reference partner for those seeking top-level turnkey service. From design to final certification, we manage every aspect of your project with expertise and passion.',
       'about.text2': 'Our strength is unified management: one single contact who coordinates architects, craftsmen, technicians, and suppliers. This means zero communication issues, certain timelines, and impeccable results.',
       'about.cta': 'Discover our story',
+      'testimonial.text': '"Impronta Arredi transformed our apartment into a masterpiece. One single contact for everything, zero stress, perfect result."',
+      'testimonial.author': '— Private client, Milan',
       'cta.title': 'Have a project in mind?',
       'cta.text': 'Contact us for a free consultation. From the first meeting to key handover, we\'ll be your single point of contact.',
       'cta.btn': 'Contact us now',
@@ -204,12 +229,6 @@
       'cookie.more': 'Learn more',
       'cookie.accept': 'Accept',
       'cookie.reject': 'Reject',
-      'chat.title': 'Impronta Arredi',
-      'chat.subtitle': 'How can we help you?',
-      'chat.lang.question': 'Which language do you prefer?',
-      'chat.placeholder': 'Write a message...',
-      'chat.send': 'Send',
-      'chat.welcome': 'Hello! Welcome to Impronta Arredi. How can I help you?',
       'page.chi-siamo.title': 'About Us',
       'page.chi-siamo.subtitle': 'Artisan excellence and contemporary vision at the service of your project',
       'page.servizi.title': 'Our Services',
@@ -239,6 +258,7 @@
       'srv.5.text': 'Kitchens, bathrooms, living rooms, bedrooms, offices: furniture designed and built to measure with selected materials. Coordinated accessories, lighting, and fabrics.',
       'srv.6.title': 'Certifications & testing',
       'srv.6.text': 'Compliance certification for all systems, testing, cadastral documentation, energy performance certificate. We deliver the project with all documentation in order.',
+      'srv.parallax.quote': '"Every phase of the project, one single person in charge"',
       'usp.label': 'The key advantage',
       'usp.title': 'Why a single contractor makes the difference',
       'usp.desc': 'Entrusting the project to a single point of contact eliminates problems and guarantees superior results.',
@@ -270,6 +290,10 @@
       'chi.val.2.text': 'Defined budget, clear timeline, constant communication. No surprises, only results.',
       'chi.val.3.title': 'Single responsibility',
       'chi.val.3.text': 'One point of contact for the entire project. Zero blame-shifting, zero excuses. If something\'s wrong, we fix it.',
+      'chi.parallax.quote': '"Every space deserves to be transformed into an experience"',
+      'chi.approach.label': 'Our approach',
+      'chi.approach.title': 'One single contact, impeccable results',
+      'chi.approach.text': 'Our strength is unified management: one single contact who coordinates architects, craftsmen, technicians, and suppliers. This means zero communication issues, certain timelines, and perfect results.',
       'contact.address.label': 'Address',
       'contact.phone.label': 'Phone',
       'contact.email.label': 'Email',
@@ -290,13 +314,21 @@
       'hero.cta1': '申请咨询',
       'hero.cta2': '了解服务',
       'hero.scroll': '探索',
-      'stat.1.number': '20+',
+      'portfolio.label': '已完成项目',
+      'portfolio.title': '我们的作品自己会说话',
+      'portfolio.1.title': '布雷拉住宅',
+      'portfolio.1.cat': '豪华公寓',
+      'portfolio.2.title': '运河区阁楼',
+      'portfolio.2.cat': '全面翻新',
+      'portfolio.3.title': '蒙扎别墅',
+      'portfolio.3.cat': '室内设计',
+      'portfolio.4.title': '新门总部',
+      'portfolio.4.cat': '行政办公室',
+      'portfolio.5.title': '大教堂酒店套房',
+      'portfolio.5.cat': '精品酒店',
       'stat.1.label': '年经验',
-      'stat.2.number': '500+',
       'stat.2.label': '已完成项目',
-      'stat.3.number': '100%',
       'stat.3.label': '认证保证',
-      'stat.4.number': '1',
       'stat.4.label': '唯一联系人',
       'features.label': '为什么选择我们',
       'features.title': '整个项目的唯一合作伙伴',
@@ -307,11 +339,15 @@
       'feature.2.text': '砌筑、电气和管道系统、地板、吊顶。全部由我们认证的团队管理。',
       'feature.3.title': '定制家具',
       'feature.3.text': '家具、配饰、照明和面料精心挑选，打造反映您个性的独特环境。',
+      'parallax.quote': '"一个联系人，零意外，完美结果"',
+      'parallax.desc': '从第一个想法到交钥匙，我们的团队以最高标准管理项目的每个方面。',
       'about.label': '关于我们',
       'about.title': '工匠卓越，当代视野',
       'about.text1': 'Impronta Arredi是寻求顶级交钥匙服务者的首选合作伙伴。从设计到最终认证，我们以专业知识和热情管理您项目的每个方面。',
       'about.text2': '我们的优势是统一管理：一个联系人协调建筑师、工匠、技术人员和供应商。这意味着零沟通问题、确定的时间表和完美的结果。',
       'about.cta': '了解我们的故事',
+      'testimonial.text': '"Impronta Arredi将我们的公寓变成了杰作。一个联系人负责一切，零压力，完美结果。"',
+      'testimonial.author': '— 私人客户，米兰',
       'cta.title': '有项目想法吗？',
       'cta.text': '联系我们获取免费咨询。从第一次会面到交钥匙，我们将是您唯一的联系人。',
       'cta.btn': '立即联系我们',
@@ -330,12 +366,6 @@
       'cookie.more': '了解更多',
       'cookie.accept': '接受',
       'cookie.reject': '拒绝',
-      'chat.title': 'Impronta Arredi',
-      'chat.subtitle': '我们能为您做什么？',
-      'chat.lang.question': '您希望用哪种语言聊天？',
-      'chat.placeholder': '输入消息...',
-      'chat.send': '发送',
-      'chat.welcome': '您好！欢迎来到Impronta Arredi。我能为您做什么？',
       'page.chi-siamo.title': '关于我们',
       'page.chi-siamo.subtitle': '工匠卓越和当代视野，为您的项目服务',
       'page.servizi.title': '我们的服务',
@@ -365,6 +395,7 @@
       'srv.5.text': '厨房、浴室、客厅、卧室、办公室：用精选材料设计和制造的定制家具。配套配饰、照明和面料。',
       'srv.6.title': '认证与验收',
       'srv.6.text': '所有系统合规认证、验收、地籍文件、能源性能证书。我们交付的项目附有完整的合规文件。',
+      'srv.parallax.quote': '"项目的每个阶段，一个负责人"',
       'usp.label': '关键优势',
       'usp.title': '为什么单一承包商能带来不同',
       'usp.desc': '将项目委托给单一联系人可消除问题并保证卓越结果。',
@@ -396,6 +427,10 @@
       'chi.val.2.text': '确定的预算、清晰的时间表、持续的沟通。没有意外，只有结果。',
       'chi.val.3.title': '唯一责任',
       'chi.val.3.text': '整个项目一个联系人。零推诿，零借口。如果出了问题，我们来解决。',
+      'chi.parallax.quote': '"每个空间都值得被转化为一种体验"',
+      'chi.approach.label': '我们的方法',
+      'chi.approach.title': '一个联系人，完美结果',
+      'chi.approach.text': '我们的优势是统一管理：一个联系人协调建筑师、工匠、技术人员和供应商。这意味着零沟通问题、确定的时间表和完美的结果。',
       'contact.address.label': '地址',
       'contact.phone.label': '电话',
       'contact.email.label': '电子邮件',
@@ -425,10 +460,8 @@
       }
     });
 
-    // Update lang attribute
     document.documentElement.lang = currentLang === 'cn' ? 'zh' : currentLang;
 
-    // Update active button
     document.querySelectorAll('.lang-switch__btn').forEach(function (btn) {
       btn.classList.toggle('lang-switch__btn--active', btn.getAttribute('data-lang') === currentLang);
     });
@@ -440,14 +473,12 @@
     applyTranslations();
   }
 
-  // Bind language switchers
   document.querySelectorAll('.lang-switch__btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       setLang(this.getAttribute('data-lang'));
     });
   });
 
-  // Apply on load
   applyTranslations();
 
   /* =================================================================
@@ -518,7 +549,8 @@
   /* =================================================================
      5. SCROLL REVEAL ANIMATIONS
      ================================================================= */
-  var revealElements = document.querySelectorAll('.reveal');
+  var revealSelectors = '.reveal, .reveal--left, .reveal--right, .reveal--scale';
+  var revealElements = document.querySelectorAll(revealSelectors);
 
   if (revealElements.length > 0 && 'IntersectionObserver' in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
@@ -536,7 +568,49 @@
   }
 
   /* =================================================================
-     6. CURRENT YEAR IN FOOTER
+     6. ANIMATED COUNTERS
+     ================================================================= */
+  var counterElements = document.querySelectorAll('[data-counter]');
+
+  if (counterElements.length > 0 && 'IntersectionObserver' in window) {
+    var counterObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counterElements.forEach(function (el) {
+      counterObserver.observe(el);
+    });
+  }
+
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-counter'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var duration = 2000;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(eased * target);
+      el.textContent = current + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  /* =================================================================
+     7. CURRENT YEAR IN FOOTER
      ================================================================= */
   var yearEl = document.querySelector('.footer__year');
   if (yearEl) {
@@ -544,7 +618,7 @@
   }
 
   /* =================================================================
-     7. SMOOTH SCROLL FOR ANCHOR LINKS
+     8. SMOOTH SCROLL FOR ANCHOR LINKS
      ================================================================= */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
@@ -557,34 +631,9 @@
   });
 
   /* =================================================================
-     8. CHATBOT WIDGET
-     ================================================================= */
-  var chatFab = document.querySelector('.chatbot-fab');
-  var chatModal = document.querySelector('.chatbot-modal');
-
-  if (chatFab && chatModal) {
-    chatFab.addEventListener('click', function () {
-      chatModal.classList.toggle('chatbot-modal--open');
-    });
-
-    // Language selection in chatbot
-    chatModal.querySelectorAll('.chatbot-modal__lang button').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        chatModal.querySelectorAll('.chatbot-modal__lang button').forEach(function (b) { b.classList.remove('active'); });
-        this.classList.add('active');
-        // Set chatbot language (placeholder for future implementation)
-        var chatLang = this.getAttribute('data-chat-lang');
-        var welcomeMsg = chatModal.querySelector('.chat-welcome');
-        if (welcomeMsg) {
-          welcomeMsg.textContent = translations[chatLang] ? translations[chatLang]['chat.welcome'] : translations.it['chat.welcome'];
-        }
-      });
-    });
-  }
-
-  /* =================================================================
-     9. EXPOSE setLang globally for inline handlers
+     9. EXPOSE setLang globally
      ================================================================= */
   window.improntaSetLang = setLang;
+  window.improntaGetLang = function () { return currentLang; };
 
 })();

@@ -16,6 +16,7 @@
   <link rel="preload" href="fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chatbot.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -50,7 +51,9 @@
   </header>
 
   <main>
-    <section class="page-hero">
+    <!-- Page Hero with background -->
+    <section class="page-hero page-hero--with-bg">
+      <div class="page-hero__bg" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80');"></div>
       <div class="container">
         <span class="section__label" data-i18n="footer.services">Servizi</span>
         <h1 data-i18n="page.servizi.title">I Nostri Servizi</h1>
@@ -59,7 +62,7 @@
       </div>
     </section>
 
-    <!-- Services grid -->
+    <!-- Services grid (dark) -->
     <section class="section section--dark">
       <div class="container">
         <div class="services-grid">
@@ -97,6 +100,15 @@
       </div>
     </section>
 
+    <!-- Parallax divider with project photo -->
+    <section class="parallax-section" aria-label="Immagine progetto">
+      <div class="parallax-section__bg" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&q=80');"></div>
+      <div class="parallax-section__overlay"></div>
+      <div class="parallax-section__content reveal">
+        <h2 data-i18n="srv.parallax.quote">"Ogni fase del progetto, un unico responsabile"</h2>
+      </div>
+    </section>
+
     <!-- USP Section -->
     <section class="section">
       <div class="container">
@@ -127,7 +139,7 @@
       </div>
     </section>
 
-    <!-- Process Section -->
+    <!-- Process Section with Timeline -->
     <section class="section section--cream">
       <div class="container">
         <div class="section__header reveal">
@@ -136,26 +148,33 @@
           <div class="gold-line"></div>
           <p data-i18n="process.desc">Un percorso chiaro e trasparente in ogni fase del progetto.</p>
         </div>
-        <div class="features-grid">
-          <div class="feature-card reveal">
-            <div class="feature-card__icon" aria-hidden="true">01</div>
-            <h3 class="feature-card__title" data-i18n="process.1.title">Ascolto e sopralluogo</h3>
-            <p class="feature-card__text" data-i18n="process.1.text">Ci incontriamo per capire le tue esigenze, visitiamo gli spazi e definiamo insieme obiettivi e budget.</p>
+        <div class="process-timeline">
+          <div class="process-step reveal">
+            <div class="process-step__number">1</div>
+            <div class="process-step__content">
+              <h3 data-i18n="process.1.title">Ascolto e sopralluogo</h3>
+              <p data-i18n="process.1.text">Ci incontriamo per capire le tue esigenze, visitiamo gli spazi e definiamo insieme obiettivi e budget.</p>
+            </div>
           </div>
-          <div class="feature-card reveal reveal--delay-1">
-            <div class="feature-card__icon" aria-hidden="true">02</div>
-            <h3 class="feature-card__title" data-i18n="process.2.title">Progettazione</h3>
-            <p class="feature-card__text" data-i18n="process.2.text">Creiamo il concept, i render 3D e il progetto esecutivo completo per la tua approvazione.</p>
+          <div class="process-step reveal reveal--delay-1">
+            <div class="process-step__number">2</div>
+            <div class="process-step__content">
+              <h3 data-i18n="process.2.title">Progettazione</h3>
+              <p data-i18n="process.2.text">Creiamo il concept, i render 3D e il progetto esecutivo completo per la tua approvazione.</p>
+            </div>
           </div>
-          <div class="feature-card reveal reveal--delay-2">
-            <div class="feature-card__icon" aria-hidden="true">03</div>
-            <h3 class="feature-card__title" data-i18n="process.3.title">Realizzazione</h3>
-            <p class="feature-card__text" data-i18n="process.3.text">Coordiniamo tutti i lavori: edili, impiantistici e di finitura. Un unico referente ti aggiorna costantemente.</p>
+          <div class="process-step reveal reveal--delay-2">
+            <div class="process-step__number">3</div>
+            <div class="process-step__content">
+              <h3 data-i18n="process.3.title">Realizzazione</h3>
+              <p data-i18n="process.3.text">Coordiniamo tutti i lavori: edili, impiantistici e di finitura. Un unico referente ti aggiorna costantemente.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- CTA -->
     <section class="section section--gold">
       <div class="container cta-section cta-section--gold reveal">
         <span class="section__label">&#9670;</span>
@@ -220,26 +239,7 @@
     </div>
   </div>
 
-  <button class="chatbot-fab" aria-label="Apri chat" title="Chat">&#128172;</button>
-  <div class="chatbot-modal" role="dialog" aria-label="Chat Impronta Arredi">
-    <div class="chatbot-modal__header">
-      <h4 data-i18n="chat.title">Impronta Arredi</h4>
-      <p data-i18n="chat.subtitle">Come possiamo aiutarti?</p>
-    </div>
-    <div class="chatbot-modal__lang">
-      <button data-chat-lang="it" class="active">Italiano</button>
-      <button data-chat-lang="en">English</button>
-      <button data-chat-lang="cn">中文</button>
-    </div>
-    <div class="chatbot-modal__body">
-      <p class="chat-welcome" data-i18n="chat.welcome">Ciao! Benvenuto su Impronta Arredi. Come posso aiutarti?</p>
-    </div>
-    <div class="chatbot-modal__footer">
-      <input type="text" data-i18n="chat.placeholder" placeholder="Scrivi un messaggio...">
-      <button data-i18n="chat.send">Invia</button>
-    </div>
-  </div>
-
   <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
 </body>
 </html>
