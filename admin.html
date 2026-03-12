@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel – Impronta Arredi</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--grigio-bg); }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__logo">IMPRONTA <span>ARREDI</span></div>
+      <nav>
+        <button class="admin-nav__item admin-nav__item--active" data-panel="dashboard">
+          &#9632; Dashboard
+        </button>
+        <button class="admin-nav__item" data-panel="leads">
+          &#9993; Richieste / Lead
+        </button>
+        <button class="admin-nav__item" data-panel="portfolio">
+          &#9733; Portfolio
+        </button>
+        <button class="admin-nav__item" data-panel="blog">
+          &#9998; Blog / News
+        </button>
+        <button class="admin-nav__item" data-panel="email">
+          &#9993; Email Marketing
+        </button>
+        <button class="admin-nav__item" data-panel="seo">
+          &#9881; SEO & Analytics
+        </button>
+        <button class="admin-nav__item" data-panel="settings">
+          &#9881; Impostazioni
+        </button>
+      </nav>
+      <div style="margin-top: auto; padding-top: var(--sp-xl); border-top: 1px solid rgba(255,255,255,0.06);">
+        <a href="/" class="admin-nav__item" style="text-decoration: none;">&#8592; Torna al sito</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Dashboard Panel -->
+      <div id="panel-dashboard" class="admin-panel-view">
+        <div class="admin-header">
+          <h1>Dashboard</h1>
+          <div>
+            <button class="admin-btn">&#8635; Aggiorna</button>
+          </div>
+        </div>
+
+        <div class="admin-cards">
+          <div class="admin-card">
+            <p class="admin-card__label">Visite oggi</p>
+            <p class="admin-card__value">247</p>
+            <p class="admin-card__trend">+12% vs ieri</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Richieste mese</p>
+            <p class="admin-card__value">34</p>
+            <p class="admin-card__trend">+8% vs mese prec.</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Tasso conversione</p>
+            <p class="admin-card__value">3.2%</p>
+            <p class="admin-card__trend admin-card__trend--down">-0.3% vs mese prec.</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Chat avviate</p>
+            <p class="admin-card__value">89</p>
+            <p class="admin-card__trend">+22% vs mese prec.</p>
+          </div>
+        </div>
+
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Ultime richieste</h3>
+            <button class="admin-btn">Vedi tutte &#8594;</button>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Nome</th>
+                <th>Tipo progetto</th>
+                <th>Lingua</th>
+                <th>Stato</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12/03/2026</td>
+                <td>Marco Rossi</td>
+                <td>Appartamento</td>
+                <td>IT</td>
+                <td><span class="admin-badge admin-badge--warning">Da leggere</span></td>
+              </tr>
+              <tr>
+                <td>11/03/2026</td>
+                <td>John Smith</td>
+                <td>Hotel</td>
+                <td>EN</td>
+                <td><span class="admin-badge admin-badge--info">In gestione</span></td>
+              </tr>
+              <tr>
+                <td>10/03/2026</td>
+                <td>Wang Wei</td>
+                <td>Ufficio</td>
+                <td>CN</td>
+                <td><span class="admin-badge admin-badge--success">Risposto</span></td>
+              </tr>
+              <tr>
+                <td>09/03/2026</td>
+                <td>Laura Bianchi</td>
+                <td>Negozio</td>
+                <td>IT</td>
+                <td><span class="admin-badge admin-badge--success">Risposto</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md);">
+          <div class="admin-panel">
+            <div class="admin-panel__header">
+              <h3 class="admin-panel__title">Visite per lingua</h3>
+            </div>
+            <div style="padding: var(--sp-md);">
+              <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-sm);">
+                <span>Italiano</span>
+                <strong>62%</strong>
+              </div>
+              <div style="height: 8px; background: var(--grigio-bg); border-radius: 4px; overflow: hidden; margin-bottom: var(--sp-md);">
+                <div style="width: 62%; height: 100%; background: var(--oro); border-radius: 4px;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-sm);">
+                <span>English</span>
+                <strong>25%</strong>
+              </div>
+              <div style="height: 8px; background: var(--grigio-bg); border-radius: 4px; overflow: hidden; margin-bottom: var(--sp-md);">
+                <div style="width: 25%; height: 100%; background: var(--oro); border-radius: 4px;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-sm);">
+                <span>中文</span>
+                <strong>13%</strong>
+              </div>
+              <div style="height: 8px; background: var(--grigio-bg); border-radius: 4px; overflow: hidden;">
+                <div style="width: 13%; height: 100%; background: var(--oro); border-radius: 4px;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-panel">
+            <div class="admin-panel__header">
+              <h3 class="admin-panel__title">Pagine più visitate</h3>
+            </div>
+            <table class="admin-table">
+              <tbody>
+                <tr><td>Homepage</td><td style="text-align:right"><strong>1,247</strong></td></tr>
+                <tr><td>Servizi</td><td style="text-align:right"><strong>856</strong></td></tr>
+                <tr><td>Portfolio</td><td style="text-align:right"><strong>623</strong></td></tr>
+                <tr><td>Contatti</td><td style="text-align:right"><strong>412</strong></td></tr>
+                <tr><td>Chi Siamo</td><td style="text-align:right"><strong>298</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leads Panel -->
+      <div id="panel-leads" class="admin-panel-view" style="display:none;">
+        <div class="admin-header">
+          <h1>Richieste / Lead</h1>
+          <button class="admin-btn admin-btn--primary">+ Esporta CSV</button>
+        </div>
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Tutte le richieste</h3>
+            <div style="display: flex; gap: var(--sp-xs);">
+              <button class="admin-btn">Tutti</button>
+              <button class="admin-btn">Da leggere</button>
+              <button class="admin-btn">In gestione</button>
+            </div>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Tipo</th>
+                <th>Lingua</th>
+                <th>Messaggio</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12/03/2026</td>
+                <td>Marco Rossi</td>
+                <td>marco@email.it</td>
+                <td>+39 333 1234567</td>
+                <td>Appartamento</td>
+                <td>IT</td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Vorrei ristrutturare il mio appartamento in zona Brera...</td>
+                <td><span class="admin-badge admin-badge--warning">Da leggere</span></td>
+                <td><button class="admin-btn">Apri</button></td>
+              </tr>
+              <tr>
+                <td>11/03/2026</td>
+                <td>John Smith</td>
+                <td>john@hotel.com</td>
+                <td>+44 7700 900000</td>
+                <td>Hotel</td>
+                <td>EN</td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">We are looking for a complete renovation of our boutique hotel...</td>
+                <td><span class="admin-badge admin-badge--info">In gestione</span></td>
+                <td><button class="admin-btn">Apri</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: var(--sp-md); color: var(--grigio); font-size: var(--fs-sm); text-align: center;">I messaggi in lingua straniera vengono tradotti automaticamente in italiano nella chat</p>
+        </div>
+      </div>
+
+      <!-- Portfolio Panel -->
+      <div id="panel-portfolio" class="admin-panel-view" style="display:none;">
+        <div class="admin-header">
+          <h1>Portfolio</h1>
+          <button class="admin-btn admin-btn--primary">+ Nuovo progetto</button>
+        </div>
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Progetti pubblicati</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Immagine</th>
+                <th>Titolo</th>
+                <th>Categoria</th>
+                <th>Data</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div style="width:60px;height:40px;background:var(--grigio-bg);border-radius:4px;"></div></td>
+                <td>Residenza Brera</td>
+                <td>Appartamento</td>
+                <td>01/2026</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn">Modifica</button></td>
+              </tr>
+              <tr>
+                <td><div style="width:60px;height:40px;background:var(--grigio-bg);border-radius:4px;"></div></td>
+                <td>Loft Navigli</td>
+                <td>Ristrutturazione</td>
+                <td>12/2025</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn">Modifica</button></td>
+              </tr>
+              <tr>
+                <td><div style="width:60px;height:40px;background:var(--grigio-bg);border-radius:4px;"></div></td>
+                <td>Headquarter Porta Nuova</td>
+                <td>Ufficio</td>
+                <td>11/2025</td>
+                <td><span class="admin-badge admin-badge--info">Bozza</span></td>
+                <td><button class="admin-btn">Modifica</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Blog Panel -->
+      <div id="panel-blog" class="admin-panel-view" style="display:none;">
+        <div class="admin-header">
+          <h1>Blog / News</h1>
+          <button class="admin-btn admin-btn--primary">+ Nuovo articolo</button>
+        </div>
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Articoli</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Titolo</th>
+                <th>Categoria</th>
+                <th>Data</th>
+                <th>Visite</th>
+                <th>Stato</th>
+                <th>Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Come scegliere il general contractor giusto</td>
+                <td>Guide</td>
+                <td>10/03/2026</td>
+                <td>342</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn">Modifica</button></td>
+              </tr>
+              <tr>
+                <td>Tendenze interior design 2026</td>
+                <td>Tendenze</td>
+                <td>05/03/2026</td>
+                <td>567</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn">Modifica</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Email Marketing Panel -->
+      <div id="panel-email" class="admin-panel-view" style="display:none;">
+        <div class="admin-header">
+          <h1>Email Marketing</h1>
+          <button class="admin-btn admin-btn--primary">+ Nuova campagna</button>
+        </div>
+        <div class="admin-cards" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="admin-card">
+            <p class="admin-card__label">Iscritti newsletter</p>
+            <p class="admin-card__value">1,247</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Tasso apertura</p>
+            <p class="admin-card__value">38.5%</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Campagne inviate</p>
+            <p class="admin-card__value">12</p>
+          </div>
+        </div>
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Campagne recenti</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Campagna</th>
+                <th>Data invio</th>
+                <th>Destinatari</th>
+                <th>Aperture</th>
+                <th>Click</th>
+                <th>Stato</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Newsletter Marzo 2026</td>
+                <td>01/03/2026</td>
+                <td>1,180</td>
+                <td>38.5%</td>
+                <td>12.3%</td>
+                <td><span class="admin-badge admin-badge--success">Inviata</span></td>
+              </tr>
+              <tr>
+                <td>Promo Primavera</td>
+                <td>15/02/2026</td>
+                <td>1,120</td>
+                <td>41.2%</td>
+                <td>15.8%</td>
+                <td><span class="admin-badge admin-badge--success">Inviata</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SEO Panel -->
+      <div id="panel-seo" class="admin-panel-view" style="display:none;">
+        <div class="admin-header">
+          <h1>SEO & Analytics</h1>
+          <button class="admin-btn">&#8635; Aggiorna dati</button>
+        </div>
+        <div class="admin-cards">
+          <div class="admin-card">
+            <p class="admin-card__label">Visite mese</p>
+            <p class="admin-card__value">4,832</p>
+            <p class="admin-card__trend">+15% vs mese prec.</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Core Web Vitals</p>
+            <p class="admin-card__value" style="color: #4CAF50;">PASS</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Keyword in top 10</p>
+            <p class="admin-card__value">23</p>
+            <p class="admin-card__trend">+5 vs mese prec.</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Backlinks</p>
+            <p class="admin-card__value">147</p>
+          </div>
+        </div>
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Audit SEO</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Check</th>
+                <th>Stato</th>
+                <th>Dettagli</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Schema.org JSON-LD</td>
+                <td><span class="admin-badge admin-badge--success">OK</span></td>
+                <td>GeneralContractor + FurnitureStore + BreadcrumbList</td>
+              </tr>
+              <tr>
+                <td>Meta description</td>
+                <td><span class="admin-badge admin-badge--success">OK</span></td>
+                <td>Tutte le pagine hanno meta description unica</td>
+              </tr>
+              <tr>
+                <td>robots.txt + sitemap</td>
+                <td><span class="admin-badge admin-badge--success">OK</span></td>
+                <td>AI bots allowed, sitemap.xml presente</td>
+              </tr>
+              <tr>
+                <td>llms.txt (GEO)</td>
+                <td><span class="admin-badge admin-badge--success">OK</span></td>
+                <td>File GEO per AI crawlers configurato</td>
+              </tr>
+              <tr>
+                <td>HTTPS</td>
+                <td><span class="admin-badge admin-badge--warning">Da verificare</span></td>
+                <td>Verificare certificato SSL dopo deploy</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Settings Panel -->
+      <div id="panel-settings" class="admin-panel-view" style="display:none;">
+        <div class="admin-header">
+          <h1>Impostazioni</h1>
+        </div>
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Informazioni aziendali</h3>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); padding: var(--sp-md);">
+            <div>
+              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Nome azienda</label>
+              <input type="text" value="Impronta Arredi" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
+            </div>
+            <div>
+              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Email</label>
+              <input type="email" value="info@improntarredi.it" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
+            </div>
+            <div>
+              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Telefono</label>
+              <input type="tel" value="+39 000 0000000" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
+            </div>
+            <div>
+              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Indirizzo</label>
+              <input type="text" value="Via Example 1, 20100 Milano" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
+            </div>
+          </div>
+          <div style="padding: 0 var(--sp-md) var(--sp-md);">
+            <button class="admin-btn admin-btn--primary">Salva modifiche</button>
+          </div>
+        </div>
+
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Chatbot</h3>
+          </div>
+          <div style="padding: var(--sp-md);">
+            <p style="font-size: var(--fs-sm); color: var(--grigio); margin-bottom: var(--sp-md);">Il chatbot traduce automaticamente i messaggi: i clienti stranieri scrivono nella loro lingua e tu ricevi tutto in italiano. Quando rispondi in italiano, il messaggio viene tradotto nella lingua del cliente.</p>
+            <div style="display: flex; gap: var(--sp-md); align-items: center; margin-bottom: var(--sp-md);">
+              <label style="font-size: var(--fs-sm); font-weight: 600;">Chatbot attivo</label>
+              <div style="width:48px;height:24px;background:var(--oro);border-radius:12px;position:relative;cursor:pointer;">
+                <div style="width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div>
+              </div>
+            </div>
+            <div style="display: flex; gap: var(--sp-md); align-items: center;">
+              <label style="font-size: var(--fs-sm); font-weight: 600;">Traduzione automatica</label>
+              <div style="width:48px;height:24px;background:var(--oro);border-radius:12px;position:relative;cursor:pointer;">
+                <div style="width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function() {
+    'use strict';
+    // Admin panel navigation
+    var navItems = document.querySelectorAll('.admin-nav__item[data-panel]');
+    var panels = document.querySelectorAll('.admin-panel-view');
+
+    navItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        var panelId = this.getAttribute('data-panel');
+
+        // Update nav active state
+        navItems.forEach(function(n) { n.classList.remove('admin-nav__item--active'); });
+        this.classList.add('admin-nav__item--active');
+
+        // Show selected panel
+        panels.forEach(function(p) { p.style.display = 'none'; });
+        var target = document.getElementById('panel-' + panelId);
+        if (target) target.style.display = 'block';
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

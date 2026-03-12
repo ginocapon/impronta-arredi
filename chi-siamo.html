@@ -16,6 +16,7 @@
   <link rel="preload" href="fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chatbot.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -50,7 +51,9 @@
   </header>
 
   <main>
-    <section class="page-hero">
+    <!-- Page Hero with background image -->
+    <section class="page-hero page-hero--with-bg">
+      <div class="page-hero__bg" style="background-image: url('https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1920&q=80');"></div>
       <div class="container">
         <span class="section__label" data-i18n="about.label">Chi siamo</span>
         <h1 data-i18n="page.chi-siamo.title">Chi Siamo</h1>
@@ -59,11 +62,14 @@
       </div>
     </section>
 
+    <!-- Story section with image -->
     <section class="section">
       <div class="container">
-        <div class="about-split reveal">
-          <div class="about-split__image">[Immagine team / laboratorio artigianale]</div>
-          <div class="about-split__content">
+        <div class="about-split">
+          <div class="about-split__image reveal--left reveal">
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80" alt="Team Impronta Arredi al lavoro" loading="lazy" width="800" height="600">
+          </div>
+          <div class="about-split__content reveal--right reveal">
             <h2 data-i18n="chi.story.title">La nostra storia</h2>
             <div class="gold-line gold-line--left"></div>
             <p data-i18n="chi.story.p1">Impronta Arredi nasce dalla passione per il design e dalla convinzione che ogni spazio meriti di essere trasformato in un'esperienza. Non siamo un semplice studio di interior design: siamo general contractor specializzati nel lusso.</p>
@@ -73,6 +79,16 @@
       </div>
     </section>
 
+    <!-- Parallax divider -->
+    <section class="parallax-section" aria-label="Citazione">
+      <div class="parallax-section__bg" style="background-image: url('https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1920&q=80');"></div>
+      <div class="parallax-section__overlay"></div>
+      <div class="parallax-section__content reveal">
+        <h2 data-i18n="chi.parallax.quote">"Ogni spazio merita di essere trasformato in un'esperienza"</h2>
+      </div>
+    </section>
+
+    <!-- Values section -->
     <section class="section section--cream">
       <div class="container">
         <div class="section__header reveal">
@@ -80,26 +96,40 @@
           <h2 data-i18n="chi.values.title">Principi che guidano ogni progetto</h2>
           <div class="gold-line"></div>
         </div>
-        <div class="features-grid">
-          <div class="feature-card reveal">
-            <div class="feature-card__icon" aria-hidden="true">&#9733;</div>
-            <h3 class="feature-card__title" data-i18n="chi.val.1.title">Eccellenza senza compromessi</h3>
-            <p class="feature-card__text" data-i18n="chi.val.1.text">Selezioniamo i migliori materiali, i migliori artigiani, le migliori soluzioni. Il lusso è nella cura dei dettagli.</p>
+        <div class="values-grid">
+          <div class="value-card reveal">
+            <div class="value-card__number">01</div>
+            <h3 class="value-card__title" data-i18n="chi.val.1.title">Eccellenza senza compromessi</h3>
+            <p class="value-card__text" data-i18n="chi.val.1.text">Selezioniamo i migliori materiali, i migliori artigiani, le migliori soluzioni. Il lusso è nella cura dei dettagli.</p>
           </div>
-          <div class="feature-card reveal reveal--delay-1">
-            <div class="feature-card__icon" aria-hidden="true">&#9678;</div>
-            <h3 class="feature-card__title" data-i18n="chi.val.2.title">Trasparenza totale</h3>
-            <p class="feature-card__text" data-i18n="chi.val.2.text">Budget definito, timeline chiara, comunicazione costante. Nessuna sorpresa, solo risultati.</p>
+          <div class="value-card reveal reveal--delay-1">
+            <div class="value-card__number">02</div>
+            <h3 class="value-card__title" data-i18n="chi.val.2.title">Trasparenza totale</h3>
+            <p class="value-card__text" data-i18n="chi.val.2.text">Budget definito, timeline chiara, comunicazione costante. Nessuna sorpresa, solo risultati.</p>
           </div>
-          <div class="feature-card reveal reveal--delay-2">
-            <div class="feature-card__icon" aria-hidden="true">&#9670;</div>
-            <h3 class="feature-card__title" data-i18n="chi.val.3.title">Responsabilità unica</h3>
-            <p class="feature-card__text" data-i18n="chi.val.3.text">Un solo referente per tutto il progetto. Zero rimpalli, zero alibi. Se qualcosa non va, lo risolviamo noi.</p>
+          <div class="value-card reveal reveal--delay-2">
+            <div class="value-card__number">03</div>
+            <h3 class="value-card__title" data-i18n="chi.val.3.title">Responsabilità unica</h3>
+            <p class="value-card__text" data-i18n="chi.val.3.text">Un solo referente per tutto il progetto. Zero rimpalli, zero alibi. Se qualcosa non va, lo risolviamo noi.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Image + text split -->
+    <section class="img-text-split">
+      <div class="img-text-split__image">
+        <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=960&q=80" alt="Dettaglio arredamento di lusso" loading="lazy" width="960" height="640">
+      </div>
+      <div class="img-text-split__content">
+        <span class="section__label" data-i18n="chi.approach.label">Il nostro approccio</span>
+        <h2 data-i18n="chi.approach.title">Un unico referente, risultati impeccabili</h2>
+        <p data-i18n="chi.approach.text">La nostra forza è la direzione unica: un solo referente che coordina architetti, artigiani, impiantisti e fornitori. Questo significa zero problemi di comunicazione, tempi certi e risultati perfetti.</p>
+        <a href="contatti.html" class="btn btn--gold" data-i18n="hero.cta1">Richiedi consulenza</a>
+      </div>
+    </section>
+
+    <!-- CTA -->
     <section class="section section--gold">
       <div class="container cta-section cta-section--gold reveal">
         <span class="section__label">&#9670;</span>
@@ -164,26 +194,7 @@
     </div>
   </div>
 
-  <button class="chatbot-fab" aria-label="Apri chat" title="Chat">&#128172;</button>
-  <div class="chatbot-modal" role="dialog" aria-label="Chat Impronta Arredi">
-    <div class="chatbot-modal__header">
-      <h4 data-i18n="chat.title">Impronta Arredi</h4>
-      <p data-i18n="chat.subtitle">Come possiamo aiutarti?</p>
-    </div>
-    <div class="chatbot-modal__lang">
-      <button data-chat-lang="it" class="active">Italiano</button>
-      <button data-chat-lang="en">English</button>
-      <button data-chat-lang="cn">中文</button>
-    </div>
-    <div class="chatbot-modal__body">
-      <p class="chat-welcome" data-i18n="chat.welcome">Ciao! Benvenuto su Impronta Arredi. Come posso aiutarti?</p>
-    </div>
-    <div class="chatbot-modal__footer">
-      <input type="text" data-i18n="chat.placeholder" placeholder="Scrivi un messaggio...">
-      <button data-i18n="chat.send">Invia</button>
-    </div>
-  </div>
-
   <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
 </body>
 </html>
