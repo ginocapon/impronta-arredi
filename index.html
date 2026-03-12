@@ -71,6 +71,56 @@
     "sameAs": []
   }
   </script>
+
+  <!-- Schema.org FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Cosa include il servizio chiavi in mano di Impronta Arredi?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Il nostro servizio chiavi in mano include progettazione e interior design, ristrutturazione edile completa, impianti elettrici e idraulici, arredamento su misura, e tutte le certificazioni necessarie. Un unico referente coordina ogni fase del progetto."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quanto tempo richiede una ristrutturazione completa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "I tempi variano in base alla complessità del progetto. Un appartamento di medie dimensioni richiede generalmente 3-6 mesi. Durante il sopralluogo iniziale definiamo una timeline dettagliata e ci impegniamo a rispettarla grazie alla nostra gestione centralizzata."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Lavorate solo a Milano o anche in altre zone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La nostra sede è a Milano, ma lavoriamo in tutta Italia e anche all'estero. Abbiamo realizzato progetti a Roma, Firenze, Como, sulla costiera e in diverse capitali europee."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "È possibile vedere un'anteprima 3D del progetto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Assolutamente sì. Realizziamo render 3D fotorealistici che vi permetteranno di visualizzare ogni dettaglio del progetto prima dell'inizio dei lavori. Questo garantisce che il risultato finale corrisponda esattamente alle vostre aspettative."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Come funziona il preventivo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Offriamo una consulenza iniziale gratuita con sopralluogo. Dopo aver compreso le vostre esigenze, prepariamo un preventivo dettagliato e trasparente, senza costi nascosti. Il budget è unico e include tutte le lavorazioni, materiali e certificazioni."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -129,18 +179,30 @@
 
     <!-- ==================== VIDEO ==================== -->
     <section class="video-section" aria-label="Video presentazione">
-      <div class="container" style="text-align: center; padding: 4rem 1rem;">
-        <div style="position: relative; width: 100%; max-width: 852px; margin: 0 auto; aspect-ratio: 16/9;">
-          <iframe
-            src="https://www.youtube.com/embed/dM3teZ4yJe0"
-            title="arredo"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-            loading="lazy"
-          ></iframe>
+      <div class="container">
+        <div class="video-split">
+          <div class="video-split__player">
+            <div class="video-split__wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/dM3teZ4yJe0"
+                title="arredo"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+          <div class="video-split__cta reveal">
+            <div class="video-split__icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <h2 data-i18n="video.title">Le nostre migliori realizzazioni</h2>
+            <div class="gold-line gold-line--left"></div>
+            <p data-i18n="video.desc">Scopri i progetti che raccontano la nostra passione per il design d'eccellenza e la cura di ogni dettaglio.</p>
+            <a href="servizi.html" class="btn btn--outline-dark" data-i18n="video.cta">Scopri i servizi</a>
+          </div>
         </div>
       </div>
     </section>
@@ -277,11 +339,112 @@
       </div>
     </section>
 
-    <!-- ==================== TESTIMONIAL ==================== -->
-    <section class="testimonial-section">
-      <div class="container reveal">
-        <p class="testimonial__text" data-i18n="testimonial.text">"Impronta Arredi ha trasformato il nostro appartamento in un capolavoro. Un unico referente per tutto, zero stress, risultato perfetto."</p>
-        <p class="testimonial__author" data-i18n="testimonial.author">— Cliente privato, Milano</p>
+    <!-- ==================== RECENSIONI CAROUSEL ==================== -->
+    <section class="reviews-section" aria-label="Recensioni clienti">
+      <div class="container">
+        <div class="section__header reveal">
+          <span class="section__label" data-i18n="reviews.label">Recensioni</span>
+          <h2 data-i18n="reviews.title">Cosa dicono i nostri clienti</h2>
+          <div class="gold-line"></div>
+        </div>
+      </div>
+      <div class="reviews-track-wrapper">
+        <div class="reviews-track" aria-live="off">
+          <!-- 10 review cards (duplicated for infinite scroll) -->
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.1.text">"Impronta Arredi ha trasformato il nostro appartamento in un capolavoro. Un unico referente per tutto, zero stress, risultato perfetto."</p>
+            <p class="review-card__author" data-i18n="review.1.author">Marco R. — Milano</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.2.text">"Professionalità impeccabile. Hanno ristrutturato il nostro ufficio rispettando tempi e budget. Consigliatissimi."</p>
+            <p class="review-card__author" data-i18n="review.2.author">Laura B. — Roma</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.3.text">"Il progetto del nostro boutique hotel è stato gestito magistralmente. Dalla progettazione all'arredamento su misura, tutto perfetto."</p>
+            <p class="review-card__author" data-i18n="review.3.author">Giovanni T. — Firenze</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.4.text">"Cercavamo qualcuno che gestisse tutto: edilizia, impianti, arredamento. Impronta Arredi ha superato le aspettative."</p>
+            <p class="review-card__author" data-i18n="review.4.author">Francesca M. — Torino</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.5.text">"La qualità dei materiali e la cura dei dettagli sono straordinarie. La nostra villa è esattamente come l'avevamo immaginata."</p>
+            <p class="review-card__author" data-i18n="review.5.author">Alessandro P. — Como</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.6.text">"Il render 3D ci ha permesso di vedere il risultato prima ancora di iniziare. Nessuna sorpresa, solo soddisfazione."</p>
+            <p class="review-card__author" data-i18n="review.6.author">Chiara L. — Bergamo</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.7.text">"Ristrutturazione completa del nostro negozio in centro a Milano. Lavoro impeccabile, consegnato nei tempi previsti."</p>
+            <p class="review-card__author" data-i18n="review.7.author">Roberto S. — Milano</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.8.text">"Finalmente un'azienda che mantiene le promesse. Un unico interlocutore dal primo giorno alla consegna delle chiavi."</p>
+            <p class="review-card__author" data-i18n="review.8.author">Elena V. — Monza</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.9.text">"Abbiamo affidato a loro la ristrutturazione del nostro attico. Risultato spettacolare, con certificazioni impeccabili."</p>
+            <p class="review-card__author" data-i18n="review.9.author">Davide C. — Brescia</p>
+          </div>
+          <div class="review-card">
+            <div class="review-card__stars" aria-label="5 stelle">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-card__text" data-i18n="review.10.text">"Design moderno e funzionale per i nostri uffici. Il team ha capito subito le nostre esigenze e le ha realizzate alla perfezione."</p>
+            <p class="review-card__author" data-i18n="review.10.author">Paola G. — Verona</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="section section--cream" id="faq" aria-label="Domande frequenti">
+      <div class="container">
+        <div class="section__header reveal">
+          <span class="section__label" data-i18n="faq.label">FAQ</span>
+          <h2 data-i18n="faq.title">Domande frequenti</h2>
+          <div class="gold-line"></div>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item reveal">
+            <summary class="faq-item__question" data-i18n="faq.1.q">Cosa include il servizio chiavi in mano?</summary>
+            <div class="faq-item__answer">
+              <p data-i18n="faq.1.a">Il nostro servizio chiavi in mano include progettazione e interior design, ristrutturazione edile completa, impianti elettrici e idraulici, arredamento su misura, e tutte le certificazioni necessarie. Un unico referente coordina ogni fase del progetto.</p>
+            </div>
+          </details>
+          <details class="faq-item reveal reveal--delay-1">
+            <summary class="faq-item__question" data-i18n="faq.2.q">Quanto tempo richiede una ristrutturazione completa?</summary>
+            <div class="faq-item__answer">
+              <p data-i18n="faq.2.a">I tempi variano in base alla complessità del progetto. Un appartamento di medie dimensioni richiede generalmente 3-6 mesi. Durante il sopralluogo iniziale definiamo una timeline dettagliata e ci impegniamo a rispettarla grazie alla nostra gestione centralizzata.</p>
+            </div>
+          </details>
+          <details class="faq-item reveal reveal--delay-2">
+            <summary class="faq-item__question" data-i18n="faq.3.q">Lavorate solo a Milano o anche in altre zone?</summary>
+            <div class="faq-item__answer">
+              <p data-i18n="faq.3.a">La nostra sede è a Milano, ma lavoriamo in tutta Italia e anche all'estero. Abbiamo realizzato progetti a Roma, Firenze, Como, sulla costiera e in diverse capitali europee. Contattateci per verificare la disponibilità nella vostra zona.</p>
+            </div>
+          </details>
+          <details class="faq-item reveal reveal--delay-1">
+            <summary class="faq-item__question" data-i18n="faq.4.q">È possibile vedere un'anteprima 3D del progetto?</summary>
+            <div class="faq-item__answer">
+              <p data-i18n="faq.4.a">Assolutamente sì. Realizziamo render 3D fotorealistici che vi permetteranno di visualizzare ogni dettaglio del progetto prima dell'inizio dei lavori. Questo garantisce che il risultato finale corrisponda esattamente alle vostre aspettative.</p>
+            </div>
+          </details>
+          <details class="faq-item reveal reveal--delay-2">
+            <summary class="faq-item__question" data-i18n="faq.5.q">Come funziona il preventivo?</summary>
+            <div class="faq-item__answer">
+              <p data-i18n="faq.5.a">Offriamo una consulenza iniziale gratuita con sopralluogo. Dopo aver compreso le vostre esigenze, prepariamo un preventivo dettagliato e trasparente, senza costi nascosti. Il budget è unico e include tutte le lavorazioni, materiali e certificazioni.</p>
+            </div>
+          </details>
+        </div>
       </div>
     </section>
 

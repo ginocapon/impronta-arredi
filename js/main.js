@@ -85,6 +85,46 @@
       'cookie.more': 'Scopri di più',
       'cookie.accept': 'Accetta',
       'cookie.reject': 'Rifiuta',
+      // Video
+      'video.title': 'Le nostre migliori realizzazioni',
+      'video.desc': 'Scopri i progetti che raccontano la nostra passione per il design d\'eccellenza e la cura di ogni dettaglio.',
+      'video.cta': 'Scopri i servizi',
+      // Reviews
+      'reviews.label': 'Recensioni',
+      'reviews.title': 'Cosa dicono i nostri clienti',
+      'review.1.text': '"Impronta Arredi ha trasformato il nostro appartamento in un capolavoro. Un unico referente per tutto, zero stress, risultato perfetto."',
+      'review.1.author': 'Marco R. — Milano',
+      'review.2.text': '"Professionalità impeccabile. Hanno ristrutturato il nostro ufficio rispettando tempi e budget. Consigliatissimi."',
+      'review.2.author': 'Laura B. — Roma',
+      'review.3.text': '"Il progetto del nostro boutique hotel è stato gestito magistralmente. Dalla progettazione all\'arredamento su misura, tutto perfetto."',
+      'review.3.author': 'Giovanni T. — Firenze',
+      'review.4.text': '"Cercavamo qualcuno che gestisse tutto: edilizia, impianti, arredamento. Impronta Arredi ha superato le aspettative."',
+      'review.4.author': 'Francesca M. — Torino',
+      'review.5.text': '"La qualità dei materiali e la cura dei dettagli sono straordinarie. La nostra villa è esattamente come l\'avevamo immaginata."',
+      'review.5.author': 'Alessandro P. — Como',
+      'review.6.text': '"Il render 3D ci ha permesso di vedere il risultato prima ancora di iniziare. Nessuna sorpresa, solo soddisfazione."',
+      'review.6.author': 'Chiara L. — Bergamo',
+      'review.7.text': '"Ristrutturazione completa del nostro negozio in centro a Milano. Lavoro impeccabile, consegnato nei tempi previsti."',
+      'review.7.author': 'Roberto S. — Milano',
+      'review.8.text': '"Finalmente un\'azienda che mantiene le promesse. Un unico interlocutore dal primo giorno alla consegna delle chiavi."',
+      'review.8.author': 'Elena V. — Monza',
+      'review.9.text': '"Abbiamo affidato a loro la ristrutturazione del nostro attico. Risultato spettacolare, con certificazioni impeccabili."',
+      'review.9.author': 'Davide C. — Brescia',
+      'review.10.text': '"Design moderno e funzionale per i nostri uffici. Il team ha capito subito le nostre esigenze e le ha realizzate alla perfezione."',
+      'review.10.author': 'Paola G. — Verona',
+      // FAQ
+      'faq.label': 'FAQ',
+      'faq.title': 'Domande frequenti',
+      'faq.1.q': 'Cosa include il servizio chiavi in mano?',
+      'faq.1.a': 'Il nostro servizio chiavi in mano include progettazione e interior design, ristrutturazione edile completa, impianti elettrici e idraulici, arredamento su misura, e tutte le certificazioni necessarie. Un unico referente coordina ogni fase del progetto.',
+      'faq.2.q': 'Quanto tempo richiede una ristrutturazione completa?',
+      'faq.2.a': 'I tempi variano in base alla complessità del progetto. Un appartamento di medie dimensioni richiede generalmente 3-6 mesi. Durante il sopralluogo iniziale definiamo una timeline dettagliata e ci impegniamo a rispettarla grazie alla nostra gestione centralizzata.',
+      'faq.3.q': 'Lavorate solo a Milano o anche in altre zone?',
+      'faq.3.a': 'La nostra sede è a Milano, ma lavoriamo in tutta Italia e anche all\'estero. Abbiamo realizzato progetti a Roma, Firenze, Como, sulla costiera e in diverse capitali europee. Contattateci per verificare la disponibilità nella vostra zona.',
+      'faq.4.q': 'È possibile vedere un\'anteprima 3D del progetto?',
+      'faq.4.a': 'Assolutamente sì. Realizziamo render 3D fotorealistici che vi permetteranno di visualizzare ogni dettaglio del progetto prima dell\'inizio dei lavori. Questo garantisce che il risultato finale corrisponda esattamente alle vostre aspettative.',
+      'faq.5.q': 'Come funziona il preventivo?',
+      'faq.5.a': 'Offriamo una consulenza iniziale gratuita con sopralluogo. Dopo aver compreso le vostre esigenze, prepariamo un preventivo dettagliato e trasparente, senza costi nascosti. Il budget è unico e include tutte le lavorazioni, materiali e certificazioni.',
       // Pages
       'page.chi-siamo.title': 'Chi Siamo',
       'page.chi-siamo.subtitle': 'Eccellenza artigianale e visione contemporanea al servizio del tuo progetto',
@@ -229,6 +269,46 @@
       'cookie.more': 'Learn more',
       'cookie.accept': 'Accept',
       'cookie.reject': 'Reject',
+      // Video
+      'video.title': 'Our finest projects',
+      'video.desc': 'Discover the projects that tell the story of our passion for design excellence and attention to every detail.',
+      'video.cta': 'Discover services',
+      // Reviews
+      'reviews.label': 'Reviews',
+      'reviews.title': 'What our clients say',
+      'review.1.text': '"Impronta Arredi transformed our apartment into a masterpiece. One single contact for everything, zero stress, perfect result."',
+      'review.1.author': 'Marco R. — Milan',
+      'review.2.text': '"Impeccable professionalism. They renovated our office on time and on budget. Highly recommended."',
+      'review.2.author': 'Laura B. — Rome',
+      'review.3.text': '"Our boutique hotel project was managed masterfully. From design to bespoke furnishing, everything was perfect."',
+      'review.3.author': 'Giovanni T. — Florence',
+      'review.4.text': '"We were looking for someone to manage everything: construction, systems, furnishing. Impronta Arredi exceeded expectations."',
+      'review.4.author': 'Francesca M. — Turin',
+      'review.5.text': '"The quality of materials and attention to detail are extraordinary. Our villa is exactly as we imagined it."',
+      'review.5.author': 'Alessandro P. — Como',
+      'review.6.text': '"The 3D render let us see the result before even starting. No surprises, only satisfaction."',
+      'review.6.author': 'Chiara L. — Bergamo',
+      'review.7.text': '"Complete renovation of our shop in central Milan. Impeccable work, delivered on time."',
+      'review.7.author': 'Roberto S. — Milan',
+      'review.8.text': '"Finally a company that keeps its promises. One single contact from day one to key handover."',
+      'review.8.author': 'Elena V. — Monza',
+      'review.9.text': '"We entrusted them with our penthouse renovation. Spectacular result, with impeccable certifications."',
+      'review.9.author': 'Davide C. — Brescia',
+      'review.10.text': '"Modern and functional design for our offices. The team immediately understood our needs and executed them perfectly."',
+      'review.10.author': 'Paola G. — Verona',
+      // FAQ
+      'faq.label': 'FAQ',
+      'faq.title': 'Frequently asked questions',
+      'faq.1.q': 'What does the turnkey service include?',
+      'faq.1.a': 'Our turnkey service includes design and interior design, complete building renovation, electrical and plumbing systems, bespoke furnishing, and all necessary certifications. A single point of contact coordinates every phase of the project.',
+      'faq.2.q': 'How long does a complete renovation take?',
+      'faq.2.a': 'Timelines vary based on project complexity. A medium-sized apartment typically requires 3-6 months. During the initial survey we define a detailed timeline and commit to meeting it thanks to our centralized management.',
+      'faq.3.q': 'Do you only work in Milan or other areas too?',
+      'faq.3.a': 'Our headquarters are in Milan, but we work throughout Italy and abroad. We have completed projects in Rome, Florence, Como, the coast, and several European capitals. Contact us to check availability in your area.',
+      'faq.4.q': 'Is it possible to see a 3D preview of the project?',
+      'faq.4.a': 'Absolutely. We create photorealistic 3D renders that allow you to visualize every detail of the project before work begins. This ensures the final result matches your expectations exactly.',
+      'faq.5.q': 'How does the quotation process work?',
+      'faq.5.a': 'We offer a free initial consultation with a site survey. After understanding your needs, we prepare a detailed and transparent quote with no hidden costs. The budget is all-inclusive, covering all work, materials, and certifications.',
       'page.chi-siamo.title': 'About Us',
       'page.chi-siamo.subtitle': 'Artisan excellence and contemporary vision at the service of your project',
       'page.servizi.title': 'Our Services',
@@ -366,6 +446,46 @@
       'cookie.more': '了解更多',
       'cookie.accept': '接受',
       'cookie.reject': '拒绝',
+      // Video
+      'video.title': '我们最好的作品',
+      'video.desc': '了解展现我们对卓越设计热情和对每个细节关注的项目。',
+      'video.cta': '了解服务',
+      // Reviews
+      'reviews.label': '客户评价',
+      'reviews.title': '客户怎么说',
+      'review.1.text': '"Impronta Arredi将我们的公寓变成了杰作。一个联系人负责一切，零压力，完美结果。"',
+      'review.1.author': 'Marco R. — 米兰',
+      'review.2.text': '"无可挑剔的专业素质。他们按时按预算完成了我们办公室的翻新。强烈推荐。"',
+      'review.2.author': 'Laura B. — 罗马',
+      'review.3.text': '"我们精品酒店项目管理得非常出色。从设计到定制家具，一切都很完美。"',
+      'review.3.author': 'Giovanni T. — 佛罗伦萨',
+      'review.4.text': '"我们在寻找能管理一切的人：建筑、系统、家具。Impronta Arredi超出了预期。"',
+      'review.4.author': 'Francesca M. — 都灵',
+      'review.5.text': '"材料质量和对细节的关注非常出色。我们的别墅完全如我们所想象的那样。"',
+      'review.5.author': 'Alessandro P. — 科莫',
+      'review.6.text': '"3D渲染让我们在开工前就看到了最终效果。没有意外，只有满意。"',
+      'review.6.author': 'Chiara L. — 贝加莫',
+      'review.7.text': '"在米兰市中心完成了我们商店的全面翻新。工作无可挑剔，按时交付。"',
+      'review.7.author': 'Roberto S. — 米兰',
+      'review.8.text': '"终于找到一家信守承诺的公司。从第一天到交钥匙只有一个联系人。"',
+      'review.8.author': 'Elena V. — 蒙扎',
+      'review.9.text': '"我们将阁楼翻新交给了他们。效果惊人，认证无可挑剔。"',
+      'review.9.author': 'Davide C. — 布雷西亚',
+      'review.10.text': '"为我们的办公室提供了现代且实用的设计。团队立即理解了我们的需求并完美实现。"',
+      'review.10.author': 'Paola G. — 维罗纳',
+      // FAQ
+      'faq.label': '常见问题',
+      'faq.title': '常见问题解答',
+      'faq.1.q': '交钥匙服务包括什么？',
+      'faq.1.a': '我们的交钥匙服务包括设计和室内设计、完整的建筑翻新、电气和管道系统、定制家具以及所有必要的认证。一个联系人协调项目的每个阶段。',
+      'faq.2.q': '完整翻新需要多长时间？',
+      'faq.2.a': '时间因项目复杂性而异。中等大小的公寓通常需要3-6个月。在初次勘察期间，我们会制定详细的时间表，并凭借集中管理确保按时完成。',
+      'faq.3.q': '你们只在米兰工作还是也在其他地区？',
+      'faq.3.a': '我们的总部在米兰，但我们在意大利全境和海外都有业务。我们在罗马、佛罗伦萨、科莫、海岸线和多个欧洲首都都完成了项目。请联系我们确认您所在地区的可用性。',
+      'faq.4.q': '是否可以看到项目的3D预览？',
+      'faq.4.a': '当然可以。我们制作逼真的3D渲染图，让您在施工前就能看到项目的每个细节。这确保最终结果完全符合您的期望。',
+      'faq.5.q': '报价流程是怎样的？',
+      'faq.5.a': '我们提供免费的初步咨询和现场勘察。了解您的需求后，我们会准备详细透明的报价，没有隐藏费用。预算是全包的，涵盖所有工程、材料和认证。',
       'page.chi-siamo.title': '关于我们',
       'page.chi-siamo.subtitle': '工匠卓越和当代视野，为您的项目服务',
       'page.servizi.title': '我们的服务',
@@ -631,7 +751,19 @@
   });
 
   /* =================================================================
-     9. EXPOSE setLang globally
+     9. REVIEWS CAROUSEL (infinite scroll via duplication)
+     ================================================================= */
+  var reviewsTrack = document.querySelector('.reviews-track');
+  if (reviewsTrack) {
+    var cards = reviewsTrack.querySelectorAll('.review-card');
+    cards.forEach(function (card) {
+      var clone = card.cloneNode(true);
+      reviewsTrack.appendChild(clone);
+    });
+  }
+
+  /* =================================================================
+     10. EXPOSE setLang globally
      ================================================================= */
   window.improntaSetLang = setLang;
   window.improntaGetLang = function () { return currentLang; };
