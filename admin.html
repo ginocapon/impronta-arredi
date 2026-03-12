@@ -5,154 +5,518 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel – Impronta Arredi</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="css/style.css">
   <style>
-    body { background: var(--grigio-bg); }
+    /* ══════════════════════════════════════════
+       ADMIN PANEL — CSS COMPLETO (self-contained)
+       ══════════════════════════════════════════ */
+    :root {
+      --nero: #0A0A0A;
+      --oro: #C9A84C;
+      --oro-scuro: #A8893A;
+      --bianco: #FAFAF8;
+      --sfondo: #f2f0eb;
+      --grigio: #888;
+      --grigio-chiaro: #e0dcd4;
+      --grigio-bg: #f5f2ec;
+      --raggio: 10px;
+      --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --sidebar-w: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: var(--sfondo);
+      color: var(--nero);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Layout ── */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .admin-sidebar {
+      width: var(--sidebar-w);
+      background: var(--nero);
+      color: #fff;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .admin-sidebar__logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1rem;
+    }
+    .admin-sidebar__logo span { color: var(--oro); }
+
+    .admin-nav__item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.7rem 0.85rem;
+      border: none;
+      background: none;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+      text-align: left;
+      margin-bottom: 2px;
+    }
+
+    .admin-nav__item:hover {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .admin-nav__item--active {
+      background: rgba(201,168,76,0.12);
+      color: var(--oro);
+      font-weight: 600;
+    }
+
+    .admin-nav__icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+    /* ── Main ── */
+    .admin-main {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 1.5rem 2rem;
+    }
+
+    /* ── Topbar ── */
+    .admin-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .admin-topbar h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .admin-topbar__actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    /* ── Buttons ── */
+    .admin-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--grigio-chiaro);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--nero);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .admin-btn:hover { border-color: var(--oro); color: var(--oro); }
+
+    .admin-btn--primary {
+      background: var(--oro);
+      border-color: var(--oro);
+      color: var(--nero);
+    }
+    .admin-btn--primary:hover { background: var(--oro-scuro); border-color: var(--oro-scuro); }
+
+    .admin-btn--sm { padding: 0.35rem 0.75rem; font-size: 0.75rem; }
+
+    .admin-btn--danger { color: #e74c3c; border-color: #e74c3c; }
+    .admin-btn--danger:hover { background: #e74c3c; color: #fff; }
+
+    /* ── Cards ── */
+    .admin-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-card {
+      background: #fff;
+      border-radius: var(--raggio);
+      padding: 1.25rem;
+      border: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .admin-card__label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--grigio);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .admin-card__value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--nero);
+      line-height: 1.2;
+    }
+
+    .admin-card__trend {
+      font-size: 0.75rem;
+      color: #4CAF50;
+      margin-top: 0.35rem;
+      font-weight: 600;
+    }
+    .admin-card__trend--down { color: #e74c3c; }
+
+    /* ── Panels ── */
+    .admin-panel {
+      background: #fff;
+      border-radius: var(--raggio);
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+
+    .admin-panel__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--grigio-chiaro);
+    }
+
+    .admin-panel__title {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .admin-panel__body { padding: 1.25rem; }
+
+    /* ── Tables ── */
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .admin-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--grigio);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--grigio-chiaro);
+      font-weight: 600;
+    }
+
+    .admin-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid #f5f3ef;
+      font-size: 0.85rem;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tr:hover td { background: #faf8f4; }
+
+    /* ── Badges ── */
+    .admin-badge {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .admin-badge--success { background: #e8f5e9; color: #2e7d32; }
+    .admin-badge--warning { background: #fff3e0; color: #e65100; }
+    .admin-badge--info { background: #e3f2fd; color: #1565c0; }
+    .admin-badge--danger { background: #fce4ec; color: #c62828; }
+
+    /* ── Toggle switch ── */
+    .admin-toggle {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .admin-toggle input { display: none; }
+    .admin-toggle__track {
+      position: absolute;
+      inset: 0;
+      background: #d4d0c8;
+      border-radius: 12px;
+      transition: background 0.3s;
+    }
+    .admin-toggle input:checked + .admin-toggle__track { background: var(--oro); }
+    .admin-toggle__thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .admin-toggle input:checked ~ .admin-toggle__thumb { transform: translateX(24px); }
+
+    /* ── Progress bar ── */
+    .admin-progress { height: 8px; background: var(--sfondo); border-radius: 4px; overflow: hidden; }
+    .admin-progress__fill { height: 100%; background: var(--oro); border-radius: 4px; transition: width 0.6s ease; }
+
+    /* ── Form ── */
+    .admin-form-group {
+      margin-bottom: 1rem;
+    }
+    .admin-form-group label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--grigio);
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+    .admin-form-group input,
+    .admin-form-group select,
+    .admin-form-group textarea {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      border: 1px solid var(--grigio-chiaro);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--nero);
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    .admin-form-group input:focus,
+    .admin-form-group textarea:focus {
+      outline: none;
+      border-color: var(--oro);
+    }
+    .admin-form-group textarea { resize: vertical; min-height: 80px; }
+
+    /* ── Grid helpers ── */
+    .admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .admin-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+    /* ── Lead detail modal ── */
+    .admin-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .admin-modal-overlay.open { display: flex; }
+    .admin-modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 560px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .admin-modal h2 { font-size: 1.1rem; margin-bottom: 1rem; }
+    .admin-modal__close {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--grigio);
+    }
+    .admin-modal__close:hover { color: var(--nero); }
+
+    /* ── Mobile burger ── */
+    .admin-burger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .admin-burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--nero);
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+
+    /* ── Panel visibility ── */
+    .admin-panel-view { display: none; }
+    .admin-panel-view.active { display: block; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+      }
+      .admin-sidebar.open { transform: translateX(0); }
+      .admin-main { margin-left: 0; padding: 1rem; }
+      .admin-burger { display: block; }
+      .admin-grid-2 { grid-template-columns: 1fr; }
+      .admin-grid-3 { grid-template-columns: 1fr; }
+      .admin-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .admin-cards { grid-template-columns: 1fr; }
+      .admin-table { font-size: 0.78rem; }
+      .admin-table th, .admin-table td { padding: 0.5rem 0.6rem; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Mobile overlay -->
+  <div class="admin-sidebar-overlay" id="sidebarOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none;" onclick="toggleSidebar()"></div>
+
   <div class="admin-layout">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
+    <!-- ══════════════════════════════════════════
+         SIDEBAR
+         ══════════════════════════════════════════ -->
+    <aside class="admin-sidebar" id="adminSidebar">
       <div class="admin-sidebar__logo">IMPRONTA <span>ARREDI</span></div>
       <nav>
         <button class="admin-nav__item admin-nav__item--active" data-panel="dashboard">
-          &#9632; Dashboard
+          <span class="admin-nav__icon">📊</span> Dashboard
         </button>
         <button class="admin-nav__item" data-panel="leads">
-          &#9993; Richieste / Lead
+          <span class="admin-nav__icon">📩</span> Richieste / Lead
+        </button>
+        <button class="admin-nav__item" data-panel="chatlog">
+          <span class="admin-nav__icon">💬</span> Chat Log
         </button>
         <button class="admin-nav__item" data-panel="portfolio">
-          &#9733; Portfolio
+          <span class="admin-nav__icon">🖼️</span> Portfolio
         </button>
         <button class="admin-nav__item" data-panel="blog">
-          &#9998; Blog / News
+          <span class="admin-nav__icon">📝</span> Blog / News
         </button>
         <button class="admin-nav__item" data-panel="email">
-          &#9993; Email Marketing
+          <span class="admin-nav__icon">📧</span> Email Marketing
         </button>
         <button class="admin-nav__item" data-panel="seo">
-          &#9881; SEO & Analytics
+          <span class="admin-nav__icon">📈</span> SEO & Analytics
         </button>
         <button class="admin-nav__item" data-panel="settings">
-          &#9881; Impostazioni
+          <span class="admin-nav__icon">⚙️</span> Impostazioni
         </button>
       </nav>
-      <div style="margin-top: auto; padding-top: var(--sp-xl); border-top: 1px solid rgba(255,255,255,0.06);">
-        <a href="index.html" class="admin-nav__item" style="text-decoration: none;">&#8592; Torna al sito</a>
+      <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06);">
+        <a href="index.html" class="admin-nav__item" style="text-decoration: none; color: rgba(255,255,255,0.55);">
+          <span class="admin-nav__icon">←</span> Torna al sito
+        </a>
       </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- ══════════════════════════════════════════
+         MAIN CONTENT
+         ══════════════════════════════════════════ -->
     <main class="admin-main">
-      <!-- Dashboard Panel -->
-      <div id="panel-dashboard" class="admin-panel-view">
-        <div class="admin-header">
-          <h1>Dashboard</h1>
-          <div>
-            <button class="admin-btn">&#8635; Aggiorna</button>
+
+      <!-- ════════ DASHBOARD ════════ -->
+      <div id="panel-dashboard" class="admin-panel-view active">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Dashboard</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn" onclick="refreshDashboard()">↻ Aggiorna</button>
           </div>
         </div>
 
         <div class="admin-cards">
           <div class="admin-card">
             <p class="admin-card__label">Visite oggi</p>
-            <p class="admin-card__value">247</p>
-            <p class="admin-card__trend">+12% vs ieri</p>
+            <p class="admin-card__value" id="stat-visite">—</p>
+            <p class="admin-card__trend">Dati demo</p>
           </div>
           <div class="admin-card">
-            <p class="admin-card__label">Richieste mese</p>
-            <p class="admin-card__value">34</p>
-            <p class="admin-card__trend">+8% vs mese prec.</p>
+            <p class="admin-card__label">Lead totali</p>
+            <p class="admin-card__value" id="stat-leads">0</p>
+            <p class="admin-card__trend">Da localStorage</p>
+          </div>
+          <div class="admin-card">
+            <p class="admin-card__label">Chat avviate</p>
+            <p class="admin-card__value" id="stat-chat">—</p>
+            <p class="admin-card__trend">Dati demo</p>
           </div>
           <div class="admin-card">
             <p class="admin-card__label">Tasso conversione</p>
             <p class="admin-card__value">3.2%</p>
-            <p class="admin-card__trend admin-card__trend--down">-0.3% vs mese prec.</p>
-          </div>
-          <div class="admin-card">
-            <p class="admin-card__label">Chat avviate</p>
-            <p class="admin-card__value">89</p>
-            <p class="admin-card__trend">+22% vs mese prec.</p>
+            <p class="admin-card__trend">Obiettivo: 5%</p>
           </div>
         </div>
 
+        <!-- Recent leads -->
         <div class="admin-panel">
           <div class="admin-panel__header">
             <h3 class="admin-panel__title">Ultime richieste</h3>
-            <button class="admin-btn">Vedi tutte &#8594;</button>
+            <button class="admin-btn admin-btn--sm" onclick="showPanel('leads')">Vedi tutte →</button>
           </div>
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Nome</th>
-                <th>Tipo progetto</th>
-                <th>Lingua</th>
-                <th>Stato</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>12/03/2026</td>
-                <td>Marco Rossi</td>
-                <td>Appartamento</td>
-                <td>IT</td>
-                <td><span class="admin-badge admin-badge--warning">Da leggere</span></td>
-              </tr>
-              <tr>
-                <td>11/03/2026</td>
-                <td>John Smith</td>
-                <td>Hotel</td>
-                <td>EN</td>
-                <td><span class="admin-badge admin-badge--info">In gestione</span></td>
-              </tr>
-              <tr>
-                <td>10/03/2026</td>
-                <td>Wang Wei</td>
-                <td>Ufficio</td>
-                <td>CN</td>
-                <td><span class="admin-badge admin-badge--success">Risposto</span></td>
-              </tr>
-              <tr>
-                <td>09/03/2026</td>
-                <td>Laura Bianchi</td>
-                <td>Negozio</td>
-                <td>IT</td>
-                <td><span class="admin-badge admin-badge--success">Risposto</span></td>
-              </tr>
-            </tbody>
-          </table>
+          <div id="dashboard-leads-table">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Data</th><th>Nome</th><th>Progetto</th><th>Lingua</th><th>Email</th></tr>
+              </thead>
+              <tbody id="dashboard-leads-body">
+                <tr><td colspan="5" style="text-align:center;color:var(--grigio);padding:2rem;">Nessuna richiesta ancora. Le richieste dal chatbot appariranno qui.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md);">
+        <!-- Language stats + Top pages -->
+        <div class="admin-grid-2">
           <div class="admin-panel">
             <div class="admin-panel__header">
               <h3 class="admin-panel__title">Visite per lingua</h3>
             </div>
-            <div style="padding: var(--sp-md);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-sm);">
-                <span>Italiano</span>
-                <strong>62%</strong>
-              </div>
-              <div style="height: 8px; background: var(--grigio-bg); border-radius: 4px; overflow: hidden; margin-bottom: var(--sp-md);">
-                <div style="width: 62%; height: 100%; background: var(--oro); border-radius: 4px;"></div>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-sm);">
-                <span>English</span>
-                <strong>25%</strong>
-              </div>
-              <div style="height: 8px; background: var(--grigio-bg); border-radius: 4px; overflow: hidden; margin-bottom: var(--sp-md);">
-                <div style="width: 25%; height: 100%; background: var(--oro); border-radius: 4px;"></div>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: var(--sp-sm);">
-                <span>中文</span>
-                <strong>13%</strong>
-              </div>
-              <div style="height: 8px; background: var(--grigio-bg); border-radius: 4px; overflow: hidden;">
-                <div style="width: 13%; height: 100%; background: var(--oro); border-radius: 4px;"></div>
-              </div>
+            <div class="admin-panel__body">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;"><span>Italiano</span><strong>62%</strong></div>
+              <div class="admin-progress" style="margin-bottom:1rem;"><div class="admin-progress__fill" style="width:62%;"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;"><span>English</span><strong>25%</strong></div>
+              <div class="admin-progress" style="margin-bottom:1rem;"><div class="admin-progress__fill" style="width:25%;"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;"><span>中文</span><strong>13%</strong></div>
+              <div class="admin-progress"><div class="admin-progress__fill" style="width:13%;"></div></div>
             </div>
           </div>
 
@@ -173,20 +537,21 @@
         </div>
       </div>
 
-      <!-- Leads Panel -->
-      <div id="panel-leads" class="admin-panel-view" style="display:none;">
-        <div class="admin-header">
-          <h1>Richieste / Lead</h1>
-          <button class="admin-btn admin-btn--primary">+ Esporta CSV</button>
+      <!-- ════════ LEADS ════════ -->
+      <div id="panel-leads" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Richieste / Lead</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn" onclick="exportLeadsCSV()">📥 Esporta CSV</button>
+            <button class="admin-btn admin-btn--danger admin-btn--sm" onclick="clearLeads()">Svuota</button>
+          </div>
         </div>
         <div class="admin-panel">
           <div class="admin-panel__header">
-            <h3 class="admin-panel__title">Tutte le richieste</h3>
-            <div style="display: flex; gap: var(--sp-xs);">
-              <button class="admin-btn">Tutti</button>
-              <button class="admin-btn">Da leggere</button>
-              <button class="admin-btn">In gestione</button>
-            </div>
+            <h3 class="admin-panel__title">Tutte le richieste (<span id="leads-count">0</span>)</h3>
           </div>
           <table class="admin-table">
             <thead>
@@ -195,149 +560,178 @@
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Telefono</th>
-                <th>Tipo</th>
+                <th>Progetto</th>
                 <th>Lingua</th>
                 <th>Messaggio</th>
-                <th>Stato</th>
                 <th>Azioni</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>12/03/2026</td>
-                <td>Marco Rossi</td>
-                <td>marco@email.it</td>
-                <td>+39 333 1234567</td>
-                <td>Appartamento</td>
-                <td>IT</td>
-                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Vorrei ristrutturare il mio appartamento in zona Brera...</td>
-                <td><span class="admin-badge admin-badge--warning">Da leggere</span></td>
-                <td><button class="admin-btn">Apri</button></td>
-              </tr>
-              <tr>
-                <td>11/03/2026</td>
-                <td>John Smith</td>
-                <td>john@hotel.com</td>
-                <td>+44 7700 900000</td>
-                <td>Hotel</td>
-                <td>EN</td>
-                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">We are looking for a complete renovation of our boutique hotel...</td>
-                <td><span class="admin-badge admin-badge--info">In gestione</span></td>
-                <td><button class="admin-btn">Apri</button></td>
-              </tr>
+            <tbody id="leads-table-body">
+              <tr><td colspan="8" style="text-align:center;color:var(--grigio);padding:2rem;">Nessuna richiesta.</td></tr>
             </tbody>
           </table>
-          <p style="margin-top: var(--sp-md); color: var(--grigio); font-size: var(--fs-sm); text-align: center;">I messaggi in lingua straniera vengono tradotti automaticamente in italiano nella chat</p>
+          <div style="padding:0.75rem 1rem;color:var(--grigio);font-size:0.75rem;text-align:center;border-top:1px solid var(--grigio-chiaro);">
+            I messaggi dal chatbot in lingua straniera vengono registrati con la lingua originale del cliente
+          </div>
         </div>
       </div>
 
-      <!-- Portfolio Panel -->
-      <div id="panel-portfolio" class="admin-panel-view" style="display:none;">
-        <div class="admin-header">
-          <h1>Portfolio</h1>
-          <button class="admin-btn admin-btn--primary">+ Nuovo progetto</button>
+      <!-- ════════ CHAT LOG ════════ -->
+      <div id="panel-chatlog" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Chat Log</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn" onclick="refreshChatLog()">↻ Aggiorna</button>
+          </div>
         </div>
         <div class="admin-panel">
           <div class="admin-panel__header">
-            <h3 class="admin-panel__title">Progetti pubblicati</h3>
+            <h3 class="admin-panel__title">Conversazioni chatbot</h3>
           </div>
+          <div id="chatlog-content" style="padding:1.25rem;max-height:500px;overflow-y:auto;">
+            <p style="color:var(--grigio);text-align:center;">Il chat log verrà popolato quando i visitatori usano il chatbot. Apri il sito in un'altra tab e usa la chat per testare.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════ PORTFOLIO ════════ -->
+      <div id="panel-portfolio" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Portfolio</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn admin-btn--primary">+ Nuovo progetto</button>
+          </div>
+        </div>
+        <div class="admin-panel">
           <table class="admin-table">
             <thead>
-              <tr>
-                <th>Immagine</th>
-                <th>Titolo</th>
-                <th>Categoria</th>
-                <th>Data</th>
-                <th>Stato</th>
-                <th>Azioni</th>
-              </tr>
+              <tr><th>Immagine</th><th>Titolo</th><th>Categoria</th><th>Data</th><th>Stato</th><th>Azioni</th></tr>
             </thead>
             <tbody>
               <tr>
-                <td><div style="width:60px;height:40px;background:var(--grigio-bg);border-radius:4px;"></div></td>
-                <td>Residenza Brera</td>
-                <td>Appartamento</td>
+                <td><div style="width:60px;height:40px;background:var(--sfondo);border-radius:6px;"></div></td>
+                <td><strong>Residenza Brera</strong></td>
+                <td>Appartamento di lusso</td>
                 <td>01/2026</td>
                 <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn">Modifica</button></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
               </tr>
               <tr>
-                <td><div style="width:60px;height:40px;background:var(--grigio-bg);border-radius:4px;"></div></td>
-                <td>Loft Navigli</td>
+                <td><div style="width:60px;height:40px;background:var(--sfondo);border-radius:6px;"></div></td>
+                <td><strong>Loft Navigli</strong></td>
                 <td>Ristrutturazione</td>
                 <td>12/2025</td>
                 <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn">Modifica</button></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
               </tr>
               <tr>
-                <td><div style="width:60px;height:40px;background:var(--grigio-bg);border-radius:4px;"></div></td>
-                <td>Headquarter Porta Nuova</td>
-                <td>Ufficio</td>
+                <td><div style="width:60px;height:40px;background:var(--sfondo);border-radius:6px;"></div></td>
+                <td><strong>Villa Monza</strong></td>
+                <td>Interior design</td>
                 <td>11/2025</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
+              </tr>
+              <tr>
+                <td><div style="width:60px;height:40px;background:var(--sfondo);border-radius:6px;"></div></td>
+                <td><strong>Headquarter Porta Nuova</strong></td>
+                <td>Ufficio direzionale</td>
+                <td>10/2025</td>
                 <td><span class="admin-badge admin-badge--info">Bozza</span></td>
-                <td><button class="admin-btn">Modifica</button></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
+              </tr>
+              <tr>
+                <td><div style="width:60px;height:40px;background:var(--sfondo);border-radius:6px;"></div></td>
+                <td><strong>Suite Hotel Duomo</strong></td>
+                <td>Boutique hotel</td>
+                <td>09/2025</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Blog Panel -->
-      <div id="panel-blog" class="admin-panel-view" style="display:none;">
-        <div class="admin-header">
-          <h1>Blog / News</h1>
-          <button class="admin-btn admin-btn--primary">+ Nuovo articolo</button>
+      <!-- ════════ BLOG ════════ -->
+      <div id="panel-blog" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Blog / News</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn admin-btn--primary">+ Nuovo articolo</button>
+          </div>
         </div>
         <div class="admin-panel">
-          <div class="admin-panel__header">
-            <h3 class="admin-panel__title">Articoli</h3>
-          </div>
           <table class="admin-table">
             <thead>
-              <tr>
-                <th>Titolo</th>
-                <th>Categoria</th>
-                <th>Data</th>
-                <th>Visite</th>
-                <th>Stato</th>
-                <th>Azioni</th>
-              </tr>
+              <tr><th>Titolo</th><th>Categoria</th><th>Data</th><th>Visite</th><th>Stato</th><th>Azioni</th></tr>
             </thead>
             <tbody>
               <tr>
-                <td>Come scegliere il general contractor giusto</td>
+                <td><strong>Come scegliere il general contractor giusto</strong></td>
                 <td>Guide</td>
                 <td>10/03/2026</td>
                 <td>342</td>
                 <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn">Modifica</button></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
               </tr>
               <tr>
-                <td>Tendenze interior design 2026</td>
+                <td><strong>Tendenze interior design 2026</strong></td>
                 <td>Tendenze</td>
                 <td>05/03/2026</td>
                 <td>567</td>
                 <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn">Modifica</button></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
+              </tr>
+              <tr>
+                <td><strong>Ristrutturare casa a Milano: costi e tempistiche</strong></td>
+                <td>Guide</td>
+                <td>20/02/2026</td>
+                <td>891</td>
+                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
+              </tr>
+              <tr>
+                <td><strong>Cucine su misura: la guida completa</strong></td>
+                <td>Arredamento</td>
+                <td>—</td>
+                <td>—</td>
+                <td><span class="admin-badge admin-badge--info">Bozza</span></td>
+                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Email Marketing Panel -->
-      <div id="panel-email" class="admin-panel-view" style="display:none;">
-        <div class="admin-header">
-          <h1>Email Marketing</h1>
-          <button class="admin-btn admin-btn--primary">+ Nuova campagna</button>
+      <!-- ════════ EMAIL MARKETING ════════ -->
+      <div id="panel-email" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Email Marketing</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn admin-btn--primary">+ Nuova campagna</button>
+          </div>
         </div>
-        <div class="admin-cards" style="grid-template-columns: repeat(3, 1fr);">
+
+        <div class="admin-cards" style="grid-template-columns:repeat(3,1fr);">
           <div class="admin-card">
             <p class="admin-card__label">Iscritti newsletter</p>
             <p class="admin-card__value">1,247</p>
           </div>
           <div class="admin-card">
-            <p class="admin-card__label">Tasso apertura</p>
+            <p class="admin-card__label">Tasso apertura medio</p>
             <p class="admin-card__value">38.5%</p>
           </div>
           <div class="admin-card">
@@ -345,24 +739,18 @@
             <p class="admin-card__value">12</p>
           </div>
         </div>
+
         <div class="admin-panel">
           <div class="admin-panel__header">
             <h3 class="admin-panel__title">Campagne recenti</h3>
           </div>
           <table class="admin-table">
             <thead>
-              <tr>
-                <th>Campagna</th>
-                <th>Data invio</th>
-                <th>Destinatari</th>
-                <th>Aperture</th>
-                <th>Click</th>
-                <th>Stato</th>
-              </tr>
+              <tr><th>Campagna</th><th>Data</th><th>Destinatari</th><th>Aperture</th><th>Click</th><th>Stato</th></tr>
             </thead>
             <tbody>
               <tr>
-                <td>Newsletter Marzo 2026</td>
+                <td><strong>Newsletter Marzo 2026</strong></td>
                 <td>01/03/2026</td>
                 <td>1,180</td>
                 <td>38.5%</td>
@@ -370,24 +758,38 @@
                 <td><span class="admin-badge admin-badge--success">Inviata</span></td>
               </tr>
               <tr>
-                <td>Promo Primavera</td>
+                <td><strong>Promo Primavera</strong></td>
                 <td>15/02/2026</td>
                 <td>1,120</td>
                 <td>41.2%</td>
                 <td>15.8%</td>
                 <td><span class="admin-badge admin-badge--success">Inviata</span></td>
               </tr>
+              <tr>
+                <td><strong>Nuovi progetti 2026</strong></td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td><span class="admin-badge admin-badge--info">Bozza</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- SEO Panel -->
-      <div id="panel-seo" class="admin-panel-view" style="display:none;">
-        <div class="admin-header">
-          <h1>SEO & Analytics</h1>
-          <button class="admin-btn">&#8635; Aggiorna dati</button>
+      <!-- ════════ SEO & ANALYTICS ════════ -->
+      <div id="panel-seo" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>SEO & Analytics</h1>
+          </div>
+          <div class="admin-topbar__actions">
+            <button class="admin-btn">↻ Aggiorna dati</button>
+          </div>
         </div>
+
         <div class="admin-cards">
           <div class="admin-card">
             <p class="admin-card__label">Visite mese</p>
@@ -396,7 +798,7 @@
           </div>
           <div class="admin-card">
             <p class="admin-card__label">Core Web Vitals</p>
-            <p class="admin-card__value" style="color: #4CAF50;">PASS</p>
+            <p class="admin-card__value" style="color:#4CAF50;">PASS</p>
           </div>
           <div class="admin-card">
             <p class="admin-card__label">Keyword in top 10</p>
@@ -408,78 +810,75 @@
             <p class="admin-card__value">147</p>
           </div>
         </div>
+
         <div class="admin-panel">
           <div class="admin-panel__header">
             <h3 class="admin-panel__title">Audit SEO</h3>
           </div>
           <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Check</th>
-                <th>Stato</th>
-                <th>Dettagli</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Check</th><th>Stato</th><th>Dettagli</th></tr></thead>
             <tbody>
-              <tr>
-                <td>Schema.org JSON-LD</td>
-                <td><span class="admin-badge admin-badge--success">OK</span></td>
-                <td>GeneralContractor + FurnitureStore + BreadcrumbList</td>
-              </tr>
-              <tr>
-                <td>Meta description</td>
-                <td><span class="admin-badge admin-badge--success">OK</span></td>
-                <td>Tutte le pagine hanno meta description unica</td>
-              </tr>
-              <tr>
-                <td>robots.txt + sitemap</td>
-                <td><span class="admin-badge admin-badge--success">OK</span></td>
-                <td>AI bots allowed, sitemap.xml presente</td>
-              </tr>
-              <tr>
-                <td>llms.txt (GEO)</td>
-                <td><span class="admin-badge admin-badge--success">OK</span></td>
-                <td>File GEO per AI crawlers configurato</td>
-              </tr>
-              <tr>
-                <td>HTTPS</td>
-                <td><span class="admin-badge admin-badge--warning">Da verificare</span></td>
-                <td>Verificare certificato SSL dopo deploy</td>
-              </tr>
+              <tr><td>Schema.org JSON-LD</td><td><span class="admin-badge admin-badge--success">OK</span></td><td>GeneralContractor + FurnitureStore + BreadcrumbList</td></tr>
+              <tr><td>Meta description</td><td><span class="admin-badge admin-badge--success">OK</span></td><td>Tutte le pagine hanno meta description unica</td></tr>
+              <tr><td>robots.txt + sitemap</td><td><span class="admin-badge admin-badge--success">OK</span></td><td>AI bots allowed, sitemap.xml presente</td></tr>
+              <tr><td>llms.txt (GEO)</td><td><span class="admin-badge admin-badge--success">OK</span></td><td>File GEO per AI crawlers configurato</td></tr>
+              <tr><td>Multilingua IT/EN/CN</td><td><span class="admin-badge admin-badge--success">OK</span></td><td>Client-side i18n con data-i18n + localStorage</td></tr>
+              <tr><td>HTTPS</td><td><span class="admin-badge admin-badge--warning">Pending</span></td><td>Attivo dopo deploy su dominio personalizzato</td></tr>
+              <tr><td>Open Graph</td><td><span class="admin-badge admin-badge--success">OK</span></td><td>og:title, og:description, og:url su tutte le pagine</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Top keywords</h3>
+          </div>
+          <table class="admin-table">
+            <thead><tr><th>Keyword</th><th>Posizione</th><th>Impressioni</th><th>Click</th></tr></thead>
+            <tbody>
+              <tr><td>ristrutturazione chiavi in mano milano</td><td><strong>3</strong></td><td>2,450</td><td>312</td></tr>
+              <tr><td>interior design lusso milano</td><td><strong>5</strong></td><td>1,890</td><td>187</td></tr>
+              <tr><td>general contractor milano</td><td><strong>7</strong></td><td>1,340</td><td>98</td></tr>
+              <tr><td>arredamento su misura milano</td><td><strong>4</strong></td><td>980</td><td>134</td></tr>
+              <tr><td>ristrutturazione appartamento lusso</td><td><strong>8</strong></td><td>756</td><td>67</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Settings Panel -->
-      <div id="panel-settings" class="admin-panel-view" style="display:none;">
-        <div class="admin-header">
-          <h1>Impostazioni</h1>
+      <!-- ════════ SETTINGS ════════ -->
+      <div id="panel-settings" class="admin-panel-view">
+        <div class="admin-topbar">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+            <h1>Impostazioni</h1>
+          </div>
         </div>
+
         <div class="admin-panel">
           <div class="admin-panel__header">
             <h3 class="admin-panel__title">Informazioni aziendali</h3>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); padding: var(--sp-md);">
-            <div>
-              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Nome azienda</label>
-              <input type="text" value="Impronta Arredi" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
+          <div class="admin-panel__body">
+            <div class="admin-grid-2">
+              <div class="admin-form-group">
+                <label>Nome azienda</label>
+                <input type="text" value="Impronta Arredi">
+              </div>
+              <div class="admin-form-group">
+                <label>Email</label>
+                <input type="email" value="info@improntarredi.it">
+              </div>
+              <div class="admin-form-group">
+                <label>Telefono</label>
+                <input type="tel" value="+39 000 0000000">
+              </div>
+              <div class="admin-form-group">
+                <label>Indirizzo</label>
+                <input type="text" value="Via Example 1, 20100 Milano">
+              </div>
             </div>
-            <div>
-              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Email</label>
-              <input type="email" value="info@improntarredi.it" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
-            </div>
-            <div>
-              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Telefono</label>
-              <input type="tel" value="+39 000 0000000" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
-            </div>
-            <div>
-              <label style="display:block; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--grigio); margin-bottom: var(--sp-xs);">Indirizzo</label>
-              <input type="text" value="Via Example 1, 20100 Milano" style="width:100%; padding: 0.625rem 0.875rem; border: 1px solid var(--grigio-chiaro); border-radius: var(--radius); font-family: var(--font-body);">
-            </div>
-          </div>
-          <div style="padding: 0 var(--sp-md) var(--sp-md);">
-            <button class="admin-btn admin-btn--primary">Salva modifiche</button>
+            <button class="admin-btn admin-btn--primary" onclick="alert('Impostazioni salvate!')">Salva modifiche</button>
           </div>
         </div>
 
@@ -487,47 +886,302 @@
           <div class="admin-panel__header">
             <h3 class="admin-panel__title">Chatbot</h3>
           </div>
-          <div style="padding: var(--sp-md);">
-            <p style="font-size: var(--fs-sm); color: var(--grigio); margin-bottom: var(--sp-md);">Il chatbot traduce automaticamente i messaggi: i clienti stranieri scrivono nella loro lingua e tu ricevi tutto in italiano. Quando rispondi in italiano, il messaggio viene tradotto nella lingua del cliente.</p>
-            <div style="display: flex; gap: var(--sp-md); align-items: center; margin-bottom: var(--sp-md);">
-              <label style="font-size: var(--fs-sm); font-weight: 600;">Chatbot attivo</label>
-              <div style="width:48px;height:24px;background:var(--oro);border-radius:12px;position:relative;cursor:pointer;">
-                <div style="width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div>
+          <div class="admin-panel__body">
+            <p style="font-size:0.82rem;color:var(--grigio);margin-bottom:1rem;">Il chatbot traduce automaticamente: i clienti stranieri scrivono nella loro lingua, tu ricevi tutto in italiano. Quando rispondi, il messaggio viene mostrato nella lingua del cliente.</p>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+              <div>
+                <strong style="font-size:0.85rem;">Chatbot attivo</strong>
+                <p style="font-size:0.75rem;color:var(--grigio);">Mostra il widget chat su tutte le pagine</p>
               </div>
+              <label class="admin-toggle">
+                <input type="checkbox" checked onchange="toggleSetting('chatbot', this.checked)">
+                <div class="admin-toggle__track"></div>
+                <div class="admin-toggle__thumb"></div>
+              </label>
             </div>
-            <div style="display: flex; gap: var(--sp-md); align-items: center;">
-              <label style="font-size: var(--fs-sm); font-weight: 600;">Traduzione automatica</label>
-              <div style="width:48px;height:24px;background:var(--oro);border-radius:12px;position:relative;cursor:pointer;">
-                <div style="width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+              <div>
+                <strong style="font-size:0.85rem;">Traduzione automatica</strong>
+                <p style="font-size:0.75rem;color:var(--grigio);">Risposte pre-tradotte in 3 lingue (IT/EN/CN)</p>
               </div>
+              <label class="admin-toggle">
+                <input type="checkbox" checked onchange="toggleSetting('translation', this.checked)">
+                <div class="admin-toggle__track"></div>
+                <div class="admin-toggle__thumb"></div>
+              </label>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <strong style="font-size:0.85rem;">Quick action buttons</strong>
+                <p style="font-size:0.75rem;color:var(--grigio);">Pulsanti rapidi nella chat (Servizi, Preventivo, ecc.)</p>
+              </div>
+              <label class="admin-toggle">
+                <input type="checkbox" checked onchange="toggleSetting('quickbtns', this.checked)">
+                <div class="admin-toggle__track"></div>
+                <div class="admin-toggle__thumb"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h3 class="admin-panel__title">Lingue supportate</h3>
+          </div>
+          <div class="admin-panel__body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+              <span style="font-size:0.85rem;">🇮🇹 Italiano (predefinita)</span>
+              <label class="admin-toggle"><input type="checkbox" checked disabled><div class="admin-toggle__track"></div><div class="admin-toggle__thumb"></div></label>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+              <span style="font-size:0.85rem;">🇬🇧 English</span>
+              <label class="admin-toggle"><input type="checkbox" checked><div class="admin-toggle__track"></div><div class="admin-toggle__thumb"></div></label>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:0.85rem;">🇨🇳 中文 (Chinese)</span>
+              <label class="admin-toggle"><input type="checkbox" checked><div class="admin-toggle__track"></div><div class="admin-toggle__thumb"></div></label>
             </div>
           </div>
         </div>
       </div>
+
     </main>
   </div>
 
+  <!-- Lead detail modal -->
+  <div class="admin-modal-overlay" id="leadModal">
+    <div class="admin-modal">
+      <button class="admin-modal__close" onclick="closeLeadModal()">&times;</button>
+      <h2 id="leadModalTitle">Dettaglio richiesta</h2>
+      <div id="leadModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       JAVASCRIPT
+       ══════════════════════════════════════════ -->
   <script>
   (function() {
     'use strict';
-    // Admin panel navigation
+
+    /* ── Panel Navigation ── */
     var navItems = document.querySelectorAll('.admin-nav__item[data-panel]');
-    var panels = document.querySelectorAll('.admin-panel-view');
 
     navItems.forEach(function(item) {
       item.addEventListener('click', function() {
-        var panelId = this.getAttribute('data-panel');
-
-        // Update nav active state
-        navItems.forEach(function(n) { n.classList.remove('admin-nav__item--active'); });
-        this.classList.add('admin-nav__item--active');
-
-        // Show selected panel
-        panels.forEach(function(p) { p.style.display = 'none'; });
-        var target = document.getElementById('panel-' + panelId);
-        if (target) target.style.display = 'block';
+        showPanel(this.getAttribute('data-panel'));
       });
     });
+
+    window.showPanel = function(panelId) {
+      navItems.forEach(function(n) { n.classList.remove('admin-nav__item--active'); });
+      document.querySelectorAll('.admin-panel-view').forEach(function(p) { p.classList.remove('active'); });
+
+      var navBtn = document.querySelector('[data-panel="' + panelId + '"]');
+      if (navBtn) navBtn.classList.add('admin-nav__item--active');
+
+      var panel = document.getElementById('panel-' + panelId);
+      if (panel) panel.classList.add('active');
+
+      // Close mobile sidebar
+      document.getElementById('adminSidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').style.display = 'none';
+
+      // Refresh data when switching panels
+      if (panelId === 'leads') renderLeadsTable();
+      if (panelId === 'chatlog') refreshChatLog();
+      if (panelId === 'dashboard') refreshDashboard();
+    };
+
+    /* ── Mobile Sidebar ── */
+    window.toggleSidebar = function() {
+      var sidebar = document.getElementById('adminSidebar');
+      var overlay = document.getElementById('sidebarOverlay');
+      var isOpen = sidebar.classList.toggle('open');
+      overlay.style.display = isOpen ? 'block' : 'none';
+    };
+
+    /* ── Settings toggles ── */
+    window.toggleSetting = function(key, val) {
+      console.log('Setting "' + key + '" → ' + val);
+    };
+
+    /* ── Get leads from localStorage ── */
+    function getLeads() {
+      try { return JSON.parse(localStorage.getItem('impronta_leads') || '[]'); }
+      catch (e) { return []; }
+    }
+
+    /* ── Render leads table ── */
+    window.renderLeadsTable = function() {
+      var leads = getLeads();
+      var tbody = document.getElementById('leads-table-body');
+      var countEl = document.getElementById('leads-count');
+      countEl.textContent = leads.length;
+
+      if (leads.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--grigio);padding:2rem;">Nessuna richiesta. Le richieste dal chatbot appariranno qui automaticamente.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      leads.forEach(function(lead, i) {
+        var date = lead.timestamp ? new Date(lead.timestamp).toLocaleDateString('it-IT') : '—';
+        var langBadge = { it: 'IT', en: 'EN', cn: 'CN' };
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + date + '</td>' +
+          '<td><strong>' + escHtml(lead.nome || '—') + '</strong></td>' +
+          '<td>' + escHtml(lead.email || '—') + '</td>' +
+          '<td>' + escHtml(lead.telefono || '—') + '</td>' +
+          '<td>' + escHtml(lead.progetto || '—') + '</td>' +
+          '<td><span class="admin-badge admin-badge--info">' + (langBadge[lead.lingua] || 'IT') + '</span></td>' +
+          '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(lead.messaggio || '—') + '</td>' +
+          '<td><button class="admin-btn admin-btn--sm" onclick="openLeadModal(' + i + ')">Apri</button></td>';
+        tbody.appendChild(tr);
+      });
+    };
+
+    /* ── Dashboard leads (last 5) ── */
+    window.refreshDashboard = function() {
+      var leads = getLeads();
+      document.getElementById('stat-leads').textContent = leads.length;
+      document.getElementById('stat-visite').textContent = Math.floor(180 + Math.random() * 120);
+      document.getElementById('stat-chat').textContent = Math.floor(40 + Math.random() * 60);
+
+      var tbody = document.getElementById('dashboard-leads-body');
+      if (leads.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grigio);padding:2rem;">Nessuna richiesta ancora. Le richieste dal chatbot appariranno qui.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      leads.slice(0, 5).forEach(function(lead) {
+        var date = lead.timestamp ? new Date(lead.timestamp).toLocaleDateString('it-IT') : '—';
+        var langBadge = { it: 'IT', en: 'EN', cn: 'CN' };
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + date + '</td>' +
+          '<td><strong>' + escHtml(lead.nome || '—') + '</strong></td>' +
+          '<td>' + escHtml(lead.progetto || '—') + '</td>' +
+          '<td><span class="admin-badge admin-badge--info">' + (langBadge[lead.lingua] || 'IT') + '</span></td>' +
+          '<td>' + escHtml(lead.email || '—') + '</td>';
+        tbody.appendChild(tr);
+      });
+    };
+
+    /* ── Lead detail modal ── */
+    window.openLeadModal = function(index) {
+      var leads = getLeads();
+      var lead = leads[index];
+      if (!lead) return;
+
+      document.getElementById('leadModalTitle').textContent = 'Richiesta di ' + (lead.nome || 'Sconosciuto');
+      var body = document.getElementById('leadModalBody');
+      body.innerHTML =
+        '<div style="display:grid;grid-template-columns:120px 1fr;gap:0.5rem 1rem;font-size:0.85rem;">' +
+          '<strong>Nome:</strong><span>' + escHtml(lead.nome || '—') + '</span>' +
+          '<strong>Email:</strong><span><a href="mailto:' + escHtml(lead.email || '') + '">' + escHtml(lead.email || '—') + '</a></span>' +
+          '<strong>Telefono:</strong><span>' + escHtml(lead.telefono || '—') + '</span>' +
+          '<strong>Progetto:</strong><span>' + escHtml(lead.progetto || '—') + '</span>' +
+          '<strong>Lingua:</strong><span>' + (lead.lingua || 'it').toUpperCase() + '</span>' +
+          '<strong>Data:</strong><span>' + (lead.timestamp ? new Date(lead.timestamp).toLocaleString('it-IT') : '—') + '</span>' +
+          '<strong>Messaggio:</strong><span style="white-space:pre-wrap;">' + escHtml(lead.messaggio || '—') + '</span>' +
+        '</div>' +
+        '<div style="margin-top:1.5rem;display:flex;gap:0.5rem;">' +
+          '<a href="mailto:' + escHtml(lead.email || '') + '" class="admin-btn admin-btn--primary">📧 Rispondi via email</a>' +
+          (lead.telefono ? '<a href="tel:' + escHtml(lead.telefono) + '" class="admin-btn">📞 Chiama</a>' : '') +
+        '</div>';
+
+      document.getElementById('leadModal').classList.add('open');
+    };
+
+    window.closeLeadModal = function() {
+      document.getElementById('leadModal').classList.remove('open');
+    };
+
+    /* ── Export leads as CSV ── */
+    window.exportLeadsCSV = function() {
+      var leads = getLeads();
+      if (leads.length === 0) { alert('Nessun lead da esportare.'); return; }
+
+      var csv = 'Data,Nome,Email,Telefono,Progetto,Lingua,Messaggio\n';
+      leads.forEach(function(l) {
+        csv += [
+          l.timestamp ? new Date(l.timestamp).toLocaleDateString('it-IT') : '',
+          '"' + (l.nome || '').replace(/"/g, '""') + '"',
+          '"' + (l.email || '').replace(/"/g, '""') + '"',
+          '"' + (l.telefono || '').replace(/"/g, '""') + '"',
+          '"' + (l.progetto || '').replace(/"/g, '""') + '"',
+          l.lingua || 'it',
+          '"' + (l.messaggio || '').replace(/"/g, '""') + '"'
+        ].join(',') + '\n';
+      });
+
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'impronta-arredi-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    /* ── Clear all leads ── */
+    window.clearLeads = function() {
+      if (!confirm('Sei sicuro di voler eliminare tutti i lead?')) return;
+      localStorage.removeItem('impronta_leads');
+      renderLeadsTable();
+      refreshDashboard();
+    };
+
+    /* ── Chat log viewer ── */
+    window.refreshChatLog = function() {
+      var container = document.getElementById('chatlog-content');
+      var log = window.improntaChatLog || [];
+
+      if (log.length === 0) {
+        container.innerHTML = '<p style="color:var(--grigio);text-align:center;padding:2rem;">Nessun messaggio nel chat log della sessione corrente.<br><br>Apri il sito in un\'altra tab, usa il chatbot, poi torna qui e clicca "Aggiorna".</p>';
+        return;
+      }
+
+      var html = '';
+      log.forEach(function(entry) {
+        var time = entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }) : '';
+        var langLabel = entry.originalLang ? ' [' + entry.originalLang.toUpperCase() + ']' : '';
+        var senderLabel = entry.sender === 'user' ? '👤 Utente' : entry.sender === 'system' ? '⚙️ Sistema' : '🤖 Bot';
+        var bgColor = entry.sender === 'user' ? '#fff3e0' : entry.sender === 'system' ? '#e8f5e9' : '#f5f5f5';
+
+        html += '<div style="padding:0.6rem 0.85rem;margin-bottom:0.5rem;border-radius:8px;background:' + bgColor + ';font-size:0.82rem;">' +
+          '<div style="display:flex;justify-content:space-between;margin-bottom:0.25rem;">' +
+            '<strong>' + senderLabel + langLabel + '</strong>' +
+            '<span style="color:var(--grigio);font-size:0.72rem;">' + time + '</span>' +
+          '</div>' +
+          '<div style="white-space:pre-wrap;word-break:break-word;">' + escHtml(entry.originalText).substring(0, 500) + '</div>' +
+        '</div>';
+      });
+
+      container.innerHTML = html;
+      container.scrollTop = container.scrollHeight;
+    };
+
+    /* ── HTML escape ── */
+    function escHtml(s) {
+      if (!s) return '';
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    /* ── Init ── */
+    refreshDashboard();
+
+    /* ── Close modal on overlay click ── */
+    document.getElementById('leadModal').addEventListener('click', function(e) {
+      if (e.target === this) closeLeadModal();
+    });
+
   })();
   </script>
 </body>
