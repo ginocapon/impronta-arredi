@@ -11,6 +11,10 @@
   font-weight: 400;
   font-display: swap;
   src: url('../fonts/inter-regular.woff2') format('woff2');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
 }
 @font-face {
   font-family: 'Inter';
@@ -32,6 +36,10 @@
   font-weight: 700;
   font-display: swap;
   src: url('../fonts/inter-bold.woff2') format('woff2');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
 }
 
 /* ---------- Custom properties — Luxury Palette ---------- */
@@ -937,7 +945,7 @@ h4 { font-size: var(--fs-2xl); }
   inset: -20%;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  /* Rimosso background-attachment:fixed — causa continuous repaint su scroll */
 }
 
 .parallax-section__overlay {
@@ -2126,7 +2134,7 @@ h4 { font-size: var(--fs-2xl); }
   .review-card { width: 300px; }
 
   .parallax-section { height: 350px; }
-  .parallax-section__bg { background-attachment: scroll; }
+  /* parallax: nessun override necessario, fixed già rimosso */
 
   .footer__grid { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; gap: var(--sp-sm); text-align: center; }

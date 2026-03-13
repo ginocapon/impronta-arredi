@@ -856,6 +856,15 @@
       var clone = card.cloneNode(true);
       reviewsTrack.appendChild(clone);
     });
+    // Pausa carousel fuori viewport per risparmiare GPU/batteria
+    if ('IntersectionObserver' in window) {
+      var reviewsObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          reviewsTrack.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+        });
+      }, { threshold: 0.1 });
+      reviewsObs.observe(reviewsTrack.parentElement);
+    }
   }
 
   /* =================================================================
