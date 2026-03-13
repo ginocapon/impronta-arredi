@@ -116,9 +116,9 @@
   };
 
   /* ══════════════════════════════════════════
-     KNOWLEDGE BASE — 100+ FAQ (IT, keyword-matched)
-     Risposte in italiano; tradotte automaticamente
-     via oggetto kbTranslations per EN e CN.
+     KNOWLEDGE BASE — 100+ FAQ (multilingua IT/EN/CN)
+     Keyword-matched, risposte in 3 lingue.
+     Log per il proprietario sempre in italiano (campo 'a').
      ══════════════════════════════════════════ */
   var knowledgeBase = [
     // === SERVIZI OFFERTI ===
@@ -262,14 +262,6 @@
   ];
 
   /* ══════════════════════════════════════════
-     KB TRANSLATIONS (EN/CN)
-     ══════════════════════════════════════════ */
-  var kbTranslations = {
-    en: {},
-    cn: {}
-  };
-
-  /* ══════════════════════════════════════════
      KB SEARCH — trova la migliore risposta nel knowledge base
      ══════════════════════════════════════════ */
   function searchKB(text) {
@@ -292,7 +284,10 @@
     }
 
     if (bestMatch && bestScore >= 3) {
-      return bestMatch.a;
+      var localized = bestMatch.a; // default Italian
+      if (chatLang === 'en' && bestMatch.a_en) localized = bestMatch.a_en;
+      if (chatLang === 'cn' && bestMatch.a_cn) localized = bestMatch.a_cn;
+      return { localized: localized, it: bestMatch.a };
     }
     return null;
   }
@@ -300,11 +295,12 @@
   /* ══════════════════════════════════════════
      CHAT LOG (per admin panel)
      ══════════════════════════════════════════ */
-  function logMessage(sender, text, lang) {
+  function logMessage(sender, text, lang, italianText) {
     chatLog.push({
       sender: sender,
       originalText: text,
       originalLang: lang,
+      italianText: italianText || text,
       timestamp: new Date().toISOString()
     });
   }
@@ -353,23 +349,24 @@
      ══════════════════════════════════════════ */
   function processContactState(text) {
     var r = responses[chatLang];
+    var rIt = responses['it'];
 
     if (state === 'contatto_nome') {
       contattoPending.nome = text;
       state = 'contatto_email';
-      return r.askEmail.replace('%name%', text);
+      return { reply: r.askEmail.replace('%name%', text), replyIt: rIt.askEmail.replace('%name%', text) };
     }
 
     if (state === 'contatto_email') {
       contattoPending.email = text;
       state = 'contatto_tel';
-      return r.askPhone;
+      return { reply: r.askPhone, replyIt: rIt.askPhone };
     }
 
     if (state === 'contatto_tel') {
       contattoPending.telefono = (text.toLowerCase() === 'skip') ? '' : text;
       state = 'contatto_progetto';
-      return r.askProject;
+      return { reply: r.askProject, replyIt: rIt.askProject };
     }
 
     if (state === 'contatto_progetto') {
@@ -381,7 +378,7 @@
         contattoPending.progetto = text;
       }
       state = 'contatto_msg';
-      return r.askMessage;
+      return { reply: r.askMessage, replyIt: rIt.askMessage };
     }
 
     if (state === 'contatto_msg') {
@@ -401,7 +398,7 @@
       } catch (e) { /* silently fail */ }
 
       contattoPending = {};
-      return r.contactSuccess;
+      return { reply: r.contactSuccess, replyIt: rIt.contactSuccess };
     }
 
     return null;
@@ -412,6 +409,7 @@
      ══════════════════════════════════════════ */
   function processMessage(text) {
     var r = responses[chatLang];
+    var rIt = responses['it'];
 
     // If in contact form flow
     if (state !== 'idle') {
@@ -425,25 +423,28 @@
     if (intent === 'yes') {
       state = 'contatto_nome';
       contattoPending = {};
-      return r.askName;
+      return { reply: r.askName, replyIt: rIt.askName };
     }
 
+    var kbTail = { it: '\n\nHai altre domande? Sono a disposizione!', en: '\n\nAny other questions? I\'m here to help!', cn: '\n\n还有其他问题吗？我随时为您服务！' };
+
     switch (intent) {
-      case 'greeting': return r.greeting;
-      case 'services': return r.services;
-      case 'contact': return r.contact;
-      case 'process': return r.process;
+      case 'greeting': return { reply: r.greeting, replyIt: rIt.greeting };
+      case 'services': return { reply: r.services, replyIt: rIt.services };
+      case 'contact': return { reply: r.contact, replyIt: rIt.contact };
+      case 'process': return { reply: r.process, replyIt: rIt.process };
       case 'quote':
         state = 'contatto_nome';
         contattoPending = {};
-        return r.askName;
+        return { reply: r.askName, replyIt: rIt.askName };
       default:
         // Search knowledge base before fallback
-        var kbAnswer = searchKB(text);
-        if (kbAnswer) {
-          return kbAnswer + '\n\nHai altre domande? Sono a disposizione!';
+        var kbResult = searchKB(text);
+        if (kbResult) {
+          var tail = kbTail[chatLang] || kbTail['it'];
+          return { reply: kbResult.localized + tail, replyIt: kbResult.it + kbTail['it'] };
         }
-        return r.fallback;
+        return { reply: r.fallback, replyIt: rIt.fallback };
     }
   }
 
@@ -576,13 +577,15 @@
     if (t) t.remove();
   }
 
-  function botReply(text) {
+  function botReply(result) {
+    var text = (typeof result === 'object') ? result.reply : result;
+    var textIt = (typeof result === 'object') ? result.replyIt : result;
     showTyping();
     var delay = 500 + Math.random() * 500;
     setTimeout(function () {
       hideTyping();
       addMessage(text, 'bot');
-      logMessage('bot', text, chatLang);
+      logMessage('bot', text, chatLang, textIt);
     }, delay);
   }
 
@@ -625,7 +628,7 @@
       updateChatUI();
       setTimeout(function () {
         addMessage(responses[chatLang].welcome, 'bot');
-        logMessage('bot', responses[chatLang].welcome, chatLang);
+        logMessage('bot', responses[chatLang].welcome, chatLang, responses['it'].welcome);
         inputEl.focus();
       }, 400);
     }
@@ -647,7 +650,7 @@
       state = 'idle';
       contattoPending = {};
       addMessage(responses[chatLang].welcome, 'bot');
-      logMessage('bot', responses[chatLang].welcome, chatLang);
+      logMessage('bot', responses[chatLang].welcome, chatLang, responses['it'].welcome);
     });
   });
 
