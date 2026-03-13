@@ -59,6 +59,15 @@ HTML puro, CSS custom, JS vanilla. Nessun framework, nessun build step.
 - Chatbot widget con selezione lingua
 - Nessuna dipendenza esterna (no CDN, no npm)
 
+## Documento operativo
+**SKILL-UNIFICATA.md** e' il documento operativo master. Contiene:
+- Regole performance (no filter blur, will-change solo hover, particles in pausa)
+- Strategia SEO e concorrenti
+- Checklist automatiche per nuove pagine
+- Architettura chatbot completa
+- Keyword strategy multilingua
+**Leggere SKILL-UNIFICATA.md ad ogni sessione di lavoro.**
+
 ## Regole operative
 1. **Leggi prima** il file da modificare — mai al buio
 2. **Mobile-first** — ogni modifica deve funzionare su mobile
