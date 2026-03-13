@@ -2035,6 +2035,57 @@ h4 { font-size: var(--fs-2xl); }
   color: var(--oro);
 }
 
+/* ---------- FAQ Page — Category layout ---------- */
+.faq-page-hero {
+  padding: calc(var(--header-h) + var(--sp-xl)) 0 var(--sp-xl);
+  background-color: var(--nero);
+  text-align: center;
+}
+
+.faq-page-hero h1 {
+  color: var(--bianco-puro);
+  font-size: var(--fs-4xl);
+  margin-bottom: var(--sp-sm);
+}
+
+.faq-page-hero p {
+  color: var(--grigio);
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: var(--fs-lg);
+}
+
+.faq-category {
+  margin-bottom: var(--sp-lg);
+}
+
+.faq-category__title {
+  font-size: var(--fs-2xl);
+  color: var(--nero);
+  margin-bottom: var(--sp-md);
+  padding-bottom: var(--sp-xs);
+  border-bottom: 2px solid var(--oro);
+  display: inline-block;
+}
+
+.faq-page-section {
+  padding: var(--sp-xl) 0 var(--sp-2xl);
+}
+
+.faq-page-section .faq-list {
+  max-width: 900px;
+}
+
+@media (min-width: 768px) {
+  .faq-page-hero h1 {
+    font-size: var(--fs-5xl);
+  }
+
+  .faq-page-section {
+    padding: var(--sp-2xl) 0 var(--sp-3xl);
+  }
+}
+
 /* ---------- Accessibility: Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
