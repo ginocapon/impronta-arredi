@@ -1,7 +1,7 @@
 # SKILL UNIFICATA — Righetto Immobiliare
 ## Prompt Operativo Master Consolidato
 
-> **Versione:** 2.4 — 12 Marzo 2026
+> **Versione:** 2.5 — 13 Marzo 2026
 > **Unica fonte di verita'** — SERP-STRATEGY.md e SKILL-KILLER.md sono stati eliminati, tutto e' qui.
 > **Ultimo aggiornamento Google verificato:** 8 Marzo 2026
 > **Prossima verifica consigliata:** Aprile 2026
@@ -887,7 +887,84 @@ js/scroll-reveal.js                 - Animazioni scroll
 
 ---
 
-## 13. CHANGELOG
+## 13. CHATBOT IMPRONTA ARREDI — Architettura e Funzionalita'
+
+> **Aggiornato:** 13 Marzo 2026
+
+### 13.1 Architettura Chatbot (`js/chatbot.js`)
+
+**Componenti principali:**
+- **Risposte strutturate multilingua** (`responses` IT/EN/CN) — benvenuto, servizi, contatti, preventivo, processo, form contatto
+- **Knowledge Base 100+ FAQ** con keyword-matching e risposte in 3 lingue (`a`, `a_en`, `a_cn`)
+- **Contact form guidato** — state machine a 5 step: nome → email → telefono → tipo progetto → messaggio
+- **Quick action buttons** multilingua — Servizi, Preventivo, Contatti, Processo
+- **Intent detection** — keyword-based per IT/EN/CN + saluti + conferma
+- **Markdown renderer** — bold, italic, link, line break
+- **Chat log per admin** — ogni messaggio salvato con `italianText` per il proprietario
+
+### 13.2 Log Proprietario Sempre in Italiano
+
+> **Regola:** Il proprietario legge SEMPRE il log in italiano, indipendentemente dalla lingua dell'ospite.
+
+**Implementazione:**
+- `processMessage()` e `processContactState()` restituiscono `{reply, replyIt}` — risposta nella lingua del visitatore + versione italiana
+- `logMessage()` salva `italianText` in ogni entry del `chatLog[]`
+- `botReply()` mostra al visitatore `reply`, logga `replyIt` per il proprietario
+- `window.improntaChatLog` espone il log con campo `italianText` per ogni messaggio bot
+- `window.improntaGetLeads()` espone i lead (localStorage `impronta_leads`)
+
+### 13.3 Knowledge Base Multilingua
+
+**Struttura entry KB:**
+```javascript
+{
+  keys: ['keyword_it', 'keyword_en', '关键词_cn'],
+  a: 'Risposta italiana (sempre presente)',
+  a_en: 'English response (optional)',
+  a_cn: '中文回复 (optional)'
+}
+```
+
+**Matching:** `searchKB()` cerca nel testo utente (case-insensitive) tutte le keyword, somma la lunghezza delle match, restituisce la migliore se score >= 3. Restituisce `{localized, it}`.
+
+**Categorie KB:** Servizi (12), Costi/Preventivi (8), Tempi (5), Materiali/Fornitori (10), Certificazioni (5), Zone servite (5), Tipologie progetto (8), Stili design (6), Garanzie (4), Personalizzazione (5), Processo lavoro (6), Azienda (6), Contatti/Orari (5), Infissi (2), Outdoor (2), Acustica/Isolamento (2), Situazioni specifiche (5), Accessibilita' (1), Tendenze (2), Domande pratiche (4), Lingue (2), Referenze (2), Competitor-inspired (8)
+
+### 13.4 Mobile CTA Bar (WhatsApp + Chiamata)
+
+**Funzionalita':**
+- Barra fissa in fondo allo schermo su mobile (≤768px)
+- 2 pulsanti: WhatsApp (`wa.me/393488621888`) + Chiamata (`tel:+393488621888`)
+- Appare allo scroll (>80px), scompare tornando in cima
+- Non impatta LCP: DOM creato subito ma nascosto con `transform: translateY(100%)`
+- Stile: pulsanti rettangolari piatti, WhatsApp verde (#25D366), Chiamata oro luxury
+
+**CSS:** `css/chatbot.css` — classe `.mobile-cta-bar`, responsive solo `@media (max-width: 768px)`
+
+### 13.5 Performance Chatbot
+
+- **Avvio ritardato 3 secondi** — il chatbot (DOM + eventi) viene creato dopo `setTimeout(3000)` per non impattare LCP
+- La barra CTA mobile parte subito (fuori dal setTimeout) perche' e' leggera
+- FAB chatbot riposizionato su mobile: `bottom: 4.5rem` per fare spazio alla CTA bar
+
+### 13.6 Checklist Chatbot — Per Ogni Modifica
+- [ ] Aggiornare risposte in TUTTE e 3 le lingue (IT/EN/CN)
+- [ ] Aggiornare KB con `a`, `a_en`, `a_cn` per ogni nuova FAQ
+- [ ] Aggiungere keyword multilingua per matching
+- [ ] Verificare che il log salvi sempre `italianText`
+- [ ] Testare su mobile: CTA bar visibile, FAB non sovrapposto
+- [ ] Verificare che il chatbot parta dopo 3 secondi (non prima)
+
+---
+
+## 14. CHANGELOG
+
+### v2.5 - 13 Marzo 2026 (Chatbot: log italiano proprietario + CTA mobile + KB multilingua)
+- **Log proprietario italiano:** processMessage/processContactState restituiscono {reply, replyIt}, chatLog salva sempre italianText per il proprietario
+- **Knowledge Base multilingua:** ogni entry supporta a_en e a_cn, searchKB restituisce {localized, it}
+- **Barra CTA mobile:** pulsanti fissi WhatsApp + Chiamata (+393488621888) in fondo schermo, appaiono allo scroll
+- **Chatbot ritardato 3s:** setTimeout per non impattare LCP/velocita' sito
+- **FAB riposizionato mobile:** spostato a bottom: 4.5rem per fare spazio alla CTA bar
+- **Sezione 13 SKILL-UNIFICATA:** documentazione completa architettura chatbot
 
 ### v2.4 - 12 Marzo 2026 (Scraping 3-step: Topic → Foto → Preview con contenuto ricco)
 - **Modal scraping a 3 step:** Step 1 scelta topic (9 categorie + custom + Google News), Step 2 gestione foto (hero + 3 inline con ricerca Unsplash o URL personalizzato), Step 3 anteprima con conferma e salvataggio
