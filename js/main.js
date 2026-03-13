@@ -865,6 +865,10 @@
   if (heroGlamour) {
     setTimeout(function () {
       heroGlamour.classList.add('hero--glamour');
+      // Attiva anche gli effetti glamour sul portfolio
+      document.querySelectorAll('.portfolio__item').forEach(function (item) {
+        item.classList.add('portfolio__item--glamour');
+      });
     }, 3000);
   }
 
