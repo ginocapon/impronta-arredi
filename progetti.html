@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progetti – Impronta Arredi | Interior Design & Ristrutturazione Chiavi in Mano</title>
+  <meta name="description" content="Scopri i nostri progetti di interior design e ristrutturazione chiavi in mano: appartamenti di lusso, ville, hotel e uffici a Milano, Roma e nel mondo.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.improntarredi.it/progetti.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Progetti – Impronta Arredi">
+  <meta property="og:description" content="I nostri lavori parlano per noi: appartamenti, ville, hotel e uffici di lusso realizzati chiavi in mano.">
+  <meta property="og:url" content="https://www.improntarredi.it/progetti.html">
+  <meta property="og:site_name" content="Impronta Arredi">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <link rel="preload" href="fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.improntarredi.it/" },
+      { "@type": "ListItem", "position": 2, "name": "Progetti", "item": "https://www.improntarredi.it/progetti.html" }
+    ]
+  }
+  </script>
+  <style>
+    /* ---------- Progetti page specific styles ---------- */
+    .project-showcase { padding: var(--sp-xl) 0; }
+    .project-showcase:nth-child(even) { background: var(--crema); }
+
+    .project-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-lg);
+      align-items: start;
+      margin-bottom: var(--sp-xl);
+    }
+    .project-card:nth-child(even) { direction: rtl; }
+    .project-card:nth-child(even) > * { direction: ltr; }
+
+    .project-card__gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .project-card__gallery img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .project-card__gallery img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .project-card__gallery img.project-img--wide {
+      grid-column: 1 / -1;
+      height: 280px;
+    }
+
+    .project-card__info { padding: var(--sp-md) 0; }
+
+    .project-card__badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--oro), var(--oro-scuro));
+      color: var(--nero);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-card__title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--nero);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .project-card__location {
+      font-size: 0.85rem;
+      color: var(--oro-scuro);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .project-card__desc {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--grigio-scuro);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-card__specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-spec {
+      background: #fff;
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 10px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    .project-spec__value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--nero);
+    }
+    .project-spec__label {
+      font-size: 0.72rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .project-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .project-tag {
+      background: rgba(201,168,76,0.1);
+      color: var(--oro-scuro);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+    }
+
+    .project-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--oro), var(--oro-scuro));
+      color: var(--nero);
+      padding: 0.7rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .project-card__cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.3);
+    }
+
+    /* Lightbox */
+    .project-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .project-lightbox--open { display: flex; }
+    .project-lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .project-lightbox__close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* CTA finale */
+    .projects-cta {
+      text-align: center;
+      padding: var(--sp-xl) var(--sp-md);
+      background: var(--nero);
+      color: #fff;
+    }
+    .projects-cta h2 {
+      color: #fff;
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .projects-cta p {
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .project-card {
+        grid-template-columns: 1fr;
+      }
+      .project-card:nth-child(even) { direction: ltr; }
+      .project-card__gallery img { height: 180px; }
+      .project-card__gallery img.project-img--wide { height: 220px; }
+      .project-card__title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo" aria-label="Impronta Arredi – Home">IMPRONTA <span>ARREDI</span></a>
+      <nav class="nav" role="navigation" aria-label="Navigazione principale">
+        <button class="nav__toggle" aria-label="Apri menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link" data-i18n="nav.home">Home</a></li>
+          <li><a href="chi-siamo.html" class="nav__link" data-i18n="nav.chi-siamo">Chi Siamo</a></li>
+          <li><a href="servizi.html" class="nav__link" data-i18n="nav.servizi">Servizi</a></li>
+          <li><a href="progetti.html" class="nav__link nav__link--active" data-i18n="nav.progetti">Progetti</a></li>
+          <li><a href="contatti.html" class="nav__link" data-i18n="nav.contatti">Contatti</a></li>
+        </ul>
+        <div class="lang-switch">
+          <button class="lang-switch__btn lang-switch__btn--active" data-lang="it">IT</button>
+          <button class="lang-switch__btn" data-lang="en">EN</button>
+          <button class="lang-switch__btn" data-lang="cn">中文</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="page-hero page-hero--with-bg">
+      <div class="page-hero__bg" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&q=80');"></div>
+      <div class="container">
+        <span class="section__label" data-i18n="projects.label">I nostri progetti</span>
+        <h1 data-i18n="projects.title">I nostri lavori parlano per noi</h1>
+        <div class="gold-line"></div>
+        <p data-i18n="projects.subtitle">Ogni progetto racconta una storia di eccellenza: dal concept alla consegna delle chiavi, con render 3D, disegni tecnici e risultato finale.</p>
+      </div>
+    </section>
+
+    <!-- ==================== PROGETTO 1: Piazza di Spagna, Roma ==================== -->
+    <section class="project-showcase section" id="piazza-spagna">
+      <div class="container">
+        <div class="project-card reveal">
+          <div class="project-card__gallery">
+            <img class="project-img--wide" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80" alt="Attico Piazza di Spagna – Salone principale" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&q=80" alt="Attico Piazza di Spagna – Cucina design" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80" alt="Attico Piazza di Spagna – Camera padronale" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80" alt="Attico Piazza di Spagna – Bagno marmo Calacatta" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Attico Piazza di Spagna – Render 3D terrazza" loading="lazy">
+          </div>
+          <div class="project-card__info">
+            <span class="project-card__badge" data-i18n="project.1.badge">Progetto Realizzato</span>
+            <h2 class="project-card__title" data-i18n="project.1.title">Attico Piazza di Spagna</h2>
+            <p class="project-card__location">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6c0 4-5 8-5 8S2 10 2 6a5 5 0 1 1 10 0z"/><circle cx="7" cy="6" r="1.5"/></svg>
+              <span data-i18n="project.1.location">Roma, Piazza di Spagna — Italia</span>
+            </p>
+            <p class="project-card__desc" data-i18n="project.1.desc">Ristrutturazione integrale di un attico panoramico di 320 mq nel cuore di Roma, affacciato sulla scalinata di Trinità dei Monti. Il progetto ha unito il fascino dell'architettura storica romana con un design contemporaneo radicale: superfici continue in marmo Calacatta Oro, cucina monolitica a scomparsa, sistema domotico integrato con illuminazione scenografica a layer, terrazza panoramica con giardino pensile e vasca infinity. Ogni materiale selezionato in Italia, lavorato artigianalmente.</p>
+            <div class="project-card__specs">
+              <div class="project-spec">
+                <div class="project-spec__value">320 mq</div>
+                <div class="project-spec__label" data-i18n="project.spec.area">Superficie</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">8 mesi</div>
+                <div class="project-spec__label" data-i18n="project.spec.duration">Durata</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">2025</div>
+                <div class="project-spec__label" data-i18n="project.spec.year">Anno</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">Chiavi in mano</div>
+                <div class="project-spec__label" data-i18n="project.spec.type">Tipologia</div>
+              </div>
+            </div>
+            <div class="project-card__tags">
+              <span class="project-tag">Interior Design</span>
+              <span class="project-tag">Marmo Calacatta</span>
+              <span class="project-tag">Domotica</span>
+              <span class="project-tag">Terrazza</span>
+              <span class="project-tag">Render 3D</span>
+            </div>
+            <a href="contatti.html" class="project-card__cta" data-i18n="project.cta">Richiedi un progetto simile &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROGETTO 2: Villa Milano ==================== -->
+    <section class="project-showcase section section--cream" id="villa-milano">
+      <div class="container">
+        <div class="project-card reveal">
+          <div class="project-card__gallery">
+            <img class="project-img--wide" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80" alt="Villa CityLife Milano – Living doppia altezza" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=600&q=80" alt="Villa CityLife – Scala scultorea" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=600&q=80" alt="Villa CityLife – Studio privato" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=600&q=80" alt="Villa CityLife – Piscina interna" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&q=80" alt="Villa CityLife – Planimetria 2D esecutiva" loading="lazy">
+          </div>
+          <div class="project-card__info">
+            <span class="project-card__badge" data-i18n="project.2.badge">Progetto Realizzato</span>
+            <h2 class="project-card__title" data-i18n="project.2.title">Villa CityLife</h2>
+            <p class="project-card__location">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6c0 4-5 8-5 8S2 10 2 6a5 5 0 1 1 10 0z"/><circle cx="7" cy="6" r="1.5"/></svg>
+              <span data-i18n="project.2.location">Milano, CityLife — Italia</span>
+            </p>
+            <p class="project-card__desc" data-i18n="project.2.desc">Progettazione e realizzazione integrale di una villa contemporanea di 480 mq nel quartiere CityLife di Milano. Architettura a doppia altezza con scala scultorea in acciaio Cor-Ten, living panoramico con vetrate floor-to-ceiling, piscina interna con area spa, giardino zen privato e garage automatizzato. Ogni ambiente è stato progettato con render 3D fotorealistici prima della realizzazione. Sistema domotico KNX completo, illuminazione Flos, arredi Poliform e B&B Italia.</p>
+            <div class="project-card__specs">
+              <div class="project-spec">
+                <div class="project-spec__value">480 mq</div>
+                <div class="project-spec__label" data-i18n="project.spec.area">Superficie</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">14 mesi</div>
+                <div class="project-spec__label" data-i18n="project.spec.duration">Durata</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">2024</div>
+                <div class="project-spec__label" data-i18n="project.spec.year">Anno</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">Chiavi in mano</div>
+                <div class="project-spec__label" data-i18n="project.spec.type">Tipologia</div>
+              </div>
+            </div>
+            <div class="project-card__tags">
+              <span class="project-tag">Villa</span>
+              <span class="project-tag">Doppia Altezza</span>
+              <span class="project-tag">Piscina Interna</span>
+              <span class="project-tag">KNX Domotica</span>
+              <span class="project-tag">Poliform</span>
+            </div>
+            <a href="contatti.html" class="project-card__cta" data-i18n="project.cta">Richiedi un progetto simile &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROGETTO 3: Penthouse Manhattan, New York ==================== -->
+    <section class="project-showcase section" id="manhattan-penthouse">
+      <div class="container">
+        <div class="project-card reveal">
+          <div class="project-card__gallery">
+            <img class="project-img--wide" src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&q=80" alt="Penthouse Manhattan – Living panoramico skyline" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&q=80" alt="Penthouse Manhattan – Master suite" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=600&q=80" alt="Penthouse Manhattan – Cucina Boffi" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=600&q=80" alt="Penthouse Manhattan – Bagno spa" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="Penthouse Manhattan – Render 3D night view" loading="lazy">
+          </div>
+          <div class="project-card__info">
+            <span class="project-card__badge" data-i18n="project.3.badge">Progetto Realizzato</span>
+            <h2 class="project-card__title" data-i18n="project.3.title">Penthouse Fifth Avenue</h2>
+            <p class="project-card__location">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6c0 4-5 8-5 8S2 10 2 6a5 5 0 1 1 10 0z"/><circle cx="7" cy="6" r="1.5"/></svg>
+              <span data-i18n="project.3.location">New York, Fifth Avenue — Manhattan</span>
+            </p>
+            <p class="project-card__desc" data-i18n="project.3.desc">Interior design e arredamento completo di un penthouse di 260 mq al 58° piano di un grattacielo su Fifth Avenue, con vista panoramica su Central Park. Il progetto ha portato il design italiano nel cuore di Manhattan: pavimenti in travertino romano, boiserie artigianali, cucina Boffi su misura, master suite con cabina armadio walk-in e bagno in onice retroilluminato. Illuminazione scenografica Artemide, sistema audio multiroom nascosto nelle pareti. Coordinamento transatlantico Milano-New York.</p>
+            <div class="project-card__specs">
+              <div class="project-spec">
+                <div class="project-spec__value">260 mq</div>
+                <div class="project-spec__label" data-i18n="project.spec.area">Superficie</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">10 mesi</div>
+                <div class="project-spec__label" data-i18n="project.spec.duration">Durata</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">2025</div>
+                <div class="project-spec__label" data-i18n="project.spec.year">Anno</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">Chiavi in mano</div>
+                <div class="project-spec__label" data-i18n="project.spec.type">Tipologia</div>
+              </div>
+            </div>
+            <div class="project-card__tags">
+              <span class="project-tag">Penthouse</span>
+              <span class="project-tag">Travertino Romano</span>
+              <span class="project-tag">Boffi</span>
+              <span class="project-tag">Onice</span>
+              <span class="project-tag">Central Park View</span>
+            </div>
+            <a href="contatti.html" class="project-card__cta" data-i18n="project.cta">Richiedi un progetto simile &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROGETTO 4: Boutique Hotel Camere, Milano ==================== -->
+    <section class="project-showcase section section--cream" id="hotel-milano">
+      <div class="container">
+        <div class="project-card reveal">
+          <div class="project-card__gallery">
+            <img class="project-img--wide" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80" alt="Hotel Brera Suite – Camera luxury" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d955e5f5c?w=600&q=80" alt="Hotel Brera – Suite deluxe" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Hotel Brera – Bagno suite" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80" alt="Hotel Brera – Render 3D lobby" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80" alt="Hotel Brera – Planimetria camere" loading="lazy">
+          </div>
+          <div class="project-card__info">
+            <span class="project-card__badge" data-i18n="project.4.badge">Progetto Realizzato</span>
+            <h2 class="project-card__title" data-i18n="project.4.title">Boutique Hotel Brera</h2>
+            <p class="project-card__location">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6c0 4-5 8-5 8S2 10 2 6a5 5 0 1 1 10 0z"/><circle cx="7" cy="6" r="1.5"/></svg>
+              <span data-i18n="project.4.location">Milano, Quartiere Brera — Italia</span>
+            </p>
+            <p class="project-card__desc" data-i18n="project.4.desc">Progettazione integrale di 24 camere e suite per un boutique hotel nel cuore del quartiere Brera a Milano. Ogni camera è un pezzo unico: palette cromatiche ispirate ai pittori della Pinacoteca di Brera, testiere artigianali in tessuto Rubelli, bagni in pietra Cardoso con rubinetteria Fantini. Lobby con installazione luminosa site-specific, rooftop bar con vista sul Duomo. Render 3D per ogni ambiente prima della realizzazione, consegna in 6 mesi con hotel operativo senza interruzioni.</p>
+            <div class="project-card__specs">
+              <div class="project-spec">
+                <div class="project-spec__value">24 camere</div>
+                <div class="project-spec__label" data-i18n="project.spec.rooms">Camere</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">6 mesi</div>
+                <div class="project-spec__label" data-i18n="project.spec.duration">Durata</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">2025</div>
+                <div class="project-spec__label" data-i18n="project.spec.year">Anno</div>
+              </div>
+              <div class="project-spec">
+                <div class="project-spec__value">Hospitality</div>
+                <div class="project-spec__label" data-i18n="project.spec.type">Tipologia</div>
+              </div>
+            </div>
+            <div class="project-card__tags">
+              <span class="project-tag">Boutique Hotel</span>
+              <span class="project-tag">24 Camere</span>
+              <span class="project-tag">Rubelli</span>
+              <span class="project-tag">Fantini</span>
+              <span class="project-tag">Rooftop</span>
+            </div>
+            <a href="contatti.html" class="project-card__cta" data-i18n="project.cta">Richiedi un progetto simile &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA FINALE ==================== -->
+    <section class="projects-cta">
+      <div class="container reveal">
+        <span class="section__label">&#9670;</span>
+        <h2 data-i18n="projects.cta.title">Il tuo progetto potrebbe essere il prossimo</h2>
+        <p data-i18n="projects.cta.text">Contattaci per una consulenza gratuita. Raccontaci la tua visione: la realizzeremo insieme, chiavi in mano.</p>
+        <a href="contatti.html" class="btn btn--gold" data-i18n="projects.cta.btn">Richiedi consulenza gratuita</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="project-lightbox" id="projectLightbox">
+    <button class="project-lightbox__close" aria-label="Chiudi">&times;</button>
+    <img src="" alt="">
+  </div>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">IMPRONTA <span>ARREDI</span></div>
+          <p class="footer__desc" data-i18n="footer.desc">Interior design e ristrutturazione chiavi in mano. Progettazione, realizzazione, arredamento e certificazioni: un unico referente per il tuo progetto.</p>
+        </div>
+        <div>
+          <h4 class="footer__title" data-i18n="footer.nav">Navigazione</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="chi-siamo.html" data-i18n="nav.chi-siamo">Chi siamo</a></li>
+            <li><a href="servizi.html" data-i18n="nav.servizi">Servizi</a></li>
+            <li><a href="progetti.html" data-i18n="nav.progetti">Progetti</a></li>
+            <li><a href="contatti.html" data-i18n="nav.contatti">Contatti</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title" data-i18n="footer.services">Servizi</h4>
+          <ul class="footer__links">
+            <li><a href="servizi.html" data-i18n="footer.srv.1">Interior design</a></li>
+            <li><a href="servizi.html" data-i18n="footer.srv.2">Ristrutturazione</a></li>
+            <li><a href="servizi.html" data-i18n="footer.srv.3">Arredamento su misura</a></li>
+            <li><a href="servizi.html" data-i18n="footer.srv.4">Certificazioni</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title" data-i18n="footer.contact">Contatti</h4>
+          <ul class="footer__links">
+            <li>Via Example 1, Milano</li>
+            <li><a href="tel:+390000000000">+39 000 0000000</a></li>
+            <li><a href="mailto:info@improntarredi.it">info@improntarredi.it</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span class="footer__year">2026</span> Impronta Arredi. <span data-i18n="footer.rights">Tutti i diritti riservati.</span></p>
+        <div class="footer__legal">
+          <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+          <a href="cookie-policy.html" data-i18n="footer.cookie">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" role="dialog" aria-label="Consenso cookie">
+    <div class="cookie-banner__inner">
+      <p class="cookie-banner__text"><span data-i18n="cookie.text">Questo sito utilizza cookie tecnici e, previo tuo consenso, cookie di profilazione per migliorare la tua esperienza.</span> <a href="cookie-policy.html" data-i18n="cookie.more">Scopri di più</a></p>
+      <div class="cookie-banner__actions">
+        <button class="cookie-banner__btn cookie-banner__btn--accept" data-i18n="cookie.accept">Accetta</button>
+        <button class="cookie-banner__btn cookie-banner__btn--reject" data-i18n="cookie.reject">Rifiuta</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    // Lightbox per le immagini progetto
+    (function() {
+      var lightbox = document.getElementById('projectLightbox');
+      if (!lightbox) return;
+      var lbImg = lightbox.querySelector('img');
+      var lbClose = lightbox.querySelector('.project-lightbox__close');
+
+      document.querySelectorAll('.project-card__gallery img').forEach(function(img) {
+        img.addEventListener('click', function() {
+          lbImg.src = this.src.replace('w=600', 'w=1600').replace('w=1200', 'w=1600');
+          lbImg.alt = this.alt;
+          lightbox.classList.add('project-lightbox--open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('project-lightbox--open');
+        document.body.style.overflow = '';
+      }
+      lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+      lbClose.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+    })();
+
+    // Auto-apertura chatbot sulla pagina progetti con messaggio di benvenuto
+    (function() {
+      var DELAY = 4000; // 4 secondi (1s dopo il caricamento del chatbot a 3s)
+      setTimeout(function() {
+        var fab = document.querySelector('.chatbot-fab');
+        var modal = document.querySelector('.chatbot-modal');
+        if (!fab || !modal) return;
+
+        // Apri il chatbot
+        fab.click();
+
+        // Dopo apertura, invia messaggio automatico di benvenuto progetti
+        setTimeout(function() {
+          var msgArea = document.querySelector('.chatbot-modal__messages');
+          if (!msgArea) return;
+
+          var lang = localStorage.getItem('impronta_lang') || 'it';
+          var msgs = {
+            it: 'Benvenuto nella nostra **galleria progetti**! 🏛️\n\nQui puoi esplorare tre delle nostre realizzazioni più prestigiose:\n\n1. **Attico Piazza di Spagna** — Roma, 320 mq di lusso nel cuore storico\n2. **Villa CityLife** — Milano, 480 mq con piscina interna e domotica KNX\n3. **Penthouse Fifth Avenue** — New York, design italiano al 58° piano\n4. **Boutique Hotel Brera** — Milano, 24 camere d\'autore\n\nVuoi saperne di più su uno di questi progetti? Oppure **richiedi una call** o un **appuntamento** con il nostro studio tecnico per discutere il tuo progetto!',
+            en: 'Welcome to our **project gallery**! 🏛️\n\nHere you can explore three of our most prestigious works:\n\n1. **Piazza di Spagna Penthouse** — Rome, 320 sqm of luxury in the historic centre\n2. **Villa CityLife** — Milan, 480 sqm with indoor pool and KNX automation\n3. **Fifth Avenue Penthouse** — New York, Italian design on the 58th floor\n4. **Boutique Hotel Brera** — Milan, 24 bespoke rooms\n\nWould you like to know more about one of these projects? Or **request a call** or **appointment** with our technical studio to discuss your project!',
+            cn: '欢迎来到我们的**项目展厅**！🏛️\n\n在这里您可以探索我们最负盛名的三个作品：\n\n1. **西班牙广场顶层公寓** — 罗马，320平方米的历史中心奢华空间\n2. **CityLife别墅** — 米兰，480平方米，配有室内泳池和KNX智能系统\n3. **第五大道顶层公寓** — 纽约，58楼的意大利设计\n4. **布雷拉精品酒店** — 米兰，24间定制客房\n\n想了解更多关于某个项目的信息吗？或者**预约电话**或与我们的技术工作室**预约会面**，讨论您的项目！'
+          };
+
+          // Crea messaggio bot nella chat
+          var msgDiv = document.createElement('div');
+          msgDiv.className = 'chat-msg chat-msg--bot';
+          msgDiv.innerHTML = '<div class="chat-msg__avatar">IA</div><div class="chat-msg__bubble">' +
+            (msgs[lang] || msgs.it)
+              .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+              .replace(/\n/g, '<br>') +
+            '</div>';
+          msgArea.appendChild(msgDiv);
+          msgArea.scrollTop = msgArea.scrollHeight;
+        }, 800);
+      }, DELAY);
+    })();
+  </script>
+</body>
+</html>
