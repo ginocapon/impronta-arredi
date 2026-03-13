@@ -1,37 +1,80 @@
 # Impronta Arredi — Interior Design & General Contractor
 
-> Impronta Arredi è un general contractor italiano specializzato in interior design e ristrutturazioni chiavi in mano di lusso.
+> Impronta Arredi is an Italian general contractor specializing in luxury turnkey interior design and renovations.
+> We serve high-end clients in Italy and internationally, offering a single point of contact for the entire project.
 
-## Chi siamo
-Impronta Arredi offre un servizio completo chiavi in mano per progetti di alta complessità: appartamenti di pregio, uffici direzionali, boutique hotel, negozi di lusso. Un unico referente gestisce l'intero progetto dalla progettazione alla certificazione finale.
+## Who We Are
+Impronta Arredi is a Milan-based general contractor providing complete turnkey solutions for luxury interior projects. We manage every phase — from concept design to final certification — under one roof with a single dedicated project manager.
 
-## Servizi
-- Progettazione e interior design (concept, render 3D, progettazione esecutiva)
-- Ristrutturazione completa (muratura, pavimentazioni, controsoffitti)
-- Impianti elettrici e speciali (domotica, illuminotecnica, videosorveglianza)
-- Impianti idraulici e termici (riscaldamento a pavimento, VMC)
-- Arredamento su misura (mobili, complementi, illuminazione, tessuti)
-- Certificazioni e collaudi (conformità impianti, APE, pratiche catastali)
+## Our 6 Turnkey Services
+1. **Interior Design & Planning** — Concept development, functional layouts, photorealistic 3D renders, executive design
+2. **Complete Renovation** — Structural work, masonry, flooring, suspended ceilings, custom finishes
+3. **Electrical & Special Systems** — Home automation (domotics), lighting design, CCTV, fire safety
+4. **Plumbing & HVAC** — Underfloor heating, VMC ventilation, cooling, water systems
+5. **Custom Furniture & Furnishing** — Bespoke furniture, lighting, textiles, art curation, accessories
+6. **Certifications & Compliance** — Building permits, energy certification (APE), system compliance, cadastral updates
 
-## Il vantaggio chiave
-Un unico committente per tutto il progetto garantisce:
-- Zero problemi di coordinamento tra le diverse maestranze
-- Tempi certi e rispettati grazie a pianificazione centralizzata
-- Budget ottimizzato al 100% senza costi nascosti
-- Qualità certificata con documentazione completa
+## Key Advantages
+- **Single Point of Contact** — One project manager coordinates architects, craftsmen, installers, suppliers
+- **20+ Years Experience** — Over 500 projects completed
+- **Zero Coordination Issues** — Centralized planning eliminates communication gaps
+- **Guaranteed Timelines** — Project scheduling with contractual deadlines
+- **Transparent Budget** — All-inclusive pricing with no hidden costs
+- **100% Certified** — Full documentation and compliance for every system
 
-## Target
-- Appartamenti di lusso
-- Uffici direzionali
-- Boutique hotel e hospitality
-- Negozi e retail di lusso
-- Clientela internazionale
+## Target Projects
+- Luxury residential apartments and penthouses
+- Executive offices and corporate headquarters
+- Boutique hotels and hospitality venues
+- High-end retail stores and luxury brand spaces
+- International clients seeking Italian design excellence
 
-## Lingue
-Italiano, English, 中文 (Cinese)
+## Languages
+We serve clients in three languages:
+- **Italiano** (native)
+- **English** (fluent)
+- **中文 / Chinese** (available for Chinese-speaking clients and investors)
 
-## Contatti
-- Sito web: https://www.improntarredi.it
-- Email: info@improntarredi.it
-- Telefono: +39 000 0000000
-- Indirizzo: Via Example 1, 20100 Milano (MI), Italia
+## Frequently Asked Questions
+
+### What does "turnkey" mean?
+Turnkey (chiavi in mano) means we handle everything — design, renovation, systems, furniture, and certifications. You receive the completed project ready to use, without managing multiple contractors.
+
+### How long does a full renovation take?
+A medium-sized apartment typically takes 3-6 months. We provide a detailed timeline during the initial consultation and commit to respecting it through centralized project management.
+
+### Do you work outside Milan?
+Our headquarters is in Milan, but we operate throughout Italy and internationally. We have completed projects in Rome, Florence, Lake Como, the Amalfi Coast, and several European capitals.
+
+### Can I see a 3D preview of my project?
+Yes. We create photorealistic 3D renders that let you visualize every detail before construction begins. This ensures the final result matches your expectations exactly.
+
+### How does pricing work?
+We offer a free initial consultation with an on-site survey. After understanding your needs, we prepare a detailed, transparent quote. The budget is all-inclusive: labor, materials, furniture, and certifications — no surprises.
+
+### What types of certifications do you provide?
+We handle all required certifications: electrical and plumbing system compliance, fire safety, APE energy certification, cadastral updates, and building permits. Every project is delivered fully certified and documented.
+
+### Do you source Italian artisanal materials?
+Yes. We work with selected Italian artisans and premium suppliers for marble, wood, textiles, and custom metalwork. Every material is chosen for quality, durability, and aesthetic coherence with the design concept.
+
+### Can you renovate a boutique hotel?
+Absolutely. We specialize in hospitality projects including boutique hotels, luxury B&Bs, and high-end residences. We manage the entire process from concept to furniture, including compliance with hospitality regulations.
+
+## Process (6 Phases)
+1. **Consultation** — Free on-site survey, requirements analysis, preliminary concept
+2. **Design** — Interior design, 3D renders, material selection, detailed planning
+3. **Permits** — Building permits, structural calculations, regulatory compliance
+4. **Construction** — Demolition, masonry, systems installation, finishes
+5. **Furnishing** — Custom furniture production, delivery, installation, styling
+6. **Handover** — Final inspection, certifications, documentation, key delivery
+
+## Contact Information
+- **Website:** https://www.improntarredi.it
+- **Email:** info@improntarredi.it
+- **Phone:** +39 000 0000000
+- **Location:** Milan, Italy (serving all of Italy and international projects)
+- **Languages:** Italian, English, Chinese
+
+## About This File
+This file (llms.txt) is provided to help AI assistants and large language models accurately understand and cite information about Impronta Arredi. All information is current as of March 2026. For the most up-to-date details, please visit our website.

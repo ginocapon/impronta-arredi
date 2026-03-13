@@ -512,29 +512,26 @@ h4 { font-size: var(--fs-2xl); }
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.4;
-  transition: transform 20s linear;
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero:hover .hero__bg {
   will-change: transform;
 }
 
 /* Hero glamour effects — si attivano con classe .hero--glamour (aggiunta via JS dopo 3s) */
+/* Usiamo opacity+transform instead of filter blur per non rallentare LCP */
 .hero--glamour .hero__bg {
-  filter: blur(3px);
-  animation: heroBlurIn 1.5s ease-in-out forwards;
+  animation: heroRevealIn 1.5s ease-in-out forwards;
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@keyframes heroBlurIn {
-  0% { filter: blur(3px); opacity: 0.4; }
-  100% { filter: blur(0); opacity: 0.55; }
+@keyframes heroRevealIn {
+  0% { opacity: 0.3; transform: scale(1.03); }
+  100% { opacity: 0.55; transform: scale(1); }
 }
 
-.hero--glamour .hero__content {
-  animation: heroContentReveal 1.2s ease-out forwards;
-}
-
-@keyframes heroContentReveal {
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+/* hero__content non ha animazione propria — i figli (label, title, text, actions) si animano individualmente */
 
 .hero--glamour .hero__overlay {
   animation: heroOverlayShift 2s ease-in-out forwards;
@@ -547,7 +544,6 @@ h4 { font-size: var(--fs-2xl); }
 
 .hero:hover .hero__bg {
   transform: scale(1.08) rotate(1.5deg);
-  filter: blur(0);
 }
 
 /* Hero hover — overlay scurisce al passaggio */
@@ -555,10 +551,6 @@ h4 { font-size: var(--fs-2xl); }
   background: linear-gradient(135deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.15) 50%, rgba(10,10,10,0.5) 100%);
 }
 
-/* Hero — effetto blur hover (parte sfocato, si rivela al hover) */
-.hero--glamour .hero__bg {
-  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.8s ease-in-out;
-}
 
 .hero__overlay {
   position: absolute;
@@ -582,6 +574,11 @@ h4 { font-size: var(--fs-2xl); }
   border-radius: 50%;
   opacity: 0;
   animation: particleFloat 8s infinite;
+  animation-play-state: paused; /* avvio solo dopo glamour */
+}
+
+.hero--glamour .hero__particle {
+  animation-play-state: running;
 }
 
 .hero__particle:nth-child(1) { left: 10%; animation-delay: 0s; }
@@ -615,7 +612,6 @@ h4 { font-size: var(--fs-2xl); }
   margin-bottom: var(--sp-md);
   position: relative;
   padding-left: 50px;
-  animation: heroLabelIn 1s ease 0.3s both;
 }
 
 .hero__label::before {
@@ -626,6 +622,20 @@ h4 { font-size: var(--fs-2xl); }
   width: 36px;
   height: 1px;
   background-color: var(--oro);
+}
+
+/* Hero content animations — partono solo dopo .hero--glamour (3s) per non impattare LCP/CLS */
+.hero--glamour .hero__label {
+  animation: heroLabelIn 0.8s ease forwards;
+}
+.hero--glamour .hero__title {
+  animation: heroTitleIn 0.8s ease 0.15s both;
+}
+.hero--glamour .hero__text {
+  animation: heroTextIn 0.8s ease 0.3s both;
+}
+.hero--glamour .hero__actions {
+  animation: heroActionsIn 0.8s ease 0.45s both;
 }
 
 @keyframes heroLabelIn {
@@ -639,7 +649,6 @@ h4 { font-size: var(--fs-2xl); }
   margin-bottom: var(--sp-md);
   line-height: 1.05;
   letter-spacing: -0.03em;
-  animation: heroTitleIn 1s ease 0.5s both;
 }
 
 .hero__title em {
@@ -659,7 +668,6 @@ h4 { font-size: var(--fs-2xl); }
   margin-bottom: var(--sp-lg);
   max-width: 560px;
   line-height: 1.8;
-  animation: heroTextIn 1s ease 0.7s both;
 }
 
 @keyframes heroTextIn {
@@ -671,7 +679,6 @@ h4 { font-size: var(--fs-2xl); }
   display: flex;
   gap: var(--sp-sm);
   flex-wrap: wrap;
-  animation: heroActionsIn 1s ease 0.9s both;
 }
 
 @keyframes heroActionsIn {
@@ -755,20 +762,19 @@ h4 { font-size: var(--fs-2xl); }
   transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease-in-out;
 }
 
-/* Portfolio glamour — immagini sfocate che si rivelano al hover */
+/* Portfolio glamour — rivelazione con opacity (no filter blur = performance) */
 .portfolio__item--glamour img {
-  filter: blur(2px);
-  animation: portfolioBlurIn 1.2s ease-out forwards;
+  opacity: 0.7;
+  animation: portfolioRevealIn 1s ease-out forwards;
 }
 
-@keyframes portfolioBlurIn {
-  0% { filter: blur(6px); opacity: 0.6; }
-  100% { filter: blur(1.5px); opacity: 1; }
+@keyframes portfolioRevealIn {
+  0% { opacity: 0.4; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .portfolio__item:hover img {
   transform: scale(1.1) rotate(2deg);
-  filter: blur(0);
 }
 
 .portfolio__overlay {
@@ -2021,6 +2027,18 @@ h4 { font-size: var(--fs-2xl); }
   color: var(--oro);
 }
 
+/* ---------- Accessibility: Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero__particle { display: none; }
+  .reviews-track { animation: none !important; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2039,6 +2057,9 @@ h4 { font-size: var(--fs-2xl); }
     --fs-3xl: 1.5rem;
     --fs-7xl: 3.5rem;
   }
+
+  /* Mobile: nascondere particles per performance */
+  .hero__particles { display: none; }
 
   /* Mobile nav */
   .nav__toggle { display: flex; }
