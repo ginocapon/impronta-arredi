@@ -12,18 +12,21 @@ HTML puro, CSS custom, JS vanilla. Nessun framework, nessun build step.
 ├── index.html              # Homepage
 ├── chi-siamo.html          # Chi siamo
 ├── servizi.html            # Servizi (6 servizi chiavi in mano)
+├── progetti.html           # Progetti showcase (4 progetti luxury)
 ├── contatti.html           # Contatti + form
 ├── privacy.html            # Privacy Policy (GDPR)
 ├── cookie-policy.html      # Cookie Policy
-├── sitemap.xml             # Sitemap XML (6 URL)
+├── sitemap.xml             # Sitemap XML (7 URL)
 ├── robots.txt              # Robots + AI bots Allow
 ├── llms.txt                # File per AI bots (GEO)
 ├── CLAUDE.md               # Questo file
-├── SKILL-UNIFICATA.md      # Linee guida operative (da righettoimmobiliare.it)
+├── SKILL-UNIFICATA.md      # Linee guida operative
 ├── css/
-│   └── style.css           # Foglio di stile principale (~750 righe)
+│   ├── style.css           # Foglio di stile principale (~750 righe)
+│   └── chatbot.css         # Stili chatbot + CTA mobile
 ├── js/
-│   └── main.js             # Script principale (~500 righe, i18n IT/EN/CN)
+│   ├── main.js             # Script principale (~700 righe, i18n IT/EN/CN)
+│   └── chatbot.js          # Chatbot multilingua con KB 80+ FAQ
 ├── fonts/                  # Font self-hosted Inter (woff2) — DA AGGIUNGERE
 └── img/                    # Immagini — DA AGGIUNGERE
 ```
@@ -66,6 +69,49 @@ HTML puro, CSS custom, JS vanilla. Nessun framework, nessun build step.
 7. **Performance** — mai animazioni sull'elemento LCP
 8. **CTA contrast** — minimo 4.5:1 (WCAG AA)
 
+## Checklist automatica di conformità (da SKILL-UNIFICATA.md)
+**OBBLIGATORIO:** Ad ogni creazione o modifica di file, verificare TUTTI i punti seguenti prima di committare.
+
+### HTML
+- [ ] HTML5 semantico con tag corretti (`<header>`, `<main>`, `<section>`, `<footer>`, `<nav>`)
+- [ ] Attributi `role` e `aria-label` per accessibilità (WCAG 2.1 AA)
+- [ ] `data-i18n` su ogni testo visibile (con chiave in IT, EN, CN nel main.js)
+- [ ] `<meta name="description">` e `<title>` univoci per ogni pagina
+- [ ] Open Graph tags (`og:title`, `og:description`, `og:url`, `og:locale`)
+- [ ] Schema.org `BreadcrumbList` JSON-LD su pagine interne
+- [ ] Cookie banner presente
+- [ ] Link navbar coerente su TUTTE le pagine (Home, Chi Siamo, Servizi, Progetti, Contatti)
+- [ ] Link footer coerente su tutte le pagine
+- [ ] `loading="lazy"` su tutte le immagini sotto la fold
+- [ ] Nessun CDN esterno — tutto self-hosted
+
+### CSS
+- [ ] Palette colori: solo variabili dalla tabella (Nero, Oro, Crema, Bianco, Grigio, Oro scuro)
+- [ ] Mobile-first: stili base per mobile, `@media` per desktop
+- [ ] Font: Inter self-hosted con `font-display: swap`
+- [ ] Contrasto minimo 4.5:1 su CTA e testi importanti
+- [ ] Animazioni: NO su elemento LCP, solo `reveal` con IntersectionObserver
+
+### JavaScript
+- [ ] Vanilla JS — nessun framework/libreria
+- [ ] i18n: ogni nuova stringa aggiunta in TUTTE e 3 le lingue (it, en, cn)
+- [ ] Chatbot KB: ogni nuova FAQ deve avere `a` (IT), `a_en` (EN), `a_cn` (CN) + keywords multilingua
+- [ ] Chatbot log: risposte sempre loggabili in italiano per il proprietario (`replyIt`)
+- [ ] Performance: chatbot caricato con `setTimeout(3000)`
+
+### SEO & Sitemap
+- [ ] sitemap.xml aggiornata con ogni nuova pagina
+- [ ] `<link rel="canonical">` corretto
+- [ ] robots.txt permissivo per AI bots
+
+### Recensioni
+- [ ] Mix linguistico: ~40% IT, ~40% EN, ~20% CN
+- [ ] Recensioni restano nella lingua originale del recensore (non tradotte)
+
+### Commit
+- [ ] Messaggio in italiano, descrittivo
+- [ ] Nessun file sensibile committato (.env, credenziali)
+
 ## Comandi
 - Nessun build richiesto: aprire `index.html` nel browser
 - Per sviluppo locale: `python3 -m http.server 8000`
@@ -81,6 +127,7 @@ HTML puro, CSS custom, JS vanilla. Nessun framework, nessun build step.
 - [ ] Aggiungere font Inter woff2 nella cartella /fonts
 - [ ] Aggiungere immagini hero e portfolio nella cartella /img
 - [ ] Collegare form contatti a backend email (API relay)
-- [ ] Implementare chatbot AI completo
-- [ ] Aggiungere pagine portfolio/progetti
+- [x] Implementare chatbot multilingua con KB 80+ FAQ
+- [x] Aggiungere pagina progetti showcase
 - [ ] Aggiungere pagina blog per SEO content
+- [ ] Sostituire immagini Unsplash con foto reali dei progetti
