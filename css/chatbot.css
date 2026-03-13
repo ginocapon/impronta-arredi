@@ -372,6 +372,58 @@
   transform: scale(1.08);
 }
 
+/* ---------- Mobile CTA bar (WhatsApp + Chiamata) ---------- */
+.mobile-cta-bar {
+  display: none; /* solo mobile */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9989;
+  gap: 0;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mobile-cta-bar--visible {
+  transform: translateY(0);
+}
+
+.mobile-cta-bar__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 0;
+  transition: opacity 0.2s;
+}
+
+.mobile-cta-bar__btn:active { opacity: 0.8; }
+
+.mobile-cta-bar__btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.mobile-cta-bar__btn--whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+
+.mobile-cta-bar__btn--call {
+  background: linear-gradient(135deg, #C9A84C, #A8893A);
+  color: #0A0A0A;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
   .chatbot-modal {
@@ -382,10 +434,16 @@
     border-radius: 20px 20px 0 0;
   }
 
+  /* FAB spostato in alto per fare spazio alla CTA bar */
   .chatbot-fab {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 56px;
-    height: 56px;
+    bottom: 4.5rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Mostra la CTA bar su mobile */
+  .mobile-cta-bar {
+    display: flex;
   }
 }

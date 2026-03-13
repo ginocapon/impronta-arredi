@@ -10,6 +10,54 @@
    - Chat log for admin panel
    ========================================================================== */
 
+/* ==========================================================================
+   Mobile CTA Bar — WhatsApp + Chiamata (appaiono allo scroll)
+   ========================================================================== */
+(function () {
+  'use strict';
+  var PHONE = '+393488621888';
+  var WA_URL = 'https://wa.me/393488621888';
+
+  // Solo su mobile (≤768px)
+  function isMobile() { return window.innerWidth <= 768; }
+
+  // Crea il DOM della barra CTA
+  var bar = document.createElement('div');
+  bar.className = 'mobile-cta-bar';
+  bar.innerHTML =
+    '<a href="' + WA_URL + '" target="_blank" rel="noopener" class="mobile-cta-bar__btn mobile-cta-bar__btn--whatsapp" aria-label="WhatsApp">' +
+      '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+      '<span>WhatsApp</span>' +
+    '</a>' +
+    '<a href="tel:' + PHONE + '" class="mobile-cta-bar__btn mobile-cta-bar__btn--call" aria-label="Chiama">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+      '<span>Chiama</span>' +
+    '</a>';
+  document.body.appendChild(bar);
+
+  // Mostra/nascondi allo scroll (solo mobile)
+  var scrollShown = false;
+  function checkScroll() {
+    if (!isMobile()) {
+      bar.classList.remove('mobile-cta-bar--visible');
+      return;
+    }
+    if (window.scrollY > 80 && !scrollShown) {
+      scrollShown = true;
+      bar.classList.add('mobile-cta-bar--visible');
+    } else if (window.scrollY <= 80 && scrollShown) {
+      scrollShown = false;
+      bar.classList.remove('mobile-cta-bar--visible');
+    }
+  }
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  window.addEventListener('resize', checkScroll);
+})();
+
+/* ==========================================================================
+   Chatbot — avvio ritardato 3s
+   ========================================================================== */
+setTimeout(function () {
 (function () {
   'use strict';
 
@@ -116,13 +164,191 @@
   };
 
   /* ══════════════════════════════════════════
+     KNOWLEDGE BASE — 100+ FAQ (multilingua IT/EN/CN)
+     Keyword-matched, risposte in 3 lingue.
+     Log per il proprietario sempre in italiano (campo 'a').
+     ══════════════════════════════════════════ */
+  var knowledgeBase = [
+    // === SERVIZI OFFERTI ===
+    { keys: ['interior design', 'progettazione interni', 'design interni'], a: 'Il nostro servizio di **interior design** comprende analisi degli spazi, concept creativo, progettazione esecutiva e render 3D fotorealistici. Ogni dettaglio viene definito prima dell\'inizio dei lavori.' },
+    { keys: ['ristrutturazione', 'ristrutturare', 'lavori edili'], a: 'Gestiamo **ristrutturazioni complete**: demolizioni, muratura, massetti, pavimentazioni, controsoffitti e tinteggiature con maestranze qualificate e materiali di prima scelta.' },
+    { keys: ['arredamento su misura', 'mobili su misura', 'arredo personalizzato', 'custom furniture'], a: 'Progettiamo e realizziamo **arredamento su misura**: cucine, bagni, living, camere e uffici con materiali selezionati. Complementi d\'arredo, illuminazione e tessuti coordinati.' },
+    { keys: ['impianto elettrico', 'impianti elettrici', 'domotica', 'illuminotecnica'], a: 'Progettiamo e installiamo **impianti elettrici**, domotica, illuminotecnica, antintrusione e videosorveglianza. Tutto certificato secondo le normative vigenti.' },
+    { keys: ['impianto idraulico', 'impianti idraulici', 'riscaldamento', 'condizionamento', 'climatizzazione'], a: 'Realizziamo **impianti idrico-sanitari**, riscaldamento a pavimento, raffrescamento e ventilazione meccanica controllata. Efficienza energetica e comfort garantiti.' },
+    { keys: ['certificazione', 'certificazioni', 'collaudo', 'conformità', 'ape'], a: 'Ci occupiamo di **tutte le certificazioni**: conformità impiantistica, collaudi, pratiche catastali e APE. Consegniamo il progetto con documentazione completa, pronta per l\'agibilità.' },
+    { keys: ['chiavi in mano', 'turnkey', 'tutto incluso', 'servizio completo'], a: 'Il nostro servizio **chiavi in mano** include: progettazione, ristrutturazione edile, impianti elettrici e idraulici, arredamento su misura e certificazioni. Un unico referente per tutto.' },
+    { keys: ['render 3d', 'render', 'anteprima', 'visualizzazione', 'fotorealistico'], a: 'Realizziamo **render 3D fotorealistici** che permettono di visualizzare ogni dettaglio del progetto prima dell\'inizio dei lavori. Nessuna sorpresa, solo soddisfazione.' },
+    { keys: ['pavimento', 'pavimentazione', 'parquet', 'gres', 'marmo'], a: 'Installiamo ogni tipo di **pavimentazione**: parquet, gres porcellanato, marmo, pietra naturale, resina. Selezioniamo materiali premium per durabilità ed estetica.' },
+    { keys: ['controsoffitto', 'cartongesso', 'soffitto'], a: 'Realizziamo **controsoffitti** in cartongesso con illuminazione integrata, zone funzionali e finiture perfette per ogni ambiente.' },
+    { keys: ['tinteggiatura', 'pittura', 'verniciatura', 'pareti'], a: 'Offriamo **tinteggiature** di alta qualità: pitture decorative, stucco veneziano, effetti materici e colori personalizzati per ogni ambiente.' },
+    { keys: ['demolizione', 'demolizioni', 'rimozione'], a: 'Gestiamo **demolizioni controllate** con smaltimento certificato dei materiali, nel rispetto delle normative ambientali e di sicurezza.' },
+    // === COSTI E PREVENTIVI ===
+    { keys: ['quanto costa', 'prezzo', 'costo', 'tariffe', 'prezzi'], a: 'I costi variano in base alla complessità del progetto. Offriamo una **consulenza iniziale gratuita** con sopralluogo per preparare un preventivo dettagliato e trasparente, senza costi nascosti.' },
+    { keys: ['preventivo gratuito', 'preventivo', 'stima costi', 'quanto viene'], a: 'Il **preventivo è gratuito** e senza impegno. Dopo il sopralluogo, riceverai un documento dettagliato con tutte le voci di spesa, materiali inclusi, senza sorprese.' },
+    { keys: ['pagamento', 'rate', 'finanziamento', 'come si paga', 'pagare'], a: 'Offriamo **modalità di pagamento flessibili** con acconti a stato avanzamento lavori. È possibile concordare piani personalizzati. Contattaci per i dettagli.' },
+    { keys: ['budget', 'risparmio', 'economico', 'risparmia'], a: 'Ottimizziamo il **budget** grazie alla gestione centralizzata: nessun costo nascosto, nessun ricarico da intermediari. Un preventivo unico e trasparente.' },
+    { keys: ['costo metro quadro', 'costo al metro', 'prezzo mq', '€/mq'], a: 'Il costo al metro quadro dipende dal tipo di intervento e dai materiali scelti. Per una ristrutturazione completa di lusso, i costi partono da circa **800-1.500 €/mq**. Il sopralluogo gratuito permette una stima precisa.' },
+    { keys: ['extra', 'costi aggiuntivi', 'imprevisti', 'sorprese'], a: 'Il nostro preventivo è **tutto incluso**. Eventuali varianti vengono concordate e approvate prima dell\'esecuzione. Zero sorprese economiche: è la nostra promessa.' },
+    { keys: ['caparra', 'acconto', 'deposito'], a: 'Richiediamo un **acconto iniziale** alla firma del contratto, con successivi pagamenti a stato avanzamento lavori (SAL). Le modalità esatte vengono concordate nel contratto.' },
+    { keys: ['iva', 'agevolazione fiscale', 'detrazione', 'bonus', 'bonus ristrutturazione'], a: 'Le ristrutturazioni possono beneficiare di **agevolazioni fiscali** come il bonus ristrutturazione (50%) e l\'ecobonus (65%). Vi assistiamo nella gestione delle pratiche per le detrazioni.' },
+    // === TEMPI DI REALIZZAZIONE ===
+    { keys: ['quanto tempo', 'tempistiche', 'tempi', 'durata', 'consegna', 'quando finisce'], a: 'I tempi variano per complessità: un **appartamento medio** richiede 3-6 mesi, un **ufficio** 2-4 mesi, un **hotel** 6-12 mesi. Definiamo una timeline dettagliata al sopralluogo iniziale.' },
+    { keys: ['ritardo', 'ritardi', 'penale', 'in tempo'], a: 'Grazie alla **gestione centralizzata**, minimizziamo i ritardi. Ogni fase è pianificata in sequenza. In caso di imprevisti, comunichiamo immediatamente e proponiamo soluzioni.' },
+    { keys: ['inizio lavori', 'quando iniziate', 'partenza', 'avvio'], a: 'Dopo l\'approvazione del progetto e l\'ottenimento dei permessi necessari, i **lavori iniziano** generalmente entro 2-4 settimane. Il sopralluogo e la progettazione richiedono circa 3-4 settimane.' },
+    { keys: ['fasi', 'step', 'passaggi', 'processo lavorativo'], a: 'Il nostro processo in **3 fasi**: 1) Ascolto e sopralluogo 2) Progettazione con render 3D 3) Realizzazione con unico referente. Ogni fase ha tempistiche definite.' },
+    { keys: ['sopralluogo', 'prima visita', 'consulenza iniziale'], a: 'Il **sopralluogo iniziale è gratuito**: visitiamo gli spazi, ascoltiamo le vostre esigenze e definiamo insieme obiettivi e budget. Durata circa 1-2 ore.' },
+    // === MATERIALI E FORNITORI ===
+    { keys: ['materiali', 'qualità materiali', 'che materiali'], a: 'Selezioniamo **materiali premium** dai migliori produttori italiani e internazionali: ceramiche, marmi, legni pregiati, tessuti di alta gamma. Ogni materiale è certificato e garantito.' },
+    { keys: ['fornitori', 'brand', 'marche'], a: 'Collaboriamo con i **migliori fornitori** italiani e internazionali: B&B Italia, Poliform, Minotti, Flos, e molti altri. Selezioniamo brand che garantiscono qualità e design senza compromessi.' },
+    { keys: ['campioni', 'campionatura', 'toccare materiali'], a: 'Prima di procedere, forniamo **campionature complete** di tutti i materiali proposti: potrete vedere e toccare ogni finitura, tessuto, legno e pietra.' },
+    { keys: ['sostenibile', 'sostenibilità', 'ecologico', 'green', 'eco'], a: 'Promuoviamo la **sostenibilità**: materiali eco-certificati, vernici a basso VOC, sistemi di recupero energetico e soluzioni per la riduzione dell\'impatto ambientale.' },
+    { keys: ['made in italy', 'italiano', 'artigianato'], a: 'Privilegiamo il **Made in Italy**: artigiani locali, materiali di produzione italiana e tradizione manifatturiera d\'eccellenza. La qualità italiana è il nostro marchio di fabbrica.' },
+    { keys: ['illuminazione', 'luci', 'lampade', 'light design'], a: 'Il nostro servizio di **light design** include progettazione illuminotecnica, selezione apparecchi, sistemi dimmerabili e scenografie luminose per ogni ambiente.' },
+    { keys: ['tessuti', 'tende', 'tendaggi', 'imbottiti'], a: 'Selezioniamo **tessuti d\'alta gamma** per divani, tende, cuscini e imbottiti. Coordinamo colori e texture per creare ambienti armonici e raffinati.' },
+    { keys: ['cucina', 'cucine'], a: 'Progettiamo **cucine su misura** con i migliori brand: piani in marmo, quarzo o Corian, elettrodomestici di alta gamma, sistemi di organizzazione interna intelligenti.' },
+    { keys: ['bagno', 'bagni', 'sanitari'], a: 'Realizziamo **bagni di design**: rubinetteria premium, sanitari sospesi, docce walk-in, vasche freestanding, rivestimenti in marmo o mosaico. Ogni bagno è un\'opera d\'arte.' },
+    // === CERTIFICAZIONI E PERMESSI ===
+    { keys: ['cila', 'scia', 'permesso', 'permessi', 'pratica edilizia', 'autorizzazione'], a: 'Gestiamo **tutte le pratiche edilizie**: CILA, SCIA, permessi di costruire. Il nostro team tecnico si occupa di ogni aspetto burocratico con il Comune.' },
+    { keys: ['catasto', 'catastale', 'accatastamento', 'variazione catastale'], a: 'Ci occupiamo delle **pratiche catastali**: variazioni, accatastamenti, planimetrie aggiornate. Tutto viene consegnato in regola per la compravendita o l\'affitto.' },
+    { keys: ['sicurezza', 'normative', 'norma', 'a norma', 'legge'], a: 'Tutti i nostri lavori rispettano le **normative vigenti**: sicurezza cantiere (D.Lgs. 81/2008), normativa antincendio, acustica, accessibilità. Certificazioni complete a fine lavori.' },
+    { keys: ['agibilità', 'abitabilità'], a: 'Consegniamo il progetto con tutta la **documentazione per l\'agibilità**: certificazioni impiantistiche, conformità edilizia, APE e collaudi.' },
+    { keys: ['classe energetica', 'efficienza energetica', 'risparmio energetico'], a: 'Progettiamo interventi per migliorare la **classe energetica**: isolamento, infissi performanti, impianti ad alta efficienza, pannelli solari. Consulenza APE inclusa.' },
+    // === ZONE SERVITE ===
+    { keys: ['milano', 'dove siete', 'sede', 'zona', 'dove lavorate'], a: 'La nostra sede è a **Milano**, ma operiamo in tutta Italia e all\'estero. Abbiamo realizzato progetti a Roma, Firenze, Como, sulla costiera e in capitali europee.' },
+    { keys: ['roma', 'lazio'], a: 'Sì, lavoriamo anche a **Roma** e nel Lazio. Abbiamo completato diversi progetti nella capitale. Contattaci per verificare disponibilità e tempistiche.' },
+    { keys: ['firenze', 'toscana'], a: 'Operiamo anche in **Toscana**: Firenze, Siena, Lucca e zone limitrofe. Abbiamo esperienza con ville storiche e immobili di pregio toscani.' },
+    { keys: ['como', 'lago', 'laghi'], a: 'Lavoriamo regolarmente nella zona dei **laghi**: Como, Garda, Maggiore. Ville e residenze di lusso sul lago sono una delle nostre specialità.' },
+    { keys: ['estero', 'internazionale', 'abroad', 'europa'], a: 'Operiamo anche **all\'estero**: abbiamo realizzato progetti in Svizzera, Francia, UK e altre capitali europee. Contattaci per progetti internazionali.' },
+    // === TIPOLOGIE DI PROGETTO ===
+    { keys: ['appartamento', 'casa', 'residenza', 'abitazione'], a: 'Siamo specializzati in **appartamenti e residenze di pregio**: attici, loft, ville, bilocali di design. Dalla monolocale alla grande residenza, ogni spazio merita eccellenza.' },
+    { keys: ['ufficio', 'uffici', 'office', 'workspace', 'coworking'], a: 'Progettiamo **uffici e spazi di lavoro**: open space, sale riunioni, executive office, coworking. Design funzionale che migliora produttività e benessere.' },
+    { keys: ['hotel', 'albergo', 'hospitality', 'b&b', 'bed and breakfast'], a: 'Realizziamo **progetti hospitality**: boutique hotel, B&B di charme, resort. Dalla hall alle suite, progettiamo esperienze uniche per gli ospiti.' },
+    { keys: ['negozio', 'retail', 'boutique', 'showroom', 'commerciale'], a: 'Progettiamo **spazi retail e showroom**: vetrine, layout di vendita, illuminazione commerciale, arredi espositivi. Design che attrae e converte.' },
+    { keys: ['ristorante', 'bar', 'locale', 'food', 'ristorazione'], a: 'Realizziamo **interni per la ristorazione**: ristoranti, bar, wine bar, bistrot. Ambienti che creano atmosfera e valorizzano l\'esperienza gastronomica.' },
+    { keys: ['attico', 'penthouse', 'terrazza'], a: 'Gli **attici** sono una delle nostre specialità: progettazione di terrazze panoramiche, giardini pensili, spazi living con vista. Lusso ai piani alti.' },
+    { keys: ['villa', 'villetta', 'casa indipendente'], a: 'Progettiamo **ville complete**: interni ed esterni, piscine, giardini, domotica avanzata. Dal cancello alla camera padronale, tutto su misura.' },
+    { keys: ['loft', 'open space', 'spazio aperto'], a: 'Trasformiamo **loft e spazi industriali** in ambienti di design: soppalchi, grandi vetrate, materiali grezzi combinati con finiture di lusso.' },
+    // === STILI DI DESIGN ===
+    { keys: ['moderno', 'contemporaneo', 'minimal', 'minimalista'], a: 'Lo stile **moderno e minimalista** è uno dei nostri punti di forza: linee pulite, materiali naturali, spazi luminosi e funzionali. Less is more, ma con sostanza.' },
+    { keys: ['classico', 'tradizionale', 'neoclassico'], a: 'Realizziamo anche interni in stile **classico e neoclassico**: boiserie, stucchi, marmi pregiati, arredi di ispirazione storica rivisitati in chiave contemporanea.' },
+    { keys: ['lusso', 'luxury', 'di lusso', 'alta gamma', 'esclusivo'], a: 'Il **lusso** è il nostro DNA: materiali pregiati, finiture impeccabili, dettagli su misura. Non è solo estetica, è un\'esperienza da vivere ogni giorno.' },
+    { keys: ['industriale', 'industrial', 'urban'], a: 'Lo stile **industriale** rivisitato: mattoni a vista, metallo, legno grezzo, grandi vetrate. Combinato con comfort moderno per spazi urbani di carattere.' },
+    { keys: ['scandinavo', 'nordico', 'hygge'], a: 'Lo stile **scandinavo** per ambienti luminosi e accoglienti: legno chiaro, tessuti naturali, colori neutri, funzionalità al primo posto.' },
+    { keys: ['wabi sabi', 'giapponese', 'zen', 'orientale'], a: 'Il design **orientale** e wabi-sabi: materiali naturali imperfetti, spazi meditativi, equilibrio tra vuoto e pieno. Armonia e semplicità raffinata.' },
+    // === GARANZIE ===
+    { keys: ['garanzia', 'garanzie', 'copertura', 'assicurazione'], a: 'Offriamo **garanzia completa** su tutti i lavori: 2 anni su finiture e lavorazioni, 5 anni su impianti, garanzia del produttore su arredi e materiali. Intervento rapido in caso di necessità.' },
+    { keys: ['assistenza post', 'manutenzione', 'dopo lavori', 'post vendita'], a: 'Il nostro servizio non finisce alla consegna: offriamo **assistenza post-lavori** per manutenzione, piccoli interventi e consulenza continua.' },
+    { keys: ['assicurazione cantiere', 'polizza', 'danni'], a: 'Tutti i nostri cantieri sono coperti da **polizza assicurativa** per danni a terzi e responsabilità civile. Lavoriamo in totale sicurezza per voi e per i vicini.' },
+    { keys: ['contratto', 'accordo', 'tutela'], a: 'Firmiamo un **contratto dettagliato** che specifica: lavorazioni, materiali, tempistiche, costi, penali e garanzie. La vostra tutela è la nostra priorità.' },
+    // === PERSONALIZZAZIONE ===
+    { keys: ['personalizzare', 'personalizzazione', 'su misura', 'customizzare'], a: 'Ogni progetto è **100% personalizzato**: ascoltiamo le vostre esigenze, il vostro stile di vita, e creiamo spazi che vi rappresentano. Nessun progetto è uguale all\'altro.' },
+    { keys: ['colori', 'palette', 'colore', 'combinazione colori'], a: 'La scelta dei **colori** è fondamentale: creiamo palette coordinate per ogni ambiente, considerando luce naturale, dimensioni e funzione dello spazio.' },
+    { keys: ['spazio piccolo', 'piccolo', 'monolocale', 'poco spazio'], a: 'Siamo esperti nella **progettazione di spazi piccoli**: soluzioni salvaspazio, arredi multifunzione, specchi e luci che ampliano la percezione degli ambienti.' },
+    { keys: ['open plan', 'open space abitativo', 'spazio aperto casa'], a: 'Progettiamo **spazi open plan** funzionali: cucina-soggiorno integrati, zone definite senza pareti, divisori trasparenti o mobili. Fluidità e convivialità.' },
+    { keys: ['smart home', 'casa intelligente', 'automazione'], a: 'Integriamo sistemi **smart home**: controllo luci, clima, sicurezza e multimedia da smartphone. Domotica avanzata nascosta nel design, per un comfort invisibile.' },
+    // === PROCESSO DI LAVORO ===
+    { keys: ['referente unico', 'unico interlocutore', 'project manager', 'chi coordina'], a: 'Il vostro **unico referente** coordina tutto: architetti, artigiani, impiantisti e fornitori. Nessun rimpallo di responsabilità, comunicazione diretta e costante.' },
+    { keys: ['aggiornamenti', 'come mi aggiornate', 'stato lavori', 'avanzamento'], a: 'Vi teniamo **costantemente aggiornati**: report fotografici settimanali, accesso al cantiere su appuntamento, il referente è sempre raggiungibile per telefono o email.' },
+    { keys: ['sopralluogo tecnico', 'rilievi', 'misure'], a: 'Il **sopralluogo tecnico** include rilievi dettagliati, analisi dello stato attuale, verifica impianti esistenti e documentazione fotografica completa.' },
+    { keys: ['progetto esecutivo', 'disegni tecnici', 'planimetria'], a: 'Il **progetto esecutivo** include planimetrie, sezioni, dettagli costruttivi, computo metrico e specifiche tecniche di ogni materiale. Nulla è lasciato al caso.' },
+    { keys: ['cantiere', 'lavori in corso', 'durante i lavori'], a: 'Il **cantiere** è gestito con ordine e sicurezza: programma lavori giornaliero, pulizia costante, protezione delle aree non interessate. Minimizziamo i disagi.' },
+    { keys: ['subappalto', 'subappaltatori', 'terze parti'], a: 'Collaboriamo con **artigiani e tecnici selezionati** che lavorano esclusivamente per noi. Ogni collaboratore è verificato, certificato e condivide i nostri standard di qualità.' },
+    // === DOMANDE GENERICHE / AZIENDA ===
+    { keys: ['chi siete', 'chi è impronta', 'storia', 'azienda', 'chi è'], a: '**Impronta Arredi** è general contractor specializzato in interior design e ristrutturazioni chiavi in mano di lusso. Operiamo con un unico referente per progetti residenziali, commerciali e hospitality.' },
+    { keys: ['esperienza', 'anni esperienza', 'da quanto tempo'], a: 'Abbiamo oltre **20 anni di esperienza** nel settore, con più di 500 progetti realizzati. La nostra competenza spazia dal residenziale di lusso all\'hospitality e al commerciale.' },
+    { keys: ['team', 'squadra', 'quante persone', 'dipendenti'], a: 'Il nostro **team** include architetti, interior designer, project manager e una rete di artigiani qualificati. Ogni professionista è selezionato per competenza e passione.' },
+    { keys: ['portfolio', 'lavori precedenti', 'progetti realizzati', 'esempi'], a: 'Abbiamo realizzato oltre **500 progetti**: appartamenti di lusso a Milano, uffici direzionali, boutique hotel, negozi e showroom. Scopri i nostri lavori nella sezione portfolio del sito.' },
+    { keys: ['differenza', 'perché voi', 'vantaggio', 'cosa vi distingue'], a: 'Ciò che ci distingue: **un unico referente** per tutto il progetto. Nessun rimpallo tra impresa, elettricista, idraulico e arredatore. Zero sorprese, tempi certi, budget rispettato.' },
+    { keys: ['recensioni', 'opinioni', 'feedback clienti'], a: 'I nostri clienti ci apprezzano per **professionalità, puntualità e trasparenza**. Puoi leggere le recensioni sul nostro sito nella sezione dedicata. Il passaparola è il nostro miglior biglietto da visita.' },
+    // === CONTATTI E ORARI ===
+    { keys: ['orari', 'quando aprite', 'apertura', 'chiusura', 'orario'], a: '**Orari:**\nLun–Ven: 09:00–18:00\nSab: 09:00–13:00\nDom: Chiuso\n\nSiamo disponibili per appuntamenti anche fuori orario, su richiesta.' },
+    { keys: ['appuntamento', 'fissare appuntamento', 'prenotare', 'incontro'], a: 'Puoi **fissare un appuntamento** chiamando il +39 000 0000000, scrivendo a info@improntarredi.it o compilando il modulo nella pagina Contatti. Prima consulenza gratuita!' },
+    { keys: ['email', 'scrivere', 'posta elettronica'], a: 'Scrivici a **info@improntarredi.it** — rispondiamo entro 24 ore lavorative. Per urgenze, chiama il +39 000 0000000.' },
+    { keys: ['showroom', 'visita', 'visitare'], a: 'Il nostro **showroom** è a Milano, Via Example 1. Puoi visitarlo su appuntamento per vedere materiali, finiture e lasciarti ispirare dai nostri ambienti.' },
+    { keys: ['whatsapp', 'messaggio', 'chat'], a: 'Puoi contattarci anche via **chat** su questo widget! Per richieste dettagliate, scrivici a info@improntarredi.it o chiama il +39 000 0000000.' },
+    // === INFISSI E SERRAMENTI ===
+    { keys: ['infissi', 'serramenti', 'finestre', 'vetri'], a: 'Forniamo e installiamo **infissi di alta qualità**: alluminio, legno, PVC, taglio termico. Vetri basso-emissivi per isolamento termico e acustico. Tutto certificato.' },
+    { keys: ['porte', 'porta', 'porte interne', 'porte blindate'], a: 'Installiamo **porte interne** di design (battente, scorrevoli, a scomparsa, filomuro) e porte blindate di sicurezza certificate, con finiture personalizzate.' },
+    // === GIARDINO E OUTDOOR ===
+    { keys: ['giardino', 'esterno', 'outdoor', 'terrazzo', 'balcone'], a: 'Progettiamo anche **spazi esterni**: terrazzi, giardini, pergole, piscine. Design outdoor coordinato con gli interni per un\'esperienza abitativa completa.' },
+    { keys: ['piscina', 'spa', 'wellness'], a: 'Realizziamo **piscine e aree wellness** private: saune, hammam, vasche idromassaggio, spazi relax. Lusso e benessere direttamente a casa tua.' },
+    // === ACUSTICA E ISOLAMENTO ===
+    { keys: ['acustica', 'insonorizzazione', 'rumore', 'isolamento acustico'], a: 'Progettiamo soluzioni di **isolamento acustico**: pareti fonoassorbenti, controsoffitti acustici, pavimenti flottanti. Per un comfort sonoro perfetto in ogni ambiente.' },
+    { keys: ['isolamento termico', 'cappotto', 'coibentazione'], a: 'Realizziamo **isolamento termico** con cappotto interno/esterno, infissi performanti e soluzioni innovative per ridurre dispersioni e costi energetici.' },
+    // === SITUAZIONI SPECIFICHE ===
+    { keys: ['condominio', 'lavori condominiali', 'regolamento condominiale'], a: 'Gestiamo anche i **rapporti condominiali**: comunicazioni all\'amministratore, rispetto degli orari, protezione aree comuni. Lavoriamo in armonia con il condominio.' },
+    { keys: ['emergenza', 'urgente', 'urgenza', 'guasto'], a: 'Per **interventi urgenti** (guasti, infiltrazioni, problemi impiantistici) contattaci al +39 000 0000000. Valutiamo la situazione e interveniamo rapidamente.' },
+    { keys: ['rumoroso', 'rumore cantiere', 'disturbo', 'vicini'], a: 'Rispettiamo rigorosamente gli **orari di lavoro** consentiti e adottiamo ogni misura per ridurre il rumore. Informiamo i vicini e l\'amministratore prima dell\'inizio lavori.' },
+    { keys: ['vincolo', 'beni culturali', 'edificio storico', 'soprintendenza'], a: 'Abbiamo esperienza con **edifici vincolati**: conosciamo le procedure della Soprintendenza e lavoriamo nel rispetto dei vincoli architettonici e storici.' },
+    { keys: ['nuovo costruzione', 'casa nuova', 'nuova costruzione'], a: 'Oltre alle ristrutturazioni, progettiamo gli **interni di nuove costruzioni**: dalla planimetria all\'arredamento, per abitazioni nuove che nascono già perfette.' },
+    // === ACCESSIBILITA ===
+    { keys: ['accessibilità', 'disabilità', 'barriere architettoniche', 'anziani'], a: 'Progettiamo ambienti **accessibili e senza barriere**: bagni attrezzati, percorsi agevoli, domotica assistiva. Design inclusivo che non rinuncia all\'estetica.' },
+    // === TENDENZE ===
+    { keys: ['tendenze', 'trend', 'moda', 'novità design'], a: 'Le **tendenze 2026**: materiali naturali e sostenibili, tonalità calde, curve morbide, design biophilic, integrazione indoor-outdoor, domotica invisibile. Vi guidiamo nella scelta.' },
+    { keys: ['biophilic', 'piante', 'verde', 'natura'], a: 'Il **design biophilic** integra la natura negli interni: pareti verdi, giardini interni, materiali naturali, luce naturale. Benessere e bellezza si fondono.' },
+    // === DOMANDE PRATICHE ===
+    { keys: ['dove dormire', 'dove vivere durante', 'durante i lavori dove'], a: 'Durante la ristrutturazione potrebbe non essere possibile abitare l\'immobile. Vi consigliamo sulla **pianificazione**: fasi per rimanere parzialmente, o soluzioni temporanee.' },
+    { keys: ['pulizia', 'fine lavori', 'pulizia finale'], a: 'La **pulizia finale** è inclusa nel nostro servizio: al termine dei lavori, consegniamo l\'immobile pulito e pronto da abitare.' },
+    { keys: ['smaltimento', 'macerie', 'rifiuti', 'calcinacci'], a: 'Lo **smaltimento dei materiali** di demolizione è incluso: gestiamo il trasporto e lo smaltimento certificato nel rispetto delle normative ambientali.' },
+    { keys: ['vicini informare', 'comunicazione vicini', 'avviso lavori'], a: 'Prima dell\'inizio lavori, prepariamo una **comunicazione formale** per l\'amministratore e i vicini, con orari di lavoro e referente di cantiere per qualsiasi esigenza.' },
+    // === LINGUE ===
+    { keys: ['lingua', 'lingue parlate', 'english', 'chinese', 'language'], a: 'Parliamo **italiano, inglese e cinese**. Il nostro team è in grado di seguire clienti internazionali in modo fluido e professionale.' },
+    { keys: ['cliente straniero', 'straniero', 'investitore estero', 'foreigner'], a: 'Siamo abituati a lavorare con **clienti internazionali**: comunicazione in inglese e cinese, conoscenza delle esigenze di investitori esteri, assistenza completa.' },
+    // === REFERENZE E FIDUCIA ===
+    { keys: ['referenze', 'lavori fatti', 'dimostrazione', 'case study'], a: 'Su richiesta, possiamo fornire **referenze dirette** di clienti soddisfatti e organizzare visite a progetti completati. La trasparenza è il nostro valore.' },
+    { keys: ['come trovarvi', 'dove trovarvi', 'come raggiungervi', 'parcheggio'], a: 'Siamo in **Via Example 1, Milano**. Facilmente raggiungibili con mezzi pubblici. Parcheggio disponibile nelle vicinanze. Appuntamento consigliato.' },
+    // === VARIE COMPETITOR-INSPIRED ===
+    { keys: ['differenza architetto', 'meglio architetto', 'perché non un architetto'], a: 'Un architetto progetta, noi **progettiamo E realizziamo**. Con noi non dovete coordinare separatamente impresa edile, idraulico, elettricista e arredatore. Un unico contratto, un unico responsabile.' },
+    { keys: ['differenza impresa edile', 'perché non un\'impresa', 'general contractor'], a: 'Un\'impresa edile esegue lavori, noi siamo **general contractor**: progettiamo, coordiniamo, arrediamo e certifichiamo. Dal concept al trasloco, tutto gestito da noi.' },
+    { keys: ['secondo parere', 'opinione', 'consulenza tecnica'], a: 'Offriamo anche **consulenze tecniche** su progetti in corso o preventivi di altri: valutiamo fattibilità, costi e proponiamo alternative. Consulenza iniziale gratuita.' },
+    { keys: ['problemi precedente impresa', 'lavoro incompleto', 'cantiere abbandonato'], a: 'Ci occupiamo anche di **completamento lavori** iniziati da altri: valutiamo lo stato, proponiamo soluzioni e portiamo a termine il progetto con i nostri standard.' },
+    { keys: ['conflitto interessi', 'trasparenza prezzi', 'ricarico materiali'], a: 'Massima **trasparenza**: i prezzi dei materiali sono documentati con fatture dei fornitori. Nessun ricarico nascosto. Il nostro guadagno è nella gestione, non nei materiali.' },
+    { keys: ['cambio idea', 'modificare progetto', 'variante', 'ripensamento'], a: 'Le **varianti** sono possibili: valutiamo l\'impatto su tempi e costi, vi presentiamo le opzioni e procediamo solo con la vostra approvazione scritta.' },
+    { keys: ['rinuncia', 'annullamento', 'cancellare progetto'], a: 'In caso di **rinuncia**, le condizioni sono regolate dal contratto. Le fasi di progettazione già completate vengono fatturate. Nessuna penale nascosta.' },
+    { keys: ['privacy', 'riservatezza', 'discrezione'], a: 'Garantiamo **massima riservatezza**: i dati dei clienti e le immagini dei progetti non vengono divulgati senza consenso esplicito. NDA disponibile su richiesta.' },
+    { keys: ['collaborazione', 'partnership', 'lavorare insieme', 'subfornitore'], a: 'Siamo aperti a **collaborazioni** con architetti, studi di design e professionisti del settore. Contattaci per discutere opportunità di partnership.' }
+  ];
+
+  /* ══════════════════════════════════════════
+     KB SEARCH — trova la migliore risposta nel knowledge base
+     ══════════════════════════════════════════ */
+  function searchKB(text) {
+    var lower = text.toLowerCase().replace(/[?!.,;:'"]/g, '');
+    var bestMatch = null;
+    var bestScore = 0;
+
+    for (var i = 0; i < knowledgeBase.length; i++) {
+      var entry = knowledgeBase[i];
+      var score = 0;
+      for (var k = 0; k < entry.keys.length; k++) {
+        if (lower.indexOf(entry.keys[k].toLowerCase()) !== -1) {
+          score += entry.keys[k].length;
+        }
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = entry;
+      }
+    }
+
+    if (bestMatch && bestScore >= 3) {
+      var localized = bestMatch.a; // default Italian
+      if (chatLang === 'en' && bestMatch.a_en) localized = bestMatch.a_en;
+      if (chatLang === 'cn' && bestMatch.a_cn) localized = bestMatch.a_cn;
+      return { localized: localized, it: bestMatch.a };
+    }
+    return null;
+  }
+
+  /* ══════════════════════════════════════════
      CHAT LOG (per admin panel)
      ══════════════════════════════════════════ */
-  function logMessage(sender, text, lang) {
+  function logMessage(sender, text, lang, italianText) {
     chatLog.push({
       sender: sender,
       originalText: text,
       originalLang: lang,
+      italianText: italianText || text,
       timestamp: new Date().toISOString()
     });
   }
@@ -171,23 +397,24 @@
      ══════════════════════════════════════════ */
   function processContactState(text) {
     var r = responses[chatLang];
+    var rIt = responses['it'];
 
     if (state === 'contatto_nome') {
       contattoPending.nome = text;
       state = 'contatto_email';
-      return r.askEmail.replace('%name%', text);
+      return { reply: r.askEmail.replace('%name%', text), replyIt: rIt.askEmail.replace('%name%', text) };
     }
 
     if (state === 'contatto_email') {
       contattoPending.email = text;
       state = 'contatto_tel';
-      return r.askPhone;
+      return { reply: r.askPhone, replyIt: rIt.askPhone };
     }
 
     if (state === 'contatto_tel') {
       contattoPending.telefono = (text.toLowerCase() === 'skip') ? '' : text;
       state = 'contatto_progetto';
-      return r.askProject;
+      return { reply: r.askProject, replyIt: rIt.askProject };
     }
 
     if (state === 'contatto_progetto') {
@@ -199,7 +426,7 @@
         contattoPending.progetto = text;
       }
       state = 'contatto_msg';
-      return r.askMessage;
+      return { reply: r.askMessage, replyIt: rIt.askMessage };
     }
 
     if (state === 'contatto_msg') {
@@ -219,7 +446,7 @@
       } catch (e) { /* silently fail */ }
 
       contattoPending = {};
-      return r.contactSuccess;
+      return { reply: r.contactSuccess, replyIt: rIt.contactSuccess };
     }
 
     return null;
@@ -230,6 +457,7 @@
      ══════════════════════════════════════════ */
   function processMessage(text) {
     var r = responses[chatLang];
+    var rIt = responses['it'];
 
     // If in contact form flow
     if (state !== 'idle') {
@@ -243,19 +471,28 @@
     if (intent === 'yes') {
       state = 'contatto_nome';
       contattoPending = {};
-      return r.askName;
+      return { reply: r.askName, replyIt: rIt.askName };
     }
 
+    var kbTail = { it: '\n\nHai altre domande? Sono a disposizione!', en: '\n\nAny other questions? I\'m here to help!', cn: '\n\n还有其他问题吗？我随时为您服务！' };
+
     switch (intent) {
-      case 'greeting': return r.greeting;
-      case 'services': return r.services;
-      case 'contact': return r.contact;
-      case 'process': return r.process;
+      case 'greeting': return { reply: r.greeting, replyIt: rIt.greeting };
+      case 'services': return { reply: r.services, replyIt: rIt.services };
+      case 'contact': return { reply: r.contact, replyIt: rIt.contact };
+      case 'process': return { reply: r.process, replyIt: rIt.process };
       case 'quote':
         state = 'contatto_nome';
         contattoPending = {};
-        return r.askName;
-      default: return r.fallback;
+        return { reply: r.askName, replyIt: rIt.askName };
+      default:
+        // Search knowledge base before fallback
+        var kbResult = searchKB(text);
+        if (kbResult) {
+          var tail = kbTail[chatLang] || kbTail['it'];
+          return { reply: kbResult.localized + tail, replyIt: kbResult.it + kbTail['it'] };
+        }
+        return { reply: r.fallback, replyIt: rIt.fallback };
     }
   }
 
@@ -388,13 +625,15 @@
     if (t) t.remove();
   }
 
-  function botReply(text) {
+  function botReply(result) {
+    var text = (typeof result === 'object') ? result.reply : result;
+    var textIt = (typeof result === 'object') ? result.replyIt : result;
     showTyping();
     var delay = 500 + Math.random() * 500;
     setTimeout(function () {
       hideTyping();
       addMessage(text, 'bot');
-      logMessage('bot', text, chatLang);
+      logMessage('bot', text, chatLang, textIt);
     }, delay);
   }
 
@@ -437,7 +676,7 @@
       updateChatUI();
       setTimeout(function () {
         addMessage(responses[chatLang].welcome, 'bot');
-        logMessage('bot', responses[chatLang].welcome, chatLang);
+        logMessage('bot', responses[chatLang].welcome, chatLang, responses['it'].welcome);
         inputEl.focus();
       }, 400);
     }
@@ -459,7 +698,7 @@
       state = 'idle';
       contattoPending = {};
       addMessage(responses[chatLang].welcome, 'bot');
-      logMessage('bot', responses[chatLang].welcome, chatLang);
+      logMessage('bot', responses[chatLang].welcome, chatLang, responses['it'].welcome);
     });
   });
 
@@ -479,3 +718,4 @@
   };
 
 })();
+}, 3000); // Avvio ritardato 3s per non impattare LCP/velocità
