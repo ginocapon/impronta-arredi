@@ -859,7 +859,17 @@
   }
 
   /* =================================================================
-     10. EXPOSE setLang globally
+     10. HERO GLAMOUR EFFECTS (attivati dopo 3s per non impattare LCP)
+     ================================================================= */
+  var heroGlamour = document.getElementById('hero-glamour');
+  if (heroGlamour) {
+    setTimeout(function () {
+      heroGlamour.classList.add('hero--glamour');
+    }, 3000);
+  }
+
+  /* =================================================================
+     11. EXPOSE setLang globally
      ================================================================= */
   window.improntaSetLang = setLang;
   window.improntaGetLang = function () { return currentLang; };

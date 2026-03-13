@@ -424,6 +424,61 @@
   color: #0A0A0A;
 }
 
+/* ---------- Tour buttons ---------- */
+.chatbot-tour-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem 0;
+  animation: chatMsgIn 0.3s ease;
+}
+
+.chatbot-tour-btn {
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  border: 1.5px solid;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.chatbot-tour-btn--next {
+  background: linear-gradient(135deg, #C9A84C, #A8893A);
+  border-color: #C9A84C;
+  color: #0A0A0A;
+}
+
+.chatbot-tour-btn--next:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.35);
+}
+
+.chatbot-tour-btn--visit {
+  background: #fff;
+  border-color: #C9A84C;
+  color: #A8893A;
+}
+
+.chatbot-tour-btn--visit:hover {
+  background: #f5f0e8;
+}
+
+.chatbot-tour-btn--stop {
+  background: transparent;
+  border-color: #d4d0c8;
+  color: #888;
+}
+
+.chatbot-tour-btn--stop:hover {
+  border-color: #999;
+  color: #555;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
   .chatbot-modal {

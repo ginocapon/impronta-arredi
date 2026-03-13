@@ -68,13 +68,77 @@ setTimeout(function () {
   var chatLang = 'it';
   var isOpen = false;
   var hasShownWelcome = false;
-  var state = 'idle'; // idle | contatto_nome | contatto_email | contatto_tel | contatto_progetto | contatto_msg
+  var state = 'idle'; // idle | contatto_nome | contatto_email | contatto_tel | contatto_progetto | contatto_msg | tour
+  var tourStep = -1; // -1 = non in tour
   var contattoPending = {};
   var chatLog = [];
+  var autoOpened = false; // per auto-apertura desktop
 
   /* ══════════════════════════════════════════
      RISPOSTE MULTILINGUA
      ══════════════════════════════════════════ */
+  /* ══════════════════════════════════════════
+     TOUR GUIDATO — percorso interattivo sezioni sito
+     ══════════════════════════════════════════ */
+  var tourSteps = [
+    {
+      section: 'servizi',
+      url: 'servizi.html',
+      it: '**1/5 — I nostri servizi**\n\nOffriamo un servizio **chiavi in mano**: progettazione, ristrutturazione, impianti, arredamento su misura e certificazioni.\n\nUn unico referente per tutto il progetto!',
+      en: '**1/5 — Our services**\n\nWe offer a **turnkey service**: design, renovation, systems, custom furnishing and certifications.\n\nOne single contact for the entire project!',
+      cn: '**1/5 — 我们的服务**\n\n我们提供**交钥匙服务**：设计、翻新、系统、定制家具和认证。\n\n整个项目只需一个联系人！'
+    },
+    {
+      section: 'progetti',
+      url: 'progetti.html',
+      it: '**2/5 — I nostri progetti**\n\nAbbiamo realizzato oltre **500 progetti** di lusso: appartamenti, uffici, hotel, negozi. Dai un\'occhiata al nostro portfolio!',
+      en: '**2/5 — Our projects**\n\nWe have completed over **500 luxury projects**: apartments, offices, hotels, shops. Take a look at our portfolio!',
+      cn: '**2/5 — 我们的项目**\n\n我们已完成超过**500个豪华项目**：公寓、办公室、酒店、商店。看看我们的作品集！'
+    },
+    {
+      section: 'chi-siamo',
+      url: 'chi-siamo.html',
+      it: '**3/5 — Chi siamo**\n\nOltre **20 anni di esperienza** nel settore. Un team di architetti, designer e project manager dedicati al tuo progetto.',
+      en: '**3/5 — About us**\n\nOver **20 years of experience** in the industry. A team of architects, designers and project managers dedicated to your project.',
+      cn: '**3/5 — 关于我们**\n\n行业超过**20年经验**。由建筑师、设计师和项目经理组成的团队，专注于您的项目。'
+    },
+    {
+      section: 'processo',
+      url: null,
+      it: '**4/5 — Come lavoriamo**\n\n**3 fasi semplici:**\n1. Ascolto e sopralluogo gratuito\n2. Progettazione con render 3D\n3. Realizzazione con unico referente\n\nZero sorprese, tempi certi, budget rispettato.',
+      en: '**4/5 — How we work**\n\n**3 simple phases:**\n1. Free consultation and site visit\n2. Design with 3D renders\n3. Execution with single contact\n\nZero surprises, certain timelines, respected budget.',
+      cn: '**4/5 — 我们如何工作**\n\n**3个简单阶段：**\n1. 免费咨询和现场勘察\n2. 3D效果图设计\n3. 由单一负责人执行\n\n零意外、确定时间、尊重预算。'
+    },
+    {
+      section: 'contatti',
+      url: 'contatti.html',
+      it: '**5/5 — Contattaci**\n\nPronti a iniziare? Richiedi una **consulenza gratuita**!\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nOppure compila il modulo nella pagina Contatti!',
+      en: '**5/5 — Contact us**\n\nReady to start? Request a **free consultation**!\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nOr fill out the form on the Contact page!',
+      cn: '**5/5 — 联系我们**\n\n准备好开始了吗？申请**免费咨询**！\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\n或在联系页面填写表格！'
+    }
+  ];
+
+  var tourResponses = {
+    it: {
+      invite: 'Ciao! Benvenuto su **Impronta Arredi**.\n\nVuoi fare una **guida interattiva** del sito? Ti mostrerò cosa facciamo e come possiamo aiutarti!\n\nOppure scrivimi direttamente la tua domanda.',
+      nextStep: 'Vuoi continuare la guida?',
+      tourEnd: '**Tour completato!** Ora conosci Impronta Arredi.\n\nPosso aiutarti con qualcos\'altro? Scrivimi una domanda o richiedi un preventivo gratuito!',
+      tourExit: 'Nessun problema! Puoi farmi qualsiasi domanda quando vuoi. Come posso aiutarti?'
+    },
+    en: {
+      invite: 'Hello! Welcome to **Impronta Arredi**.\n\nWould you like an **interactive guide** of the site? I\'ll show you what we do and how we can help!\n\nOr just ask me your question directly.',
+      nextStep: 'Want to continue the guide?',
+      tourEnd: '**Tour complete!** Now you know Impronta Arredi.\n\nCan I help with anything else? Ask me a question or request a free quote!',
+      tourExit: 'No problem! You can ask me any question anytime. How can I help you?'
+    },
+    cn: {
+      invite: '您好！欢迎来到**Impronta Arredi**。\n\n您想进行**网站互动导览**吗？我将为您介绍我们的服务！\n\n或者直接向我提问。',
+      nextStep: '继续导览吗？',
+      tourEnd: '**导览完成！**现在您了解了Impronta Arredi。\n\n还有其他需要帮助的吗？向我提问或申请免费报价！',
+      tourExit: '没问题！您随时可以向我提问。有什么可以帮您的吗？'
+    }
+  };
+
   var responses = {
     it: {
       welcome: 'Ciao! Sono l\'assistente di **Impronta Arredi**.\n\nPosso aiutarti con:\n• **Servizi** — cosa offriamo\n• **Preventivo** — richiedi un preventivo gratuito\n• **Contatti** — orari, telefono, email\n• **Processo** — come lavoriamo\n\nCome posso aiutarti?',
@@ -82,7 +146,7 @@ setTimeout(function () {
       contact: '**Contatti Impronta Arredi**\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n📍 Via Example 1, Milano\n\n**Orari:**\nLun–Ven: 09:00–18:00\nSab: 09:00–13:00\nDom: Chiuso\n\nOppure compila il modulo nella [pagina Contatti](contatti.html)!',
       quote: 'Per un **preventivo gratuito** e senza impegno, ho bisogno di qualche informazione.\n\nPosso guidarti nel processo oppure puoi contattarci direttamente:\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nVuoi procedere con la richiesta guidata?',
       process: '**Come lavoriamo — 3 fasi:**\n\n**1. Ascolto e sopralluogo**\nCi incontriamo, visitiamo gli spazi e definiamo obiettivi e budget.\n\n**2. Progettazione**\nConcept creativo, render 3D fotorealistici, progetto esecutivo.\n\n**3. Realizzazione**\nCoordiamo tutti i lavori con un unico referente che ti aggiorna costantemente.\n\n**Il vantaggio?** Zero rimpalli, tempi certi, budget rispettato.',
-      fallback: 'Grazie per il messaggio! Per una risposta personalizzata ti consiglio di contattarci:\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nOppure clicca su **"Richiedi preventivo"** qui sotto!',
+      fallback: 'Non riesco a trovare una risposta precisa alla tua domanda. Ti consiglio di **farti contattare da un nostro consulente** che saprà aiutarti!\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nOppure clicca su **"Preventivo"** qui sotto per lasciare i tuoi dati e ti ricontatteremo!',
       greeting: 'Ciao! Sono l\'assistente di **Impronta Arredi**.\n\nPosso aiutarti con informazioni sui nostri servizi, preventivi gratuiti o metterti in contatto con il nostro team.\n\nCome posso aiutarti?',
       askName: 'Ottimo! Ti guido nella richiesta.\n\n**Come ti chiami?** (Nome e Cognome)',
       askEmail: 'Piacere **%name%**!\n\n**Qual è la tua email?**',
@@ -99,7 +163,7 @@ setTimeout(function () {
       contact: '**Contact Impronta Arredi**\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n📍 Via Example 1, Milan\n\n**Hours:**\nMon–Fri: 09:00–18:00\nSat: 09:00–13:00\nSun: Closed\n\nOr fill out the form on the [Contact page](contatti.html)!',
       quote: 'For a **free quote** with no obligation, I need some information.\n\nI can guide you through the process, or you can contact us directly:\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nWould you like to proceed with the guided request?',
       process: '**How we work — 3 phases:**\n\n**1. Listening & survey**\nWe meet, visit your spaces, and define objectives and budget.\n\n**2. Design**\nCreative concept, photorealistic 3D renders, executive project.\n\n**3. Construction**\nWe coordinate all work with a single point of contact keeping you updated.\n\n**The advantage?** Zero blame-shifting, certain timelines, respected budget.',
-      fallback: 'Thank you for your message! For a personalized response, I recommend contacting us:\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nOr click **"Request quote"** below!',
+      fallback: 'I couldn\'t find a precise answer to your question. I recommend **being contacted by one of our consultants** who can help you!\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\nOr click **"Quote"** below to leave your details and we\'ll get back to you!',
       greeting: 'Hello! I\'m the **Impronta Arredi** assistant.\n\nI can help with information about our services, free quotes, or connect you with our team.\n\nHow can I help?',
       askName: 'Great! I\'ll guide you through the request.\n\n**What\'s your name?** (First and Last)',
       askEmail: 'Nice to meet you **%name%**!\n\n**What\'s your email?**',
@@ -116,7 +180,7 @@ setTimeout(function () {
       contact: '**联系 Impronta Arredi**\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n📍 Via Example 1, 米兰\n\n**营业时间：**\n周一至周五：09:00–18:00\n周六：09:00–13:00\n周日：休息\n\n或在[联系页面](contatti.html)填写表格！',
       quote: '如需**免费报价**，我需要一些信息。\n\n我可以引导您完成流程，或者您可以直接联系我们：\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\n您想继续进行引导式请求吗？',
       process: '**我们如何工作 — 3个阶段：**\n\n**1. 倾听与勘察**\n我们会面、参观空间、确定目标和预算。\n\n**2. 设计**\n创意概念、逼真3D渲染、施工项目。\n\n**3. 施工**\n我们协调所有工作，一个联系人持续为您更新。\n\n**优势？** 零推诿、确定时间、预算保证。',
-      fallback: '感谢您的留言！如需个性化回复，建议联系我们：\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\n或点击下方**"申请报价"**！',
+      fallback: '我无法找到准确的答案。建议您**让我们的顾问联系您**，他们可以帮助您！\n\n📞 +39 000 0000000\n📧 info@improntarredi.it\n\n或点击下方**"报价"**留下您的信息，我们会回复您！',
       greeting: '您好！我是**Impronta Arredi**的助手。\n\n我可以帮助您了解我们的服务、免费报价或联系我们的团队。\n\n有什么可以帮您的吗？',
       askName: '好的！我将引导您完成请求。\n\n**您叫什么名字？**（姓名）',
       askEmail: '很高兴认识您 **%name%**！\n\n**您的电子邮件是什么？**',
@@ -376,9 +440,19 @@ setTimeout(function () {
       return 'greeting';
     }
 
-    // Si/procedere — durante flusso quote
-    if (/^(s[ìi]|yes|ok|proceed|procedi|是|好|voglio|want|sure|certo)/.test(lower)) {
+    // Tour / guida
+    if (/guida|tour|visita guidata|guided|guide|导览|导游/.test(lower)) {
+      return 'tour';
+    }
+
+    // Si/procedere — durante flusso quote o tour
+    if (/^(s[ìi]|yes|ok|proceed|procedi|是|好|voglio|want|sure|certo|avanti|next|continua|继续|下一)/.test(lower)) {
       return 'yes';
+    }
+
+    // No / rifiuto
+    if (/^(no|nah|non|不|不要|nein)/.test(lower)) {
+      return 'no';
     }
 
     // Keywords
@@ -455,19 +529,61 @@ setTimeout(function () {
   /* ══════════════════════════════════════════
      PROCESS USER MESSAGE
      ══════════════════════════════════════════ */
+  /* ══════════════════════════════════════════
+     TOUR PROCESSING — gestione step del tour guidato
+     ══════════════════════════════════════════ */
+  function advanceTour() {
+    tourStep++;
+    if (tourStep >= tourSteps.length) {
+      // Tour finito
+      state = 'idle';
+      tourStep = -1;
+      var tr = tourResponses[chatLang];
+      var trIt = tourResponses['it'];
+      return { reply: tr.tourEnd, replyIt: trIt.tourEnd, tourButtons: 'end' };
+    }
+    var step = tourSteps[tourStep];
+    var msg = step[chatLang];
+    var msgIt = step['it'];
+    return { reply: msg, replyIt: msgIt, tourButtons: 'nav', tourUrl: step.url, tourSection: step.section };
+  }
+
   function processMessage(text) {
     var r = responses[chatLang];
     var rIt = responses['it'];
 
     // If in contact form flow
-    if (state !== 'idle') {
+    if (state !== 'idle' && state !== 'tour') {
       var contactReply = processContactState(text);
       if (contactReply) return contactReply;
     }
 
     var intent = detectIntent(text);
 
-    // "Yes" after quote prompt → start contact form
+    // Tour state handling
+    if (state === 'tour') {
+      if (intent === 'yes') {
+        return advanceTour();
+      }
+      if (intent === 'no') {
+        state = 'idle';
+        tourStep = -1;
+        var tr = tourResponses[chatLang];
+        var trIt = tourResponses['it'];
+        return { reply: tr.tourExit, replyIt: trIt.tourExit };
+      }
+      // L'utente fa una domanda libera durante il tour — rispondi ma resta in tour
+      // (non uscire dal tour, l'utente può continuare dopo)
+    }
+
+    // Start tour
+    if (intent === 'tour') {
+      state = 'tour';
+      tourStep = -1;
+      return advanceTour();
+    }
+
+    // "Yes" — se non siamo in tour, inizia il contact form
     if (intent === 'yes') {
       state = 'contatto_nome';
       contattoPending = {};
@@ -500,11 +616,11 @@ setTimeout(function () {
      DOM CREATION
      ══════════════════════════════════════════ */
   function createChatbotDOM() {
-    // FAB
+    // FAB — icona casa con compasso (oro profilato nero)
     var fab = document.createElement('button');
     fab.className = 'chatbot-fab';
     fab.setAttribute('aria-label', 'Apri chat');
-    fab.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+    fab.innerHTML = '<svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 6L6 28h8v24h36V28h8L32 6z" fill="#C9A84C" stroke="#0A0A0A" stroke-width="2.5"/><circle cx="32" cy="34" r="10" fill="none" stroke="#0A0A0A" stroke-width="2"/><line x1="32" y1="24" x2="32" y2="44" stroke="#0A0A0A" stroke-width="1.5"/><line x1="22" y1="34" x2="42" y2="34" stroke="#0A0A0A" stroke-width="1.5"/><path d="M32 24l6 16-6-4-6 4 6-16z" fill="#0A0A0A" opacity="0.7"/></svg>';
     document.body.appendChild(fab);
 
     // Modal
@@ -514,7 +630,7 @@ setTimeout(function () {
     modal.setAttribute('aria-label', 'Chat ' + BOT_NAME);
     modal.innerHTML =
       '<div class="chatbot-modal__header">' +
-        '<div class="chatbot-header__avatar">IA</div>' +
+        '<div class="chatbot-header__avatar"><svg width="24" height="24" viewBox="0 0 64 64" fill="none"><path d="M32 6L6 28h8v24h36V28h8L32 6z" fill="#C9A84C" stroke="#0A0A0A" stroke-width="2.5"/><circle cx="32" cy="34" r="10" fill="none" stroke="#0A0A0A" stroke-width="2"/><path d="M32 24l6 16-6-4-6 4 6-16z" fill="#0A0A0A" opacity="0.7"/></svg></div>' +
         '<div class="chatbot-header__info">' +
           '<h4>' + BOT_NAME + '</h4>' +
           '<span class="chatbot-header__status"><span class="chatbot-online-dot"></span> <span class="chatbot-subtitle"></span></span>' +
@@ -588,7 +704,7 @@ setTimeout(function () {
     if (sender === 'bot') {
       var avatar = document.createElement('div');
       avatar.className = 'chat-msg__avatar';
-      avatar.textContent = 'IA';
+      avatar.innerHTML = '<svg width="16" height="16" viewBox="0 0 64 64" fill="none"><path d="M32 6L6 28h8v24h36V28h8L32 6z" fill="#C9A84C" stroke="#0A0A0A" stroke-width="3"/><circle cx="32" cy="34" r="10" fill="none" stroke="#0A0A0A" stroke-width="2.5"/><path d="M32 24l6 16-6-4-6 4 6-16z" fill="#0A0A0A" opacity="0.7"/></svg>';
       msg.appendChild(avatar);
     }
 
@@ -608,7 +724,7 @@ setTimeout(function () {
 
     var avatar = document.createElement('div');
     avatar.className = 'chat-msg__avatar';
-    avatar.textContent = 'IA';
+    avatar.innerHTML = '<svg width="16" height="16" viewBox="0 0 64 64" fill="none"><path d="M32 6L6 28h8v24h36V28h8L32 6z" fill="#C9A84C" stroke="#0A0A0A" stroke-width="3"/><circle cx="32" cy="34" r="10" fill="none" stroke="#0A0A0A" stroke-width="2.5"/><path d="M32 24l6 16-6-4-6 4 6-16z" fill="#0A0A0A" opacity="0.7"/></svg>';
     typing.appendChild(avatar);
 
     var dots = document.createElement('div');
@@ -625,15 +741,95 @@ setTimeout(function () {
     if (t) t.remove();
   }
 
+  function renderTourButtons(tourButtons, tourUrl, tourSection) {
+    var container = document.createElement('div');
+    container.className = 'chatbot-tour-btns';
+
+    var tourBtnLabels = {
+      it: { next: 'Avanti ➜', visit: 'Visita la pagina', stop: 'Esci dal tour', quote: 'Richiedi preventivo', restart: 'Ricomincia tour' },
+      en: { next: 'Next ➜', visit: 'Visit page', stop: 'Exit tour', quote: 'Request quote', restart: 'Restart tour' },
+      cn: { next: '下一步 ➜', visit: '访问页面', stop: '退出导览', quote: '申请报价', restart: '重新导览' }
+    };
+    var labels = tourBtnLabels[chatLang] || tourBtnLabels['it'];
+
+    if (tourButtons === 'nav') {
+      // Pulsante visita pagina (se c'è un URL)
+      if (tourUrl) {
+        var visitBtn = document.createElement('a');
+        visitBtn.className = 'chatbot-tour-btn chatbot-tour-btn--visit';
+        visitBtn.href = tourUrl;
+        visitBtn.textContent = labels.visit;
+        container.appendChild(visitBtn);
+      }
+      // Pulsante avanti
+      var nextBtn = document.createElement('button');
+      nextBtn.className = 'chatbot-tour-btn chatbot-tour-btn--next';
+      nextBtn.textContent = labels.next;
+      nextBtn.addEventListener('click', function () {
+        container.remove();
+        addMessage(labels.next, 'user');
+        logMessage('user', labels.next, chatLang);
+        var reply = advanceTour();
+        botReply(reply);
+      });
+      container.appendChild(nextBtn);
+      // Pulsante esci
+      var stopBtn = document.createElement('button');
+      stopBtn.className = 'chatbot-tour-btn chatbot-tour-btn--stop';
+      stopBtn.textContent = labels.stop;
+      stopBtn.addEventListener('click', function () {
+        container.remove();
+        state = 'idle';
+        tourStep = -1;
+        var tr = tourResponses[chatLang];
+        var trIt = tourResponses['it'];
+        addMessage(labels.stop, 'user');
+        logMessage('user', labels.stop, chatLang);
+        botReply({ reply: tr.tourExit, replyIt: trIt.tourExit });
+      });
+      container.appendChild(stopBtn);
+    } else if (tourButtons === 'end') {
+      // Fine tour — pulsanti preventivo e ricomincia
+      var quoteBtn = document.createElement('button');
+      quoteBtn.className = 'chatbot-tour-btn chatbot-tour-btn--next';
+      quoteBtn.textContent = labels.quote;
+      quoteBtn.addEventListener('click', function () {
+        container.remove();
+        handleUserMessage(labels.quote);
+      });
+      container.appendChild(quoteBtn);
+      var restartBtn = document.createElement('button');
+      restartBtn.className = 'chatbot-tour-btn chatbot-tour-btn--visit';
+      restartBtn.textContent = labels.restart;
+      restartBtn.addEventListener('click', function () {
+        container.remove();
+        state = 'tour';
+        tourStep = -1;
+        var reply = advanceTour();
+        botReply(reply);
+      });
+      container.appendChild(restartBtn);
+    }
+
+    messagesEl.appendChild(container);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
   function botReply(result) {
     var text = (typeof result === 'object') ? result.reply : result;
     var textIt = (typeof result === 'object') ? result.replyIt : result;
+    var tourButtons = (typeof result === 'object') ? result.tourButtons : null;
+    var tourUrl = (typeof result === 'object') ? result.tourUrl : null;
+    var tourSection = (typeof result === 'object') ? result.tourSection : null;
     showTyping();
     var delay = 500 + Math.random() * 500;
     setTimeout(function () {
       hideTyping();
       addMessage(text, 'bot');
       logMessage('bot', text, chatLang, textIt);
+      if (tourButtons) {
+        renderTourButtons(tourButtons, tourUrl, tourSection);
+      }
     }, delay);
   }
 
@@ -657,36 +853,84 @@ setTimeout(function () {
   /* ══════════════════════════════════════════
      EVENTS
      ══════════════════════════════════════════ */
-  fab.addEventListener('click', function () {
-    isOpen = !isOpen;
-    modal.classList.toggle('chatbot-modal--open', isOpen);
-    fab.classList.toggle('chatbot-fab--open', isOpen);
+  var FAB_ICON_HOUSE = '<svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 6L6 28h8v24h36V28h8L32 6z" fill="#C9A84C" stroke="#0A0A0A" stroke-width="2.5"/><circle cx="32" cy="34" r="10" fill="none" stroke="#0A0A0A" stroke-width="2"/><line x1="32" y1="24" x2="32" y2="44" stroke="#0A0A0A" stroke-width="1.5"/><line x1="22" y1="34" x2="42" y2="34" stroke="#0A0A0A" stroke-width="1.5"/><path d="M32 24l6 16-6-4-6 4 6-16z" fill="#0A0A0A" opacity="0.7"/></svg>';
+  var FAB_ICON_CLOSE = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
-    if (isOpen) {
-      fab.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-    } else {
-      fab.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+  function openChat() {
+    isOpen = true;
+    modal.classList.add('chatbot-modal--open');
+    fab.classList.add('chatbot-fab--open');
+    fab.innerHTML = FAB_ICON_CLOSE;
+  }
+
+  function closeChat() {
+    isOpen = false;
+    modal.classList.remove('chatbot-modal--open');
+    fab.classList.remove('chatbot-fab--open');
+    fab.innerHTML = FAB_ICON_HOUSE;
+  }
+
+  function showWelcomeWithTourInvite() {
+    if (hasShownWelcome) return;
+    hasShownWelcome = true;
+    if (window.improntaGetLang) {
+      chatLang = window.improntaGetLang();
     }
+    updateChatUI();
+    setTimeout(function () {
+      var tr = tourResponses[chatLang];
+      var trIt = tourResponses['it'];
+      addMessage(tr.invite, 'bot');
+      logMessage('bot', tr.invite, chatLang, trIt.invite);
+      // Mostra pulsanti Guida / No grazie
+      var tourInvBtns = document.createElement('div');
+      tourInvBtns.className = 'chatbot-tour-btns';
+      var tourLabels = {
+        it: { yes: 'Si, inizia la guida!', no: 'No grazie, ho una domanda' },
+        en: { yes: 'Yes, start the guide!', no: 'No thanks, I have a question' },
+        cn: { yes: '好的，开始导览！', no: '不用了，我有问题' }
+      };
+      var tl = tourLabels[chatLang] || tourLabels['it'];
+      var yesBtn = document.createElement('button');
+      yesBtn.className = 'chatbot-tour-btn chatbot-tour-btn--next';
+      yesBtn.textContent = tl.yes;
+      yesBtn.addEventListener('click', function () {
+        tourInvBtns.remove();
+        addMessage(tl.yes, 'user');
+        logMessage('user', tl.yes, chatLang);
+        state = 'tour';
+        tourStep = -1;
+        var reply = advanceTour();
+        botReply(reply);
+      });
+      tourInvBtns.appendChild(yesBtn);
+      var noBtn = document.createElement('button');
+      noBtn.className = 'chatbot-tour-btn chatbot-tour-btn--stop';
+      noBtn.textContent = tl.no;
+      noBtn.addEventListener('click', function () {
+        tourInvBtns.remove();
+        addMessage(tl.no, 'user');
+        logMessage('user', tl.no, chatLang);
+        botReply({ reply: responses[chatLang].welcome, replyIt: responses['it'].welcome });
+      });
+      tourInvBtns.appendChild(noBtn);
+      messagesEl.appendChild(tourInvBtns);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      inputEl.focus();
+    }, 400);
+  }
 
-    if (isOpen && !hasShownWelcome) {
-      hasShownWelcome = true;
-      if (window.improntaGetLang) {
-        chatLang = window.improntaGetLang();
-      }
-      updateChatUI();
-      setTimeout(function () {
-        addMessage(responses[chatLang].welcome, 'bot');
-        logMessage('bot', responses[chatLang].welcome, chatLang, responses['it'].welcome);
-        inputEl.focus();
-      }, 400);
+  fab.addEventListener('click', function () {
+    if (isOpen) {
+      closeChat();
+    } else {
+      openChat();
+      showWelcomeWithTourInvite();
     }
   });
 
   closeBtn.addEventListener('click', function () {
-    isOpen = false;
-    modal.classList.remove('chatbot-modal--open');
-    fab.classList.remove('chatbot-fab--open');
-    fab.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+    closeChat();
   });
 
   langBtns.forEach(function (btn) {
@@ -708,6 +952,19 @@ setTimeout(function () {
   });
 
   updateChatUI();
+
+  /* ══════════════════════════════════════════
+     AUTO-OPEN DESKTOP (solo >768px, dopo 3s aggiuntivi)
+     ══════════════════════════════════════════ */
+  if (window.innerWidth > 768 && !autoOpened) {
+    setTimeout(function () {
+      if (!isOpen && !autoOpened) {
+        autoOpened = true;
+        openChat();
+        showWelcomeWithTourInvite();
+      }
+    }, 3000);
+  }
 
   /* ══════════════════════════════════════════
      EXPOSE FOR ADMIN
