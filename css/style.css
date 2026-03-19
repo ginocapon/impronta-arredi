@@ -502,6 +502,18 @@ h4 { font-size: var(--fs-2xl); }
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* ---------- Admin secret link ---------- */
+.nav__admin-link {
+  color: rgba(255,255,255,0.12);
+  font-size: var(--fs-xs);
+  padding: 4px 6px;
+  margin-left: 4px;
+  text-decoration: none;
+  transition: color var(--transition);
+  line-height: 1;
+}
+.nav__admin-link:hover { color: var(--oro); }
+
 /* ---------- Hero (Cinematic) ---------- */
 .hero {
   margin-top: var(--header-h);
