@@ -749,120 +749,410 @@
 
       <!-- ════════ BLOG ════════ -->
       <div id="panel-blog" class="admin-panel-view">
-        <div class="admin-topbar">
-          <div style="display:flex;align-items:center;gap:0.75rem;">
-            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
-            <h1>Blog / News</h1>
+        <!-- LIST VIEW -->
+        <div id="blog-list-view">
+          <div class="admin-topbar">
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+              <h1>Blog / News</h1>
+            </div>
+            <div class="admin-topbar__actions">
+              <button class="admin-btn admin-btn--primary" onclick="blogEditor.newArticle()">+ Nuovo articolo</button>
+            </div>
           </div>
-          <div class="admin-topbar__actions">
-            <button class="admin-btn admin-btn--primary">+ Nuovo articolo</button>
+          <div class="admin-panel">
+            <div class="admin-panel__header">
+              <h3 class="admin-panel__title">Articoli (<span id="blog-count">0</span>)</h3>
+              <div style="display:flex;gap:0.5rem;">
+                <select id="blog-filter-cat" onchange="blogEditor.renderList()" style="padding:0.3rem 0.5rem;border:1px solid var(--grigio-chiaro);border-radius:6px;font-size:0.78rem;font-family:inherit;">
+                  <option value="">Tutte le categorie</option>
+                  <option value="Guide">Guide</option>
+                  <option value="Tendenze">Tendenze</option>
+                  <option value="Arredamento">Arredamento</option>
+                  <option value="Ristrutturazione">Ristrutturazione</option>
+                  <option value="Interior Design">Interior Design</option>
+                  <option value="Lusso">Lusso</option>
+                </select>
+              </div>
+            </div>
+            <table class="admin-table">
+              <thead>
+                <tr><th>Titolo</th><th>Categoria</th><th>Data</th><th>Stato</th><th>Azioni</th></tr>
+              </thead>
+              <tbody id="blog-table-body">
+                <tr><td colspan="5" style="text-align:center;color:var(--grigio);padding:2rem;">Nessun articolo.</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="admin-panel">
-          <table class="admin-table">
-            <thead>
-              <tr><th>Titolo</th><th>Categoria</th><th>Data</th><th>Visite</th><th>Stato</th><th>Azioni</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Come scegliere il general contractor giusto</strong></td>
-                <td>Guide</td>
-                <td>10/03/2026</td>
-                <td>342</td>
-                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
-              </tr>
-              <tr>
-                <td><strong>Tendenze interior design 2026</strong></td>
-                <td>Tendenze</td>
-                <td>05/03/2026</td>
-                <td>567</td>
-                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
-              </tr>
-              <tr>
-                <td><strong>Ristrutturare casa a Milano: costi e tempistiche</strong></td>
-                <td>Guide</td>
-                <td>20/02/2026</td>
-                <td>891</td>
-                <td><span class="admin-badge admin-badge--success">Pubblicato</span></td>
-                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
-              </tr>
-              <tr>
-                <td><strong>Cucine su misura: la guida completa</strong></td>
-                <td>Arredamento</td>
-                <td>—</td>
-                <td>—</td>
-                <td><span class="admin-badge admin-badge--info">Bozza</span></td>
-                <td><button class="admin-btn admin-btn--sm">Modifica</button></td>
-              </tr>
-            </tbody>
-          </table>
+
+        <!-- EDITOR VIEW -->
+        <div id="blog-editor-view" style="display:none;">
+          <div class="admin-topbar">
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <button class="admin-btn admin-btn--sm" onclick="blogEditor.backToList()">← Indietro</button>
+              <h1 id="blog-editor-title">Nuovo articolo</h1>
+            </div>
+            <div class="admin-topbar__actions">
+              <button class="admin-btn" onclick="blogEditor.preview()">👁 Anteprima</button>
+              <button class="admin-btn" onclick="blogEditor.exportHTML()">📋 Copia HTML</button>
+              <button class="admin-btn admin-btn--primary" onclick="blogEditor.save()">💾 Salva</button>
+            </div>
+          </div>
+
+          <div class="admin-grid-2">
+            <!-- Left: Form -->
+            <div>
+              <div class="admin-panel">
+                <div class="admin-panel__header"><h3 class="admin-panel__title">Contenuto</h3></div>
+                <div class="admin-panel__body">
+                  <input type="hidden" id="blog-edit-id">
+                  <div class="admin-form-group">
+                    <label>Titolo articolo *</label>
+                    <input type="text" id="blog-title" placeholder="Es: Come scegliere il general contractor giusto">
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Slug (URL)</label>
+                    <input type="text" id="blog-slug" placeholder="come-scegliere-general-contractor" style="font-size:0.8rem;color:var(--grigio);">
+                  </div>
+                  <div class="admin-grid-2">
+                    <div class="admin-form-group">
+                      <label>Categoria</label>
+                      <select id="blog-category">
+                        <option value="Guide">Guide</option>
+                        <option value="Tendenze">Tendenze</option>
+                        <option value="Arredamento">Arredamento</option>
+                        <option value="Ristrutturazione">Ristrutturazione</option>
+                        <option value="Interior Design">Interior Design</option>
+                        <option value="Lusso">Lusso</option>
+                      </select>
+                    </div>
+                    <div class="admin-form-group">
+                      <label>Stato</label>
+                      <select id="blog-status">
+                        <option value="bozza">Bozza</option>
+                        <option value="pubblicato">Pubblicato</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Immagine hero (URL)</label>
+                    <input type="text" id="blog-image" placeholder="https://images.unsplash.com/...">
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Contenuto articolo (HTML) *</label>
+                    <div style="display:flex;gap:0.35rem;margin-bottom:0.5rem;flex-wrap:wrap;">
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('h2')">H2</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('h3')">H3</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('p')">P</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('strong')">Bold</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('em')">Italic</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('ul')">Lista</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('blockquote')">Citazione</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('a')">Link</button>
+                      <button type="button" class="admin-btn admin-btn--sm" onclick="blogEditor.insertTag('img')">Immagine</button>
+                    </div>
+                    <textarea id="blog-content" style="min-height:350px;font-family:monospace;font-size:0.82rem;line-height:1.6;tab-size:2;" placeholder="Scrivi il contenuto dell'articolo in HTML..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: SEO + Meta -->
+            <div>
+              <div class="admin-panel">
+                <div class="admin-panel__header"><h3 class="admin-panel__title">SEO & Meta</h3></div>
+                <div class="admin-panel__body">
+                  <div class="admin-form-group">
+                    <label>Meta Title (max 60 car.)</label>
+                    <input type="text" id="blog-meta-title" maxlength="60" placeholder="Titolo per Google">
+                    <small style="color:var(--grigio);font-size:0.7rem;"><span id="blog-meta-title-count">0</span>/60</small>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Meta Description (max 160 car.)</label>
+                    <textarea id="blog-meta-desc" maxlength="160" style="min-height:60px;" placeholder="Descrizione per Google"></textarea>
+                    <small style="color:var(--grigio);font-size:0.7rem;"><span id="blog-meta-desc-count">0</span>/160</small>
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Keyword principali</label>
+                    <input type="text" id="blog-keywords" placeholder="keyword1, keyword2, keyword3">
+                  </div>
+                  <div class="admin-form-group">
+                    <label>Autore</label>
+                    <input type="text" id="blog-author" value="Impronta Arredi">
+                  </div>
+                </div>
+              </div>
+
+              <div class="admin-panel">
+                <div class="admin-panel__header"><h3 class="admin-panel__title">Anteprima Google</h3></div>
+                <div class="admin-panel__body" id="blog-seo-preview" style="font-family:Arial,sans-serif;">
+                  <div style="font-size:1.1rem;color:#1a0dab;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="seo-preview-title">Titolo articolo — Impronta Arredi</div>
+                  <div style="font-size:0.78rem;color:#006621;margin-bottom:4px;" id="seo-preview-url">improntarredi.it/blog/slug-articolo</div>
+                  <div style="font-size:0.82rem;color:#545454;line-height:1.4;" id="seo-preview-desc">La meta description apparirà qui...</div>
+                </div>
+              </div>
+
+              <div class="admin-panel">
+                <div class="admin-panel__header"><h3 class="admin-panel__title">Azioni</h3></div>
+                <div class="admin-panel__body" style="display:flex;flex-direction:column;gap:0.5rem;">
+                  <button class="admin-btn" onclick="blogEditor.exportHTML()" style="width:100%;">📋 Copia codice HTML completo</button>
+                  <button class="admin-btn" onclick="blogEditor.downloadHTML()" style="width:100%;">📥 Scarica file .html</button>
+                  <p style="font-size:0.72rem;color:var(--grigio);margin-top:0.5rem;">Il file HTML generato è pronto per essere caricato nella cartella <code>blog/</code> del sito. Include: header, footer, schema JSON-LD, breadcrumb e stili coerenti con il sito.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ════════ EMAIL MARKETING ════════ -->
+      <!-- ════════ EMAIL MARKETING / NEWSLETTER ════════ -->
       <div id="panel-email" class="admin-panel-view">
-        <div class="admin-topbar">
-          <div style="display:flex;align-items:center;gap:0.75rem;">
-            <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
-            <h1>Email Marketing</h1>
+        <!-- LIST VIEW -->
+        <div id="newsletter-list-view">
+          <div class="admin-topbar">
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <button class="admin-burger" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+              <h1>Email Marketing</h1>
+            </div>
+            <div class="admin-topbar__actions">
+              <button class="admin-btn admin-btn--primary" onclick="nlEditor.newNL()">+ Nuova email</button>
+            </div>
           </div>
-          <div class="admin-topbar__actions">
-            <button class="admin-btn admin-btn--primary">+ Nuova campagna</button>
+          <p style="color:var(--grigio);font-size:0.82rem;margin-bottom:1rem;">Invio email tramite SMTP proprio — Deliverability professionale con DKIM/SPF/DMARC</p>
+
+          <div class="admin-cards" style="grid-template-columns:repeat(4,1fr);">
+            <div class="admin-card" style="text-align:center;background:linear-gradient(135deg,#4CAF50,#66BB6A);color:#fff;border:none;">
+              <p class="admin-card__value" id="nl-stat-sent" style="color:#fff;">0</p>
+              <p style="font-size:0.72rem;opacity:0.9;">Email inviate</p>
+            </div>
+            <div class="admin-card" style="text-align:center;background:linear-gradient(135deg,#42A5F5,#1E88E5);color:#fff;border:none;">
+              <p class="admin-card__value" style="color:#fff;">0%</p>
+              <p style="font-size:0.72rem;opacity:0.9;">Tasso apertura</p>
+            </div>
+            <div class="admin-card" style="text-align:center;background:linear-gradient(135deg,#FFA726,#FB8C00);color:#fff;border:none;">
+              <p class="admin-card__value" style="color:#fff;">0%</p>
+              <p style="font-size:0.72rem;opacity:0.9;">Tasso click</p>
+            </div>
+            <div class="admin-card" style="text-align:center;background:linear-gradient(135deg,#EF5350,#E53935);color:#fff;border:none;">
+              <p class="admin-card__value" style="color:#fff;">0</p>
+              <p style="font-size:0.72rem;opacity:0.9;">Bounce/Unsub</p>
+            </div>
+          </div>
+
+          <div class="admin-panel">
+            <div class="admin-panel__header">
+              <h3 class="admin-panel__title">Email salvate</h3>
+            </div>
+            <table class="admin-table">
+              <thead><tr><th>Oggetto</th><th>Tipo</th><th>Data</th><th>Stato</th><th>Azioni</th></tr></thead>
+              <tbody id="nl-table-body">
+                <tr><td colspan="5" style="text-align:center;color:var(--grigio);padding:2rem;">Nessuna email. Clicca "+ Nuova email" per iniziare.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="admin-panel">
+            <div class="admin-panel__header"><h3 class="admin-panel__title">📧 Configurazione invio dal tuo hosting</h3></div>
+            <div class="admin-panel__body" style="font-size:0.82rem;line-height:1.7;">
+              <p><strong>Come funziona (stesso metodo di righettoimmobiliare.it):</strong></p>
+              <ol style="padding-left:1.25rem;margin:0.75rem 0;">
+                <li>Crea il sottodominio <code>newsletter.improntarredi.it</code> dal pannello hosting</li>
+                <li>Carica lo script PHP di invio (generato automaticamente) nel sottodominio</li>
+                <li>Configura DKIM + SPF + DMARC nel DNS del dominio (anti-spam)</li>
+                <li>Componi l'email qui → clicca <strong>"Copia HTML"</strong> → incolla nello script</li>
+                <li>L'invio avviene in modalità <strong>warm-up graduale</strong> per non finire in spam</li>
+              </ol>
+              <div style="background:#fffde7;padding:0.75rem 1rem;border-radius:8px;border:1px solid #fff9c4;margin-top:0.5rem;">
+                <strong>Warm-up anti-spam:</strong> Sett. 1: max 50/giorno → Sett. 2: max 100 → Sett. 3: max 200 → Poi illimitato
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="admin-cards" style="grid-template-columns:repeat(3,1fr);">
-          <div class="admin-card">
-            <p class="admin-card__label">Iscritti newsletter</p>
-            <p class="admin-card__value">1,247</p>
+        <!-- EDITOR VIEW -->
+        <div id="newsletter-editor-view" style="display:none;">
+          <div class="admin-topbar">
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <button class="admin-btn admin-btn--sm" onclick="nlEditor.backToList()">← Indietro</button>
+              <h1 id="nl-editor-title">Nuova email</h1>
+            </div>
+            <div class="admin-topbar__actions">
+              <button class="admin-btn" onclick="nlEditor.copyHTML()">📋 Copia HTML</button>
+              <button class="admin-btn" onclick="nlEditor.downloadHTML()">📥 Scarica .html</button>
+              <button class="admin-btn admin-btn--primary" onclick="nlEditor.save()">💾 Salva</button>
+            </div>
           </div>
-          <div class="admin-card">
-            <p class="admin-card__label">Tasso apertura medio</p>
-            <p class="admin-card__value">38.5%</p>
-          </div>
-          <div class="admin-card">
-            <p class="admin-card__label">Campagne inviate</p>
-            <p class="admin-card__value">12</p>
-          </div>
-        </div>
 
-        <div class="admin-panel">
-          <div class="admin-panel__header">
-            <h3 class="admin-panel__title">Campagne recenti</h3>
+          <!-- Step 1: Inserisci contenuto da... -->
+          <div class="admin-panel">
+            <div class="admin-panel__header"><h3 class="admin-panel__title" style="color:var(--oro);">Inserisci contenuto da...</h3></div>
+            <div class="admin-panel__body">
+              <div class="admin-grid-2">
+                <div class="admin-form-group">
+                  <label>Articoli Blog</label>
+                  <select id="nl-from-blog" onchange="nlEditor.loadFromBlog()">
+                    <option value="">— Seleziona articolo —</option>
+                  </select>
+                </div>
+                <div class="admin-form-group">
+                  <label>Landing Pages</label>
+                  <select id="nl-from-landing" onchange="nlEditor.loadFromLanding()">
+                    <option value="">— Seleziona landing —</option>
+                    <option value="servizi">Servizi</option>
+                    <option value="contatti">Contatti / Preventivo</option>
+                    <option value="progetti">Portfolio Progetti</option>
+                  </select>
+                </div>
+              </div>
+              <p style="font-size:0.72rem;color:var(--grigio);">Seleziona un contenuto e verrà inserito automaticamente nel corpo email con immagine, titolo e link.</p>
+            </div>
           </div>
-          <table class="admin-table">
-            <thead>
-              <tr><th>Campagna</th><th>Data</th><th>Destinatari</th><th>Aperture</th><th>Click</th><th>Stato</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Newsletter Marzo 2026</strong></td>
-                <td>01/03/2026</td>
-                <td>1,180</td>
-                <td>38.5%</td>
-                <td>12.3%</td>
-                <td><span class="admin-badge admin-badge--success">Inviata</span></td>
-              </tr>
-              <tr>
-                <td><strong>Promo Primavera</strong></td>
-                <td>15/02/2026</td>
-                <td>1,120</td>
-                <td>41.2%</td>
-                <td>15.8%</td>
-                <td><span class="admin-badge admin-badge--success">Inviata</span></td>
-              </tr>
-              <tr>
-                <td><strong>Nuovi progetti 2026</strong></td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td><span class="admin-badge admin-badge--info">Bozza</span></td>
-              </tr>
-            </tbody>
-          </table>
+
+          <!-- Step 2: Componi Email -->
+          <div class="admin-panel">
+            <div class="admin-panel__header"><h3 class="admin-panel__title" style="color:var(--oro);">Componi Email</h3></div>
+            <div class="admin-panel__body">
+              <input type="hidden" id="nl-edit-id">
+              <div class="admin-grid-2">
+                <div class="admin-form-group">
+                  <label>Mittente</label>
+                  <input type="email" id="nl-from-email" value="info@improntarredi.it">
+                </div>
+                <div class="admin-form-group">
+                  <label>Nome mittente</label>
+                  <input type="text" id="nl-from-name" value="Impronta Arredi">
+                </div>
+              </div>
+              <div class="admin-form-group">
+                <label>Oggetto ({{nome}} = nome del cliente — max 60 car.)</label>
+                <input type="text" id="nl-subject" placeholder="Es: {{nome}}, scopri le tendenze interior 2026" maxlength="100">
+                <small style="color:var(--grigio);font-size:0.7rem;"><span id="nl-subject-count">0</span>/100 car. | Anteprima: <span id="nl-subject-preview">—</span></small>
+              </div>
+              <div class="admin-form-group">
+                <label>Preheader (testo visibile nell'inbox dopo l'oggetto)</label>
+                <input type="text" id="nl-preheader" placeholder="Scopri le novità che trasformano i tuoi spazi..." maxlength="100">
+              </div>
+
+              <hr style="border:none;border-top:1px solid var(--grigio-chiaro);margin:1rem 0;">
+              <p style="font-size:0.82rem;color:var(--grigio);margin-bottom:1rem;">Crea la tua email senza scrivere codice — compila i campi e il sistema genera l'HTML professionale.</p>
+
+              <div class="admin-form-group">
+                <label>Immagine header (opzionale, URL)</label>
+                <input type="text" id="nl-hero-img" placeholder="https://images.unsplash.com/..." oninput="nlEditor.updatePreview()">
+              </div>
+              <div class="admin-form-group">
+                <label>Titolo email</label>
+                <input type="text" id="nl-heading" placeholder="Es: Le tendenze arredamento primavera 2026" oninput="nlEditor.updatePreview()">
+              </div>
+              <div class="admin-form-group">
+                <label>Sottotitolo (opzionale)</label>
+                <input type="text" id="nl-subheading" placeholder="Es: Scopri come rinnovare i tuoi spazi" oninput="nlEditor.updatePreview()">
+              </div>
+              <div class="admin-form-group">
+                <label>Testo principale (scrivi liberamente — se vuoi personalizzare con il nome del cliente scrivi {{nome}})</label>
+                <textarea id="nl-body" style="min-height:150px;" placeholder="Buongiorno,&#10;&#10;siamo lieti di condividere le ultime novità dal mondo dell'interior design...&#10;&#10;Non esitate a contattarci per una consulenza gratuita." oninput="nlEditor.updatePreview()"></textarea>
+              </div>
+
+              <!-- Box evidenziato -->
+              <div style="background:#faf8f4;padding:1rem;border-radius:8px;margin-bottom:1rem;">
+                <label style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--grigio);font-weight:600;display:block;margin-bottom:0.5rem;">Box evidenziato (opzionale) — appare come riquadro colorato</label>
+                <div class="admin-form-group" style="margin-bottom:0.5rem;">
+                  <input type="text" id="nl-box-title" placeholder="Titolo box (es: Il consiglio di Impronta Arredi)" oninput="nlEditor.updatePreview()">
+                </div>
+                <div class="admin-form-group" style="margin-bottom:0;">
+                  <textarea id="nl-box-text" style="min-height:50px;" placeholder="Testo del box evidenziato" oninput="nlEditor.updatePreview()"></textarea>
+                </div>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="admin-grid-2">
+                <div class="admin-form-group">
+                  <label>Testo pulsante CTA</label>
+                  <input type="text" id="nl-cta-text" value="Contattaci" oninput="nlEditor.updatePreview()">
+                </div>
+                <div class="admin-form-group">
+                  <label>Link pulsante</label>
+                  <input type="text" id="nl-cta-url" value="https://improntarredi.it/contatti" oninput="nlEditor.updatePreview()">
+                </div>
+              </div>
+              <div class="admin-grid-2">
+                <div class="admin-form-group">
+                  <label>2° Pulsante (opzionale)</label>
+                  <input type="text" id="nl-cta2-text" placeholder="Es: Scopri i servizi" oninput="nlEditor.updatePreview()">
+                </div>
+                <div class="admin-form-group">
+                  <label>Link 2° pulsante</label>
+                  <input type="text" id="nl-cta2-url" placeholder="https://improntarredi.it/servizi" oninput="nlEditor.updatePreview()">
+                </div>
+              </div>
+
+              <!-- Foto aggiuntive -->
+              <div class="admin-form-group">
+                <label>Foto aggiuntive nel corpo (puoi aggiungerne quante vuoi)</label>
+                <div id="nl-extra-images"></div>
+                <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
+                  <input type="text" id="nl-extra-img-url" placeholder="Incolla URL immagine..." style="flex:1;">
+                  <button class="admin-btn admin-btn--sm" onclick="nlEditor.addExtraImage()">Aggiungi</button>
+                </div>
+              </div>
+
+              <hr style="border:none;border-top:1px solid var(--grigio-chiaro);margin:1rem 0;">
+              <div style="display:flex;gap:1.5rem;">
+                <label style="font-size:0.82rem;display:flex;align-items:center;gap:0.35rem;cursor:pointer;">
+                  <input type="checkbox" id="nl-unsub-link" checked> Link "Cancellami"
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Programmazione invii -->
+          <div class="admin-panel">
+            <div class="admin-panel__header"><h3 class="admin-panel__title" style="color:var(--oro);">Programmazione Invii</h3></div>
+            <div class="admin-panel__body">
+              <div class="admin-grid-2">
+                <div class="admin-form-group">
+                  <label>Modalità</label>
+                  <select id="nl-send-mode">
+                    <option value="warmup">Graduale (warm-up)</option>
+                    <option value="immediate">Invio immediato</option>
+                    <option value="scheduled">Programmato</option>
+                  </select>
+                </div>
+                <div class="admin-form-group">
+                  <label>Delay tra email (sec)</label>
+                  <input type="number" id="nl-delay" value="5" min="1" max="60">
+                </div>
+              </div>
+              <div class="admin-grid-2">
+                <div class="admin-form-group">
+                  <label>Pianifica invio</label>
+                  <input type="datetime-local" id="nl-schedule-date">
+                </div>
+                <div class="admin-form-group">
+                  <label>Reply-To</label>
+                  <input type="email" id="nl-reply-to" value="info@improntarredi.it">
+                </div>
+              </div>
+              <div style="background:#f9fbe7;padding:0.75rem 1rem;border-radius:8px;font-size:0.78rem;">
+                <strong>Warm-up:</strong> Sett. 1: max 50/giorno → Sett. 2: max 100 → Sett. 3: max 200 → Poi illimitato.
+              </div>
+            </div>
+          </div>
+
+          <!-- Anteprima live -->
+          <div class="admin-panel">
+            <div class="admin-panel__header">
+              <h3 class="admin-panel__title">Anteprima email</h3>
+              <div style="display:flex;gap:0.35rem;">
+                <button class="admin-btn admin-btn--sm" onclick="nlEditor.previewMode='desktop';nlEditor.updatePreview()">🖥 Desktop</button>
+                <button class="admin-btn admin-btn--sm" onclick="nlEditor.previewMode='mobile';nlEditor.updatePreview()">📱 Mobile</button>
+              </div>
+            </div>
+            <div style="padding:1rem;background:var(--grigio-bg);overflow:auto;max-height:600px;">
+              <div id="nl-preview-frame" style="margin:0 auto;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.1);border-radius:4px;overflow:hidden;transition:max-width 0.3s;max-width:600px;"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1297,6 +1587,536 @@
     document.getElementById('leadModal').addEventListener('click', function(e) {
       if (e.target === this) closeLeadModal();
     });
+
+    /* ══════════════════════════════════════════════════════════════
+       BLOG EDITOR — CRUD completo con localStorage
+       ══════════════════════════════════════════════════════════════ */
+    var blogEditor = window.blogEditor = {
+      KEY: 'impronta_blog_articles',
+
+      getAll: function() {
+        try { return JSON.parse(localStorage.getItem(this.KEY) || '[]'); } catch(e) { return []; }
+      },
+      saveAll: function(arr) { localStorage.setItem(this.KEY, JSON.stringify(arr)); },
+
+      renderList: function() {
+        var articles = this.getAll();
+        var filter = document.getElementById('blog-filter-cat').value;
+        var filtered = filter ? articles.filter(function(a) { return a.category === filter; }) : articles;
+        var tbody = document.getElementById('blog-table-body');
+        document.getElementById('blog-count').textContent = articles.length;
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grigio);padding:2rem;">Nessun articolo' + (filter ? ' in questa categoria' : '') + '. Clicca "+ Nuovo articolo" per iniziare.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = '';
+        filtered.forEach(function(art, i) {
+          var realIndex = articles.indexOf(art);
+          var statusClass = art.status === 'pubblicato' ? 'admin-badge--success' : 'admin-badge--info';
+          var statusLabel = art.status === 'pubblicato' ? 'Pubblicato' : 'Bozza';
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td><strong>' + escHtml(art.title) + '</strong></td>' +
+            '<td>' + escHtml(art.category) + '</td>' +
+            '<td>' + (art.date || '—') + '</td>' +
+            '<td><span class="admin-badge ' + statusClass + '">' + statusLabel + '</span></td>' +
+            '<td style="white-space:nowrap;">' +
+              '<button class="admin-btn admin-btn--sm" onclick="blogEditor.edit(' + realIndex + ')">Modifica</button> ' +
+              '<button class="admin-btn admin-btn--sm" onclick="blogEditor.exportSingle(' + realIndex + ')">📋 HTML</button> ' +
+              '<button class="admin-btn admin-btn--sm admin-btn--danger" onclick="blogEditor.remove(' + realIndex + ')">✕</button>' +
+            '</td>';
+          tbody.appendChild(tr);
+        });
+      },
+
+      newArticle: function() {
+        document.getElementById('blog-edit-id').value = '';
+        document.getElementById('blog-title').value = '';
+        document.getElementById('blog-slug').value = '';
+        document.getElementById('blog-category').value = 'Guide';
+        document.getElementById('blog-status').value = 'bozza';
+        document.getElementById('blog-image').value = '';
+        document.getElementById('blog-content').value = '';
+        document.getElementById('blog-meta-title').value = '';
+        document.getElementById('blog-meta-desc').value = '';
+        document.getElementById('blog-keywords').value = '';
+        document.getElementById('blog-author').value = 'Impronta Arredi';
+        document.getElementById('blog-editor-title').textContent = 'Nuovo articolo';
+        document.getElementById('blog-list-view').style.display = 'none';
+        document.getElementById('blog-editor-view').style.display = 'block';
+        this.updateSeoPreview();
+      },
+
+      edit: function(index) {
+        var art = this.getAll()[index];
+        if (!art) return;
+        document.getElementById('blog-edit-id').value = index;
+        document.getElementById('blog-title').value = art.title || '';
+        document.getElementById('blog-slug').value = art.slug || '';
+        document.getElementById('blog-category').value = art.category || 'Guide';
+        document.getElementById('blog-status').value = art.status || 'bozza';
+        document.getElementById('blog-image').value = art.image || '';
+        document.getElementById('blog-content').value = art.content || '';
+        document.getElementById('blog-meta-title').value = art.metaTitle || '';
+        document.getElementById('blog-meta-desc').value = art.metaDesc || '';
+        document.getElementById('blog-keywords').value = art.keywords || '';
+        document.getElementById('blog-author').value = art.author || 'Impronta Arredi';
+        document.getElementById('blog-editor-title').textContent = 'Modifica: ' + art.title;
+        document.getElementById('blog-list-view').style.display = 'none';
+        document.getElementById('blog-editor-view').style.display = 'block';
+        this.updateSeoPreview();
+      },
+
+      save: function() {
+        var title = document.getElementById('blog-title').value.trim();
+        if (!title) { alert('Inserisci un titolo.'); return; }
+
+        var slug = document.getElementById('blog-slug').value.trim() || this.slugify(title);
+        document.getElementById('blog-slug').value = slug;
+
+        var art = {
+          title: title,
+          slug: slug,
+          category: document.getElementById('blog-category').value,
+          status: document.getElementById('blog-status').value,
+          image: document.getElementById('blog-image').value.trim(),
+          content: document.getElementById('blog-content').value,
+          metaTitle: document.getElementById('blog-meta-title').value.trim() || title + ' — Impronta Arredi',
+          metaDesc: document.getElementById('blog-meta-desc').value.trim(),
+          keywords: document.getElementById('blog-keywords').value.trim(),
+          author: document.getElementById('blog-author').value.trim(),
+          date: new Date().toLocaleDateString('it-IT'),
+          updatedAt: new Date().toISOString()
+        };
+
+        var articles = this.getAll();
+        var editId = document.getElementById('blog-edit-id').value;
+        if (editId !== '') {
+          art.createdAt = articles[parseInt(editId)].createdAt || art.updatedAt;
+          articles[parseInt(editId)] = art;
+        } else {
+          art.createdAt = art.updatedAt;
+          articles.unshift(art);
+        }
+        this.saveAll(articles);
+        alert('Articolo salvato!');
+        this.backToList();
+      },
+
+      remove: function(index) {
+        if (!confirm('Eliminare questo articolo?')) return;
+        var articles = this.getAll();
+        articles.splice(index, 1);
+        this.saveAll(articles);
+        this.renderList();
+      },
+
+      backToList: function() {
+        document.getElementById('blog-list-view').style.display = 'block';
+        document.getElementById('blog-editor-view').style.display = 'none';
+        this.renderList();
+      },
+
+      slugify: function(s) {
+        return s.toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      },
+
+      insertTag: function(tag) {
+        var ta = document.getElementById('blog-content');
+        var start = ta.selectionStart;
+        var end = ta.selectionEnd;
+        var sel = ta.value.substring(start, end);
+        var insert = '';
+        if (tag === 'ul') insert = '<ul>\n  <li>' + (sel || 'Elemento') + '</li>\n  <li>Elemento</li>\n</ul>';
+        else if (tag === 'a') insert = '<a href="https://improntarredi.it/">' + (sel || 'testo link') + '</a>';
+        else if (tag === 'img') insert = '<img src="' + (sel || 'URL_IMMAGINE') + '" alt="Descrizione" width="800" height="500" loading="lazy">';
+        else if (tag === 'blockquote') insert = '<blockquote>' + (sel || 'Citazione') + '</blockquote>';
+        else insert = '<' + tag + '>' + (sel || 'Testo') + '</' + tag + '>';
+        ta.value = ta.value.substring(0, start) + insert + ta.value.substring(end);
+        ta.focus();
+        ta.selectionStart = ta.selectionEnd = start + insert.length;
+      },
+
+      updateSeoPreview: function() {
+        var title = document.getElementById('blog-meta-title').value || document.getElementById('blog-title').value || 'Titolo articolo';
+        var slug = document.getElementById('blog-slug').value || 'slug-articolo';
+        var desc = document.getElementById('blog-meta-desc').value || 'La meta description apparirà qui...';
+        document.getElementById('seo-preview-title').textContent = title + ' — Impronta Arredi';
+        document.getElementById('seo-preview-url').textContent = 'improntarredi.it/blog/' + slug;
+        document.getElementById('seo-preview-desc').textContent = desc;
+      },
+
+      generateFullHTML: function(art) {
+        if (!art) {
+          art = {
+            title: document.getElementById('blog-title').value,
+            slug: document.getElementById('blog-slug').value || this.slugify(document.getElementById('blog-title').value),
+            category: document.getElementById('blog-category').value,
+            image: document.getElementById('blog-image').value,
+            content: document.getElementById('blog-content').value,
+            metaTitle: document.getElementById('blog-meta-title').value || document.getElementById('blog-title').value + ' — Impronta Arredi',
+            metaDesc: document.getElementById('blog-meta-desc').value,
+            keywords: document.getElementById('blog-keywords').value,
+            author: document.getElementById('blog-author').value,
+            date: new Date().toLocaleDateString('it-IT')
+          };
+        }
+        var heroImg = art.image ? '<div style="width:100%;height:400px;background:url(\'' + art.image + '\') center/cover;margin-bottom:2rem;border-radius:8px;"></div>' : '';
+        return '<!DOCTYPE html>\n<html lang="it">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>' + escHtml(art.metaTitle) + '</title>\n  <meta name="description" content="' + escHtml(art.metaDesc) + '">\n  <meta name="robots" content="index, follow">\n  <link rel="canonical" href="https://www.improntarredi.it/blog/' + art.slug + '">\n  <meta property="og:type" content="article">\n  <meta property="og:title" content="' + escHtml(art.metaTitle) + '">\n  <meta property="og:description" content="' + escHtml(art.metaDesc) + '">\n  <meta property="og:url" content="https://www.improntarredi.it/blog/' + art.slug + '">\n  <meta property="og:site_name" content="Impronta Arredi">\n  <meta property="og:locale" content="it_IT">\n  <meta name="theme-color" content="#0A0A0A">\n  <link rel="stylesheet" href="../css/style.css">\n  <script type="application/ld+json">\n  {\n    "@context": "https://schema.org",\n    "@type": "BlogPosting",\n    "headline": "' + escHtml(art.title) + '",\n    "description": "' + escHtml(art.metaDesc) + '",\n    "author": {"@type": "Organization", "name": "' + escHtml(art.author) + '"},\n    "publisher": {"@type": "Organization", "name": "Impronta Arredi"},\n    "datePublished": "' + (art.createdAt || new Date().toISOString()) + '",\n    "dateModified": "' + new Date().toISOString() + '",\n    "mainEntityOfPage": "https://www.improntarredi.it/blog/' + art.slug + '"\n  }\n  <\/script>\n  <script type="application/ld+json">\n  {\n    "@context": "https://schema.org",\n    "@type": "BreadcrumbList",\n    "itemListElement": [\n      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.improntarredi.it/"},\n      {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.improntarredi.it/blog"},\n      {"@type": "ListItem", "position": 3, "name": "' + escHtml(art.title) + '"}\n    ]\n  }\n  <\/script>\n</head>\n<body>\n  <header class="header" role="banner">\n    <div class="container header__inner">\n      <a href="../index.html" class="header__logo" aria-label="Impronta Arredi – Home">IMPRONTA <span>ARREDI</span></a>\n      <nav class="nav" role="navigation" aria-label="Navigazione principale">\n        <button class="nav__toggle" aria-label="Apri menu" aria-expanded="false"><span></span><span></span><span></span></button>\n        <ul class="nav__list">\n          <li><a href="../index.html" class="nav__link">Home</a></li>\n          <li><a href="../chi-siamo.html" class="nav__link">Chi Siamo</a></li>\n          <li><a href="../servizi.html" class="nav__link">Servizi</a></li>\n          <li><a href="../progetti.html" class="nav__link">Progetti</a></li>\n          <li><a href="../contatti.html" class="nav__link">Contatti</a></li>\n        </ul>\n      </nav>\n    </div>\n  </header>\n  <main>\n    <article class="section" style="padding-top:120px;">\n      <div class="container" style="max-width:800px;">\n        <nav aria-label="Breadcrumb" style="font-size:0.82rem;color:#888;margin-bottom:1.5rem;">\n          <a href="../index.html" style="color:#C9A84C;">Home</a> / <a href="../blog.html" style="color:#C9A84C;">Blog</a> / ' + escHtml(art.title) + '\n        </nav>\n        <span class="section__label">' + escHtml(art.category) + '</span>\n        <h1 style="margin:0.5rem 0 1rem;">' + escHtml(art.title) + '</h1>\n        <p style="font-size:0.82rem;color:#888;margin-bottom:2rem;">Di ' + escHtml(art.author) + ' | ' + art.date + '</p>\n        ' + heroImg + '\n        <div class="blog-content" style="font-size:1rem;line-height:1.8;">\n          ' + art.content + '\n        </div>\n      </div>\n    </article>\n  </main>\n  <footer class="footer" role="contentinfo">\n    <div class="container">\n      <div class="footer__bottom">\n        <p>&copy; 2026 Impronta Arredi. Tutti i diritti riservati.</p>\n      </div>\n    </div>\n  </footer>\n  <script src="../js/main.js" defer><\/script>\n</body>\n</html>';
+      },
+
+      exportHTML: function() {
+        var html = this.generateFullHTML();
+        navigator.clipboard.writeText(html).then(function() { alert('HTML copiato negli appunti!'); });
+      },
+
+      exportSingle: function(index) {
+        var art = this.getAll()[index];
+        var html = this.generateFullHTML(art);
+        navigator.clipboard.writeText(html).then(function() { alert('HTML dell\'articolo "' + art.title + '" copiato!'); });
+      },
+
+      downloadHTML: function() {
+        var html = this.generateFullHTML();
+        var slug = document.getElementById('blog-slug').value || 'articolo';
+        var blob = new Blob([html], { type: 'text/html' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url; a.download = slug + '.html'; a.click();
+        URL.revokeObjectURL(url);
+      },
+
+      preview: function() {
+        var html = this.generateFullHTML();
+        var w = window.open('', '_blank');
+        w.document.write(html);
+        w.document.close();
+      }
+    };
+
+    // Auto-generate slug from title
+    document.getElementById('blog-title').addEventListener('input', function() {
+      if (!document.getElementById('blog-slug').dataset.manual) {
+        document.getElementById('blog-slug').value = blogEditor.slugify(this.value);
+      }
+      blogEditor.updateSeoPreview();
+    });
+    document.getElementById('blog-slug').addEventListener('input', function() { this.dataset.manual = '1'; });
+    document.getElementById('blog-meta-title').addEventListener('input', function() {
+      document.getElementById('blog-meta-title-count').textContent = this.value.length;
+      blogEditor.updateSeoPreview();
+    });
+    document.getElementById('blog-meta-desc').addEventListener('input', function() {
+      document.getElementById('blog-meta-desc-count').textContent = this.value.length;
+      blogEditor.updateSeoPreview();
+    });
+
+    // Init blog on panel switch
+    var origShowPanel = window.showPanel;
+    window.showPanel = function(id) {
+      origShowPanel(id);
+      if (id === 'blog') blogEditor.renderList();
+      if (id === 'email') { nlEditor.renderList(); nlEditor.populateBlogSelect(); }
+    };
+
+    /* ══════════════════════════════════════════════════════════════
+       NEWSLETTER EDITOR — Email marketing stile Righetto
+       ══════════════════════════════════════════════════════════════ */
+    var nlEditor = window.nlEditor = {
+      KEY: 'impronta_newsletters',
+      previewMode: 'desktop',
+      extraImages: [],
+
+      getAll: function() {
+        try { return JSON.parse(localStorage.getItem(this.KEY) || '[]'); } catch(e) { return []; }
+      },
+      saveAll: function(arr) { localStorage.setItem(this.KEY, JSON.stringify(arr)); },
+
+      renderList: function() {
+        var nls = this.getAll();
+        document.getElementById('nl-stat-sent').textContent = nls.filter(function(n){ return n.sent; }).length;
+        var tbody = document.getElementById('nl-table-body');
+        if (nls.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grigio);padding:2rem;">Nessuna email. Clicca "+ Nuova email" per iniziare.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = '';
+        nls.forEach(function(nl, i) {
+          var statusClass = nl.sent ? 'admin-badge--success' : 'admin-badge--info';
+          var statusLabel = nl.sent ? 'Inviata' : 'Bozza';
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td><strong>' + escHtml(nl.subject || 'Senza oggetto') + '</strong></td>' +
+            '<td>' + escHtml(nl.type || 'Newsletter') + '</td>' +
+            '<td>' + (nl.date || '—') + '</td>' +
+            '<td><span class="admin-badge ' + statusClass + '">' + statusLabel + '</span></td>' +
+            '<td style="white-space:nowrap;">' +
+              '<button class="admin-btn admin-btn--sm" onclick="nlEditor.edit(' + i + ')">Modifica</button> ' +
+              '<button class="admin-btn admin-btn--sm" onclick="nlEditor.copySingleHTML(' + i + ')">📋</button> ' +
+              '<button class="admin-btn admin-btn--sm admin-btn--danger" onclick="nlEditor.remove(' + i + ')">✕</button>' +
+            '</td>';
+          tbody.appendChild(tr);
+        });
+      },
+
+      populateBlogSelect: function() {
+        var sel = document.getElementById('nl-from-blog');
+        if (!sel) return;
+        var articles = blogEditor.getAll();
+        sel.innerHTML = '<option value="">— Seleziona articolo —</option>';
+        articles.forEach(function(art, i) {
+          sel.innerHTML += '<option value="' + i + '">' + escHtml(art.title) + '</option>';
+        });
+      },
+
+      loadFromBlog: function() {
+        var sel = document.getElementById('nl-from-blog');
+        if (!sel.value) return;
+        var art = blogEditor.getAll()[parseInt(sel.value)];
+        if (!art) return;
+        document.getElementById('nl-heading').value = art.title;
+        document.getElementById('nl-hero-img').value = art.image || '';
+        document.getElementById('nl-body').value = 'Abbiamo pubblicato un nuovo articolo sul nostro blog:\n\n' + art.title + '\n\n' + (art.metaDesc || 'Leggi l\'articolo completo sul nostro sito.');
+        document.getElementById('nl-cta-text').value = 'Leggi l\'articolo';
+        document.getElementById('nl-cta-url').value = 'https://improntarredi.it/blog/' + art.slug;
+        document.getElementById('nl-subject').value = art.title + ' — Impronta Arredi Blog';
+        this.updatePreview();
+      },
+
+      loadFromLanding: function() {
+        var sel = document.getElementById('nl-from-landing');
+        if (!sel.value) return;
+        var pages = {
+          servizi: { title: 'I nostri servizi', desc: 'Scopri tutti i servizi di Impronta Arredi: interior design, ristrutturazione, arredamento su misura e certificazioni.', url: 'https://improntarredi.it/servizi', cta: 'Scopri i servizi' },
+          contatti: { title: 'Richiedi una consulenza gratuita', desc: 'Contattaci per un sopralluogo gratuito. Il nostro team è a disposizione per il tuo progetto.', url: 'https://improntarredi.it/contatti', cta: 'Contattaci' },
+          progetti: { title: 'I nostri progetti', desc: 'Scopri le nostre realizzazioni: appartamenti di lusso, uffici, boutique hotel e negozi.', url: 'https://improntarredi.it/progetti', cta: 'Vedi i progetti' }
+        };
+        var p = pages[sel.value];
+        document.getElementById('nl-heading').value = p.title;
+        document.getElementById('nl-body').value = p.desc;
+        document.getElementById('nl-cta-text').value = p.cta;
+        document.getElementById('nl-cta-url').value = p.url;
+        document.getElementById('nl-subject').value = p.title + ' — Impronta Arredi';
+        this.updatePreview();
+      },
+
+      newNL: function() {
+        document.getElementById('nl-edit-id').value = '';
+        document.getElementById('nl-subject').value = '';
+        document.getElementById('nl-preheader').value = '';
+        document.getElementById('nl-heading').value = '';
+        document.getElementById('nl-subheading').value = '';
+        document.getElementById('nl-hero-img').value = '';
+        document.getElementById('nl-body').value = '';
+        document.getElementById('nl-box-title').value = '';
+        document.getElementById('nl-box-text').value = '';
+        document.getElementById('nl-cta-text').value = 'Contattaci';
+        document.getElementById('nl-cta-url').value = 'https://improntarredi.it/contatti';
+        document.getElementById('nl-cta2-text').value = '';
+        document.getElementById('nl-cta2-url').value = '';
+        this.extraImages = [];
+        document.getElementById('nl-extra-images').innerHTML = '';
+        document.getElementById('nl-editor-title').textContent = 'Nuova email';
+        document.getElementById('newsletter-list-view').style.display = 'none';
+        document.getElementById('newsletter-editor-view').style.display = 'block';
+        this.populateBlogSelect();
+        this.updatePreview();
+      },
+
+      edit: function(index) {
+        var nl = this.getAll()[index];
+        if (!nl) return;
+        document.getElementById('nl-edit-id').value = index;
+        document.getElementById('nl-subject').value = nl.subject || '';
+        document.getElementById('nl-preheader').value = nl.preheader || '';
+        document.getElementById('nl-heading').value = nl.heading || '';
+        document.getElementById('nl-subheading').value = nl.subheading || '';
+        document.getElementById('nl-hero-img').value = nl.heroImg || '';
+        document.getElementById('nl-body').value = nl.body || '';
+        document.getElementById('nl-box-title').value = nl.boxTitle || '';
+        document.getElementById('nl-box-text').value = nl.boxText || '';
+        document.getElementById('nl-cta-text').value = nl.ctaText || 'Contattaci';
+        document.getElementById('nl-cta-url').value = nl.ctaUrl || '';
+        document.getElementById('nl-cta2-text').value = nl.cta2Text || '';
+        document.getElementById('nl-cta2-url').value = nl.cta2Url || '';
+        this.extraImages = nl.extraImages || [];
+        this.renderExtraImages();
+        document.getElementById('nl-editor-title').textContent = 'Modifica: ' + (nl.subject || 'Email');
+        document.getElementById('newsletter-list-view').style.display = 'none';
+        document.getElementById('newsletter-editor-view').style.display = 'block';
+        this.populateBlogSelect();
+        this.updatePreview();
+      },
+
+      save: function() {
+        var subject = document.getElementById('nl-subject').value.trim();
+        if (!subject) { alert('Inserisci un oggetto.'); return; }
+        var nl = {
+          subject: subject,
+          preheader: document.getElementById('nl-preheader').value.trim(),
+          heading: document.getElementById('nl-heading').value.trim(),
+          subheading: document.getElementById('nl-subheading').value.trim(),
+          heroImg: document.getElementById('nl-hero-img').value.trim(),
+          body: document.getElementById('nl-body').value,
+          boxTitle: document.getElementById('nl-box-title').value.trim(),
+          boxText: document.getElementById('nl-box-text').value.trim(),
+          ctaText: document.getElementById('nl-cta-text').value.trim(),
+          ctaUrl: document.getElementById('nl-cta-url').value.trim(),
+          cta2Text: document.getElementById('nl-cta2-text').value.trim(),
+          cta2Url: document.getElementById('nl-cta2-url').value.trim(),
+          extraImages: this.extraImages,
+          type: 'Newsletter',
+          date: new Date().toLocaleDateString('it-IT'),
+          sent: false
+        };
+        var nls = this.getAll();
+        var editId = document.getElementById('nl-edit-id').value;
+        if (editId !== '') { nls[parseInt(editId)] = nl; }
+        else { nls.unshift(nl); }
+        this.saveAll(nls);
+        alert('Email salvata!');
+        this.backToList();
+      },
+
+      remove: function(index) {
+        if (!confirm('Eliminare questa email?')) return;
+        var nls = this.getAll(); nls.splice(index, 1); this.saveAll(nls); this.renderList();
+      },
+
+      backToList: function() {
+        document.getElementById('newsletter-list-view').style.display = 'block';
+        document.getElementById('newsletter-editor-view').style.display = 'none';
+        this.renderList();
+      },
+
+      addExtraImage: function() {
+        var url = document.getElementById('nl-extra-img-url').value.trim();
+        if (!url) return;
+        this.extraImages.push(url);
+        document.getElementById('nl-extra-img-url').value = '';
+        this.renderExtraImages();
+        this.updatePreview();
+      },
+
+      removeExtraImage: function(i) {
+        this.extraImages.splice(i, 1);
+        this.renderExtraImages();
+        this.updatePreview();
+      },
+
+      renderExtraImages: function() {
+        var c = document.getElementById('nl-extra-images');
+        c.innerHTML = '';
+        this.extraImages.forEach(function(url, i) {
+          c.innerHTML += '<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">' +
+            '<img src="' + escHtml(url) + '" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" alt="">' +
+            '<span style="flex:1;font-size:0.75rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(url) + '</span>' +
+            '<button class="admin-btn admin-btn--sm admin-btn--danger" onclick="nlEditor.removeExtraImage(' + i + ')" style="font-size:0.65rem;">Rimuovi</button></div>';
+        });
+      },
+
+      generateHTML: function(data) {
+        var d = data || {
+          subject: document.getElementById('nl-subject').value,
+          preheader: document.getElementById('nl-preheader').value,
+          heading: document.getElementById('nl-heading').value,
+          subheading: document.getElementById('nl-subheading').value,
+          heroImg: document.getElementById('nl-hero-img').value,
+          body: document.getElementById('nl-body').value,
+          boxTitle: document.getElementById('nl-box-title').value,
+          boxText: document.getElementById('nl-box-text').value,
+          ctaText: document.getElementById('nl-cta-text').value,
+          ctaUrl: document.getElementById('nl-cta-url').value,
+          cta2Text: document.getElementById('nl-cta2-text').value,
+          cta2Url: document.getElementById('nl-cta2-url').value,
+          extraImages: this.extraImages
+        };
+        var showUnsub = document.getElementById('nl-unsub-link') ? document.getElementById('nl-unsub-link').checked : true;
+
+        var heroHtml = d.heroImg ? '<tr><td style="padding:0;"><img src="' + d.heroImg + '" width="600" style="width:100%;display:block;border-radius:0;" alt=""></td></tr>' : '';
+        var subheadHtml = d.subheading ? '<p style="font-size:14px;color:#888;margin:4px 0 0;">' + escHtml(d.subheading) + '</p>' : '';
+        var bodyHtml = (d.body || '').replace(/\n/g, '<br>');
+        var boxHtml = '';
+        if (d.boxTitle || d.boxText) {
+          boxHtml = '<tr><td style="padding:20px 30px 0;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F0E8;border-radius:8px;border-left:4px solid #C9A84C;"><tr><td style="padding:16px 20px;">' +
+            (d.boxTitle ? '<p style="font-weight:700;margin:0 0 6px;color:#0A0A0A;">' + escHtml(d.boxTitle) + '</p>' : '') +
+            '<p style="margin:0;color:#2A2A2A;font-size:14px;">' + escHtml(d.boxText) + '</p>' +
+            '</td></tr></table></td></tr>';
+        }
+        var ctaHtml = d.ctaText ? '<tr><td style="padding:24px 30px 0;text-align:center;"><table cellpadding="0" cellspacing="0" style="margin:0 auto;"><tr><td style="background:#C9A84C;border-radius:6px;"><a href="' + d.ctaUrl + '" style="display:inline-block;padding:12px 32px;color:#0A0A0A;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:0.05em;">' + escHtml(d.ctaText) + '</a></td>' +
+          (d.cta2Text ? '<td style="width:12px;"></td><td style="background:#0A0A0A;border-radius:6px;"><a href="' + d.cta2Url + '" style="display:inline-block;padding:12px 32px;color:#FAFAF8;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:0.05em;">' + escHtml(d.cta2Text) + '</a></td>' : '') +
+          '</tr></table></td></tr>' : '';
+        var extraImgHtml = '';
+        (d.extraImages || []).forEach(function(url) {
+          extraImgHtml += '<tr><td style="padding:16px 30px 0;"><img src="' + url + '" width="540" style="width:100%;display:block;border-radius:8px;" alt=""></td></tr>';
+        });
+        var unsubHtml = showUnsub ? '<br><a href="https://improntarredi.it/unsubscribe" style="color:#888;font-size:11px;">Cancellami dalla lista</a>' : '';
+
+        return '<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + escHtml(d.subject) + '</title>\n' +
+          (d.preheader ? '<div style="display:none;max-height:0;overflow:hidden;">' + escHtml(d.preheader) + '</div>\n' : '') +
+          '</head>\n<body style="margin:0;padding:0;background:#f2f0eb;font-family:\'Segoe UI\',Arial,sans-serif;">\n' +
+          '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f2f0eb;padding:20px 0;">\n<tr><td align="center">\n' +
+          '<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">\n' +
+          '<!-- Header -->\n<tr><td style="background:#0A0A0A;padding:24px 30px;text-align:center;">' +
+          '<p style="margin:0;font-size:18px;font-weight:800;letter-spacing:3px;color:#FAFAF8;">IMPRONTA <span style="color:#C9A84C;">ARREDI</span></p>' +
+          '</td></tr>\n' +
+          heroHtml +
+          '<!-- Titolo -->\n<tr><td style="padding:30px 30px 0;">' +
+          '<h1 style="margin:0;font-size:24px;color:#0A0A0A;font-weight:700;">' + escHtml(d.heading || d.subject) + '</h1>' +
+          subheadHtml +
+          '</td></tr>\n' +
+          '<!-- Corpo -->\n<tr><td style="padding:20px 30px 0;font-size:15px;line-height:1.7;color:#2A2A2A;">' + bodyHtml + '</td></tr>\n' +
+          boxHtml +
+          extraImgHtml +
+          ctaHtml +
+          '<!-- Footer -->\n<tr><td style="padding:30px;border-top:1px solid #e0dcd4;margin-top:24px;text-align:center;font-size:12px;color:#888;line-height:1.6;">' +
+          'Impronta Arredi — Interior Design e Ristrutturazione Chiavi in Mano<br>' +
+          'Via Example 1, 20100 Milano | <a href="mailto:info@improntarredi.it" style="color:#C9A84C;">info@improntarredi.it</a>' +
+          unsubHtml +
+          '</td></tr>\n' +
+          '</table>\n</td></tr></table>\n</body>\n</html>';
+      },
+
+      updatePreview: function() {
+        var html = this.generateHTML();
+        var frame = document.getElementById('nl-preview-frame');
+        frame.style.maxWidth = this.previewMode === 'mobile' ? '375px' : '600px';
+        frame.innerHTML = html;
+        // Update subject counter
+        var subj = document.getElementById('nl-subject');
+        if (subj) {
+          var cnt = document.getElementById('nl-subject-count');
+          var prev = document.getElementById('nl-subject-preview');
+          if (cnt) cnt.textContent = subj.value.length;
+          if (prev) prev.textContent = subj.value.replace(/\{\{nome\}\}/g, 'Mario Rossi') || '—';
+        }
+      },
+
+      copyHTML: function() {
+        var html = this.generateHTML();
+        navigator.clipboard.writeText(html).then(function() { alert('Codice HTML copiato negli appunti!\n\nIncollalo nel tuo servizio di invio email o nello script PHP sul sottodominio.'); });
+      },
+
+      copySingleHTML: function(index) {
+        var nl = this.getAll()[index];
+        var html = this.generateHTML(nl);
+        navigator.clipboard.writeText(html).then(function() { alert('HTML copiato!'); });
+      },
+
+      downloadHTML: function() {
+        var html = this.generateHTML();
+        var subj = document.getElementById('nl-subject').value || 'newsletter';
+        var slug = subj.toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 40);
+        var blob = new Blob([html], { type: 'text/html' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a'); a.href = url; a.download = 'email-' + slug + '.html'; a.click();
+        URL.revokeObjectURL(url);
+      }
+    };
+
+    // Init subject counter
+    document.getElementById('nl-subject').addEventListener('input', function() { nlEditor.updatePreview(); });
 
   })();
   </script>
