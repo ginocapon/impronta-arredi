@@ -33,7 +33,7 @@
   <link rel="preload" href="fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/chatbot.css">
+  <link rel="stylesheet" href="css/chatbot.css" media="print" onload="this.media='all'">
 
   <!-- Schema.org GeneralContractor + FurnitureStore -->
   <script type="application/ld+json">
@@ -193,15 +193,15 @@
         <div class="video-split">
           <div class="video-split__player">
             <div class="video-split__wrapper">
-              <iframe
-                src="https://www.youtube.com/embed/dM3teZ4yJe0"
-                title="arredo"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
+              <div class="video-facade" id="videoFacade" onclick="loadYouTube()" role="button" tabindex="0" aria-label="Riproduci video presentazione" style="position:relative;width:100%;padding-bottom:56.25%;background:#0A0A0A;cursor:pointer;border-radius:8px;overflow:hidden;">
+                <img src="https://img.youtube.com/vi/dM3teZ4yJe0/hqdefault.jpg" alt="Video presentazione Impronta Arredi" loading="lazy" width="480" height="360" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;object-fit:cover;">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);">
+                  <svg width="68" height="68" viewBox="0 0 68 68" fill="none" style="filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3));">
+                    <circle cx="34" cy="34" r="34" fill="rgba(201,168,76,0.9)"/>
+                    <polygon points="28,20 52,34 28,48" fill="#0A0A0A"/>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
           <div class="video-split__cta reveal">
@@ -533,6 +533,10 @@
     </div>
   </div>
 
+  <!-- YouTube facade pattern — carica iframe solo al click -->
+  <script>
+  function loadYouTube(){var f=document.getElementById('videoFacade');if(!f)return;var w=f.parentElement;f.remove();var iframe=document.createElement('iframe');iframe.src='https://www.youtube.com/embed/dM3teZ4yJe0?autoplay=1';iframe.title='arredo';iframe.frameBorder='0';iframe.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allowFullscreen=true;iframe.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;border-radius:8px;';var container=document.createElement('div');container.style.cssText='position:relative;width:100%;padding-bottom:56.25%;';container.appendChild(iframe);w.appendChild(container);}
+  </script>
   <!-- ==================== EXTERNAL CHATBOT ==================== -->
   <script src="js/main.js" defer></script>
   <script src="js/chatbot.js" defer></script>
