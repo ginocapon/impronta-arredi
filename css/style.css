@@ -504,13 +504,14 @@ h4 { font-size: var(--fs-2xl); }
 
 /* ---------- Admin secret link ---------- */
 .nav__admin-link {
-  color: rgba(255,255,255,0.12);
-  font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.18);
+  font-size: 0.65rem;
   padding: 4px 6px;
-  margin-left: 4px;
+  margin-left: 6px;
   text-decoration: none;
   transition: color var(--transition);
   line-height: 1;
+  cursor: pointer;
 }
 .nav__admin-link:hover { color: var(--oro); }
 
@@ -2168,6 +2169,23 @@ h4 { font-size: var(--fs-2xl); }
   .nav__list--open + .lang-switch,
   .nav__list--open ~ .lang-switch {
     z-index: 1002;
+  }
+
+  .nav__admin-link {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1003;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.15);
+    padding: 6px;
+  }
+
+  /* Performance: rimuovi backdrop-filter su mobile */
+  .header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(10, 10, 10, 0.98);
   }
 
   .hero { min-height: auto; padding: var(--sp-2xl) 0; }
