@@ -378,6 +378,79 @@
       transition: all 0.3s;
     }
 
+    /* ── Login overlay ── */
+    .admin-login-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--nero);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .admin-login-overlay.hidden { display: none; }
+    .admin-login-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .admin-login-box__logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .admin-login-box__logo span { color: var(--oro); }
+    .admin-login-box__sub {
+      font-size: 0.78rem;
+      color: var(--grigio);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .admin-login-box input[type="password"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--grigio-chiaro);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      transition: border-color 0.2s;
+    }
+    .admin-login-box input[type="password"]:focus {
+      outline: none;
+      border-color: var(--oro);
+    }
+    .admin-login-box .admin-login-error {
+      color: #e74c3c;
+      font-size: 0.78rem;
+      margin-bottom: 0.75rem;
+      min-height: 1.2em;
+    }
+    .admin-login-box button {
+      width: 100%;
+      padding: 0.7rem;
+      background: var(--oro);
+      border: none;
+      border-radius: 8px;
+      color: var(--nero);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .admin-login-box button:hover { background: var(--oro-scuro); }
+
     /* ── Panel visibility ── */
     .admin-panel-view { display: none; }
     .admin-panel-view.active { display: block; }
@@ -403,6 +476,21 @@
   </style>
 </head>
 <body>
+
+  <!-- ══════════════════════════════════════════
+       LOGIN OVERLAY
+       ══════════════════════════════════════════ -->
+  <div class="admin-login-overlay" id="loginOverlay">
+    <div class="admin-login-box">
+      <div class="admin-login-box__logo">IMPRONTA <span>ARREDI</span></div>
+      <p class="admin-login-box__sub">Pannello Amministrazione</p>
+      <form id="loginForm" onsubmit="return handleLogin(event)">
+        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" autofocus>
+        <p class="admin-login-error" id="loginError"></p>
+        <button type="submit">Accedi</button>
+      </form>
+    </div>
+  </div>
 
   <!-- Mobile overlay -->
   <div class="admin-sidebar-overlay" id="sidebarOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none;" onclick="toggleSidebar()"></div>
@@ -963,6 +1051,34 @@
   <!-- ══════════════════════════════════════════
        JAVASCRIPT
        ══════════════════════════════════════════ -->
+  <script>
+  /* ── Login ── */
+  window.handleLogin = function(e) {
+    e.preventDefault();
+    var pw = document.getElementById('loginPassword').value;
+    // Hash semplice per non esporre la password in chiaro nel sorgente
+    var hash = 0;
+    for (var i = 0; i < pw.length; i++) {
+      hash = ((hash << 5) - hash) + pw.charCodeAt(i);
+      hash |= 0;
+    }
+    if (hash === -1008706898) {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      sessionStorage.setItem('impronta_admin_auth', '1');
+      return false;
+    }
+    document.getElementById('loginError').textContent = 'Password errata. Riprova.';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginPassword').focus();
+    return false;
+  };
+
+  // Auto-login se già autenticato nella sessione
+  if (sessionStorage.getItem('impronta_admin_auth') === '1') {
+    document.getElementById('loginOverlay').classList.add('hidden');
+  }
+  </script>
+
   <script>
   (function() {
     'use strict';
